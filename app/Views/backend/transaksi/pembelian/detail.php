@@ -44,7 +44,7 @@
                     </thead>
                     <tbody>
                         <?php $no = 1;
-                        foreach ($items as $i): ?>
+foreach ($items as $i): ?>
                             <tr>
                                 <td><?= $no++; ?></td>
                                 <td><?= esc($i['nama_part']); ?></td>

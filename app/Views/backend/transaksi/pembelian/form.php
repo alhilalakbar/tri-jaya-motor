@@ -4,7 +4,7 @@
         <select name="header[id_pemasok]" class="form-select" required>
             <option value="">-- Pilih Toko/Supplier --</option>
             <?php foreach ($pemasok as $ps): ?>
-                <option value="<?= $ps['id_pemasok']; ?>"><?= esc($ps['nama_pemasok']); ?></option>
+            <option value="<?= $ps['id_pemasok']; ?>"><?= esc($ps['nama_pemasok']); ?></option>
             <?php endforeach; ?>
         </select>
     </div>
@@ -32,14 +32,18 @@
                 <select name="items[0][id_part]" class="form-select form-select-sm" required>
                     <option value="">-- Pilih Suku Cadang --</option>
                     <?php foreach ($part_list as $p): ?>
-                        <option value="<?= $p['id_part']; ?>"><?= esc($p['nama_part']); ?></option>
+                    <option value="<?= $p['id_part']; ?>"><?= esc($p['nama_part']); ?></option>
                     <?php endforeach; ?>
                 </select>
             </td>
-            <td><input type="number" name="items[0][jumlah]" class="form-control form-control-sm" value="1" min="1"
-                    required></td>
-            <td><input type="number" name="items[0][harga_beli]" class="form-control form-control-sm" value="0" min="0"
-                    required></td>
+            <td>
+                <input type="number" name="items[0][jumlah_beli]" class="form-control form-control-sm" value="1" min="1"
+                    required>
+            </td>
+            <td>
+                <input type="number" name="items[0][harga_beli_satuan]" class="form-control form-control-sm" value="0"
+                    min="0" required>
+            </td>
             <td class="text-center"><button type="button" class="btn btn-outline-danger btn-sm disabled"><i
                         class="bi bi-trash"></i></button></td>
         </tr>

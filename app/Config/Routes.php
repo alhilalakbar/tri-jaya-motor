@@ -104,7 +104,7 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
         // Pembelian Stok
         $routes->get('pembelian', 'Transaksi\Pembelian::index');
         $routes->post('pembelian/save', 'Transaksi\Pembelian::save');
-
+        $routes->get('pembelian/detail/(:any)', 'Transaksi\Pembelian::detail/$1');
         // Servis
         $routes->get('servis', 'Transaksi\Servis::index');
         $routes->post('servis/create', 'Transaksi\Servis::create');

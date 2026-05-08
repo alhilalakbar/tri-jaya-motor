@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Controllers\Transaksi;
+
 use App\Controllers\BaseController;
 use App\Models\Transaksi\Stok\PembelianStokModel;
 use App\Models\Transaksi\Stok\DetailPembelianModel;
@@ -59,10 +61,49 @@ class Pembelian extends BaseController
             }
 
             $db->transCommit();
-            return redirect()->to('/transaksi/pembelian');
+            return redirect()->to('backend/transaksi/pembelian');
         } catch (\Exception $e) {
             $db->transRollback();
             return redirect()->back();
         }
+    }
+
+
+    public function detail($id)
+    {
+        $db = \Config\Database::connect();
+
+        // Mengambil data Header Pembelian
+        $pembelian = $db
+            ->table('pembelian_stok')
+            ->select('
+            pembelian_stok.*, 
+            pemasok.nama_pemasok,
+            pembelian_stok.total_biaya_pembelian AS total_harga
+        ')
+            ->join('pemasok', 'pemasok.id_pemasok = pembelian_stok.id_pemasok')
+            ->where('id_pembelian', $id)
+            ->get()
+            ->getRowArray();
+
+        // Mengambil data Detail Item
+        $detail = $db
+            ->table('detail_pembelian_stok')
+            ->select('
+            detail_pembelian_stok.*, 
+            sparepart.nama_part,
+            detail_pembelian_stok.jumlah_beli AS jumlah,
+            detail_pembelian_stok.harga_beli_satuan AS harga_beli
+        ')
+            ->join('sparepart', 'sparepart.id_part = detail_pembelian_stok.id_part')
+            ->where('id_pembelian', $id)
+            ->get()
+            ->getResultArray();
+
+        return view('backend/transaksi/pembelian/detail', [
+            'title' => 'Detail Pembelian',
+            'h'     => $pembelian,
+            'items' => $detail
+        ]);
     }
 }

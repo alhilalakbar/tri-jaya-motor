@@ -25,7 +25,7 @@
                         <td><span class="badge text-bg-dark"><?= $d['kode_pembelian']; ?></span></td>
                         <td><?= date('d/m/Y', strtotime($d['tanggal_pembelian'])); ?></td>
                         <td><?= esc($d['nama_pemasok']); ?></td>
-                        <td>Rp <?= number_format($d['total_harga'], 0, ',', '.'); ?></td>
+                        <td>Rp <?= number_format($d['total_biaya_pembelian'], 0, ',', '.'); ?></td>
                         <td class="text-center">
                             <a href="<?= base_url('backend/transaksi/pembelian/detail/' . $d['id_pembelian']); ?>"
                                 class="btn btn-outline-info btn-sm">
@@ -41,7 +41,7 @@
 
 <div class="modal fade" id="modalBeli" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
-        <form action="<?= base_url('transaksi/pembelian/save'); ?>" method="post">
+        <form action="<?= base_url('backend/transaksi/pembelian/save'); ?>" method="post">
             <?= csrf_field(); ?>
             <div class="modal-content">
                 <div class="modal-header bg-dark text-white">

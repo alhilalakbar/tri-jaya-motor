@@ -73,7 +73,7 @@ class Servis extends BaseController
             }
 
             $db->transCommit();
-            return redirect()->to('/transaksi/servis')->with('message', 'Data servis berhasil disimpan.');
+            return redirect()->to('backend/transaksi/servis')->with('message', 'Data servis berhasil disimpan.');
 
         } catch (\Exception $e) {
             $db->transRollback();
