@@ -13,16 +13,16 @@ class MerkMotor extends BaseController
 
     public function index()
     {
-        return view('master/merk_motor/index', ['data' => $this->model->findAll()]);
+        return view('backend/master/merk_motor/index', ['data' => $this->model->findAll()]);
     }
     public function save()
     {
-        $this->model->save(['nama_merk' => $this->request->getPost('nama_merk')]);
+        $this->model->save(['nama_merek' => $this->request->getPost('nama_merek')]);
         return redirect()->back();
     }
     public function update($id)
     {
-        $this->model->update($id, ['nama_merk' => $this->request->getPost('nama_merk')]);
+        $this->model->update($id, ['nama_merek' => $this->request->getPost('nama_merek')]);
         return redirect()->back();
     }
     public function delete($id)

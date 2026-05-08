@@ -24,7 +24,7 @@ class Sparepart extends BaseController
             'kategori' => $kat->findAll(),
             'merek' => $merk->findAll()
         ];
-        return view('master/sparepart/index', $data);
+        return view('backend/master/sparepart/index', $data);
     }
     public function save()
     {

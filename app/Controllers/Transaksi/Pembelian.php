@@ -8,8 +8,41 @@ class Pembelian extends BaseController
 {
     public function index()
     {
-        $model = new PembelianStokModel();
-        return view('transaksi/pembelian/index', ['data' => $model->findAll()]);
+        $db = \Config\Database::connect();
+
+        $model = new \App\Models\Transaksi\Stok\PembelianStokModel();
+
+        $data = [
+
+            'title' => 'Pembelian Stok',
+
+            'data' => $model
+                ->select('
+                pembelian_stok.*,
+                pemasok.nama_pemasok
+            ')
+                ->join(
+                    'pemasok',
+                    'pemasok.id_pemasok = pembelian_stok.id_pemasok'
+                )
+                ->orderBy('id_pembelian', 'DESC')
+                ->findAll(),
+
+            'pemasok' => $db
+                ->table('pemasok')
+                ->get()
+                ->getResultArray(),
+
+            'part_list' => $db
+                ->table('sparepart')
+                ->get()
+                ->getResultArray(),
+        ];
+
+        return view(
+            'backend/transaksi/pembelian/index',
+            $data
+        );
     }
     public function save()
     {

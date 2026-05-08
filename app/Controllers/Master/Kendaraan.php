@@ -24,7 +24,7 @@ class Kendaraan extends BaseController
             'pelanggan' => $pel->findAll(),
             'tipe' => $tipe->findAll()
         ];
-        return view('master/kendaraan/index', $data);
+        return view('backend/master/kendaraan/index', $data);
     }
     public function save()
     {

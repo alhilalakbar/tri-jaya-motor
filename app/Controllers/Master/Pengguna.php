@@ -13,7 +13,7 @@ class Pengguna extends BaseController
 
     public function index()
     {
-        return view('master/pengguna/index', ['data' => $this->model->findAll()]);
+        return view('backend/master/pengguna/index', ['data' => $this->model->findAll()]);
     }
     public function save()
     {

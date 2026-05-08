@@ -13,7 +13,7 @@ class JasaServis extends BaseController
 
     public function index()
     {
-        return view('master/jasa_servis/index', ['data' => $this->model->findAll()]);
+        return view('backend/master/jasa_servis/index', ['data' => $this->model->findAll()]);
     }
     public function save()
     {

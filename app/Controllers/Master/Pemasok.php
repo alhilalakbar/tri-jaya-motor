@@ -13,7 +13,7 @@ class Pemasok extends BaseController
 
     public function index()
     {
-        return view('master/pemasok/index', ['data' => $this->model->findAll()]);
+        return view('backend/master/pemasok/index', ['data' => $this->model->findAll()]);
     }
     public function save()
     {

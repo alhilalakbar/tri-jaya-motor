@@ -2,7 +2,7 @@
 use CodeIgniter\Model;
 
 class MerkMotorModel extends Model {
-    protected $table = 'merk_motor'; 
+    protected $table = 'merek_motor'; 
     protected $primaryKey = 'id_merek_motor'; 
-    protected $allowedFields = ['nama_merk']; 
+    protected $allowedFields = ['nama_merek']; 
 }

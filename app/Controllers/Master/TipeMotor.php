@@ -16,10 +16,10 @@ class TipeMotor extends BaseController
     {
         $merk = new MerkMotorModel();
         $data = [
-            'tipe' => $this->model->select('tipe_motor.*, merk_motor.nama_merk')->join('merk_motor', 'merk_motor.id_merek_motor = tipe_motor.id_merek_motor')->findAll(),
+            'tipe' => $this->model->select('tipe_motor.*, merek_motor.nama_merek_motor')->join('merek_motor', 'merek_motor.id_merek_motor = tipe_motor.id_merek_motor')->findAll(),
             'merk' => $merk->findAll()
         ];
-        return view('master/tipe_motor/index', $data);
+        return view('backend/master/tipe_motor/index', $data);
     }
     public function save()
     {
