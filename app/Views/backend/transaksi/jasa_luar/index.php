@@ -29,10 +29,12 @@
                     <td>Rp <?= number_format($d['biaya_modal_vendor'], 0, ',', '.'); ?></td>
                     <td>Rp <?= number_format($d['tagihan_ke_pelanggan'], 0, ',', '.'); ?></td>
                     <td>
-                        <button class="btn btn-warning btn-sm" onclick="editData(<?= htmlspecialchars(json_encode($d)); ?>)">
+                        <button class="btn btn-warning btn-sm"
+                            onclick="editData(<?= htmlspecialchars(json_encode($d)); ?>)">
                             <i class="bi bi-pencil-square"></i>
                         </button>
-                        <a href="<?= base_url('transaksi/jasaluar/delete/' . $d['id_jasa_luar']); ?>" class="btn btn-danger btn-sm" onclick="return confirm('Hapus data ini?')">
+                        <a href="<?= base_url('transaksi/jasaluar/delete/' . $d['id_jasa_luar']); ?>"
+                            class="btn btn-danger btn-sm" onclick="return confirm('Hapus data ini?')">
                             <i class="bi bi-trash"></i>
                         </a>
                     </td>
@@ -48,7 +50,9 @@
         <form action="" method="post" id="formMaster">
             <?= csrf_field(); ?>
             <div class="modal-content">
-                <div class="modal-header"><h5 class="modal-title" id="modalTitle">Form Jasa Luar</h5></div>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">Form Jasa Luar</h5>
+                </div>
                 <div class="modal-body">
                     <?= $this->include('backend/transaksi/jasa_luar/form'); ?>
                 </div>
@@ -61,34 +65,39 @@
 </div>
 
 <script>
-    let modalElement; let modal; let form;
+let modalElement;
+let modal;
+let form;
 
-    document.addEventListener('DOMContentLoaded', function() {
-        modalElement = document.getElementById('modalMaster');
-        form = document.getElementById('formMaster');
-        if (typeof bootstrap !== 'undefined') modal = new bootstrap.Modal(modalElement);
-    });
+document.addEventListener('DOMContentLoaded', function() {
+    modalElement = document.getElementById('modalMaster');
+    form = document.getElementById('formMaster');
+    if (typeof bootstrap !== 'undefined') modal = new bootstrap.Modal(modalElement);
+});
 
-    function tambahData() {
-        if (!form || !modal) return;
-        document.getElementById('modalTitle').innerText = 'Tambah Jasa Luar';
-        form.action = '<?= base_url('transaksi/jasaluar/save'); ?>';
-        form.reset();
-        modal.show();
-    }
+function tambahData() {
+    if (!form || !modal) return;
+    document.getElementById('modalTitle').innerText = 'Tambah Jasa Luar';
+    form.action = '<?= base_url('backend/transaksi/jasa_luar/save'); ?>';
+    form.reset();
+    modal.show();
+}
 
-    function editData(data) {
-        if (!form || !modal) return;
-        document.getElementById('modalTitle').innerText = 'Edit Jasa Luar';
-        form.action = '<?= base_url('transaksi/jasaluar/update'); ?>/' + data.id_jasa_luar;
-        
-        // Isi form otomatis
-        if(document.getElementById('id_transaksi')) document.getElementById('id_transaksi').value = data.id_transaksi;
-        if(document.getElementById('deskripsi_pekerjaan')) document.getElementById('deskripsi_pekerjaan').value = data.deskripsi_pekerjaan;
-        if(document.getElementById('biaya_modal_vendor')) document.getElementById('biaya_modal_vendor').value = data.biaya_modal_vendor;
-        if(document.getElementById('tagihan_ke_pelanggan')) document.getElementById('tagihan_ke_pelanggan').value = data.tagihan_ke_pelanggan;
-        
-        modal.show();
-    }
+function editData(data) {
+    if (!form || !modal) return;
+    document.getElementById('modalTitle').innerText = 'Edit Jasa Luar';
+    form.action = '<?= base_url('transaksi/jasaluar/update'); ?>/' + data.id_jasa_luar;
+
+    // Isi form otomatis
+    if (document.getElementById('id_transaksi')) document.getElementById('id_transaksi').value = data.id_transaksi;
+    if (document.getElementById('deskripsi_pekerjaan')) document.getElementById('deskripsi_pekerjaan').value = data
+        .deskripsi_pekerjaan;
+    if (document.getElementById('biaya_modal_vendor')) document.getElementById('biaya_modal_vendor').value = data
+        .biaya_modal_vendor;
+    if (document.getElementById('tagihan_ke_pelanggan')) document.getElementById('tagihan_ke_pelanggan').value = data
+        .tagihan_ke_pelanggan;
+
+    modal.show();
+}
 </script>
 <?= $this->endSection(); ?>
