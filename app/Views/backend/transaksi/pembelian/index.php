@@ -12,9 +12,9 @@
         <table id="tableBeli" class="table table-bordered table-striped table-hover">
             <thead class="table-light">
                 <tr>
-                    <th>No. Faktur</th>
+                    <th>Kode Pembelian</th>
                     <th>Tanggal</th>
-                    <th>Pemasok</th>
+                    <th>Toko / Pemasok</th>
                     <th>Total Belanja</th>
                     <th style="width: 80px">Aksi</th>
                 </tr>
@@ -27,7 +27,7 @@
                         <td><?= esc($d['nama_pemasok']); ?></td>
                         <td>Rp <?= number_format($d['total_harga'], 0, ',', '.'); ?></td>
                         <td class="text-center">
-                            <a href="<?= base_url('transaksi/pembelian/detail/' . $d['id_pembelian']); ?>"
+                            <a href="<?= base_url('backend/transaksi/pembelian/detail/' . $d['id_pembelian']); ?>"
                                 class="btn btn-outline-info btn-sm">
                                 <i class="bi bi-eye"></i>
                             </a>

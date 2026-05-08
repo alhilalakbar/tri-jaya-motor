@@ -1,16 +1,12 @@
 <div class="row mb-4">
-    <div class="col-md-5">
-        <label class="form-label">Pemasok / Supplier <span class="text-danger">*</span></label>
+    <div class="col-md-9">
+        <label class="form-label">Toko / Pemasok <span class="text-danger">*</span></label>
         <select name="header[id_pemasok]" class="form-select" required>
-            <option value="">-- Pilih Pemasok --</option>
+            <option value="">-- Pilih Toko/Supplier --</option>
             <?php foreach ($pemasok as $ps): ?>
                 <option value="<?= $ps['id_pemasok']; ?>"><?= esc($ps['nama_pemasok']); ?></option>
             <?php endforeach; ?>
         </select>
-    </div>
-    <div class="col-md-4">
-        <label class="form-label">Nomor Faktur / Nota <span class="text-danger">*</span></label>
-        <input type="text" name="header[kode_pembelian]" class="form-control" placeholder="Contoh: FAK-2026001" required>
     </div>
     <div class="col-md-3">
         <label class="form-label">Tanggal Beli</label>

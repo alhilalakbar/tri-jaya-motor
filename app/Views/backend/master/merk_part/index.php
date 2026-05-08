@@ -53,7 +53,7 @@
                         </td>
 
                         <td>
-                            <?= $d['nama_merek']; ?>
+                            <?= $d['nama_merek_part']; ?>
                         </td>
 
                         <td>
@@ -67,7 +67,7 @@
                             </button>
 
                             <a
-                                href="<?= base_url('backend/master/merekpart/delete/' . $d['id_merek_part']); ?>"
+                                href="<?= base_url('backend/master/merk_part/delete/' . $d['id_merek_part']); ?>"
                                 class="btn btn-danger btn-sm"
                                 onclick="return confirm('Hapus data?')">
 
@@ -87,7 +87,6 @@
     </div>
 </div>
 
-<!-- MODAL -->
 <div
     class="modal fade"
     id="modalMaster"
@@ -163,19 +162,13 @@
 
     document.addEventListener('DOMContentLoaded', function () {
 
-        // =========================
-        // ELEMENT
-        // =========================
-
         modalElement =
             document.getElementById('modalMaster');
 
         form =
             document.getElementById('formMaster');
 
-        // =========================
-        // VALIDASI
-        // =========================
+
 
         if (!modalElement) {
 
@@ -195,9 +188,7 @@
             return;
         }
 
-        // =========================
-        // VALIDASI BOOTSTRAP
-        // =========================
+
 
         if (typeof bootstrap === 'undefined') {
 
@@ -209,9 +200,7 @@
             return;
         }
 
-        // =========================
-        // INIT MODAL
-        // =========================
+
 
         modal =
             new bootstrap.Modal(modalElement);
@@ -222,9 +211,7 @@
 
     });
 
-    // =========================
-    // TAMBAH DATA
-    // =========================
+
 
     function tambahData() {
 
@@ -238,10 +225,8 @@
             return;
         }
 
-        // Reset form
         form.reset();
 
-        // Reset hidden input
         if (
             document.getElementById(
                 'id_merek_part'
@@ -253,22 +238,16 @@
             ).value = '';
         }
 
-        // Set title
         document.getElementById(
             'modalTitle'
         ).innerText = 'Tambah Data';
 
-        // Set action
         form.action =
-            '<?= base_url('backend/master/merekpart/save'); ?>';
+            '<?= base_url('backend/master/merk_part/save'); ?>';
 
-        // Show modal
         modal.show();
     }
 
-    // =========================
-    // EDIT DATA
-    // =========================
 
     function editData(data) {
 
@@ -291,7 +270,7 @@
 
         // Action
         form.action =
-            '<?= base_url('backend/master/merekpart/update'); ?>/' +
+            '<?= base_url('backend/master/merk_part/update'); ?>/' +
             data.id_merek_part;
 
         // =========================

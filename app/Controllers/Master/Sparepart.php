@@ -18,7 +18,7 @@ class Sparepart extends BaseController
         $kat = new KategoriPartModel();
         $merk = new MerekPartModel();
         $data = [
-            'sparepart' => $this->model->select('sparepart.*, kategori_part.nama_kategori, merek_part.nama_merek')
+            'sparepart' => $this->model->select('sparepart.*, kategori_part.nama_kategori, merek_part.nama_merek_part')
                 ->join('kategori_part', 'kategori_part.id_kategori = sparepart.id_kategori')
                 ->join('merek_part', 'merek_part.id_merek_part = sparepart.id_merek_part', 'left')->findAll(),
             'kategori' => $kat->findAll(),

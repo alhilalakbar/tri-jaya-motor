@@ -31,7 +31,7 @@
                                 onclick="editData(<?= htmlspecialchars(json_encode($d)); ?>)">
                                 <i class="bi bi-pencil-square"></i>
                             </button>
-                            <a href="<?= base_url('backend/master/merkmotor/delete/' . $d['id_merek_motor']); ?>"
+                            <a href="<?= base_url('backend/master/merk_motor/delete/' . $d['id_merek_motor']); ?>"
                                 class="btn btn-danger btn-sm" onclick="return confirm('Hapus data?')">
                                 <i class="bi bi-trash"></i>
                             </a>
@@ -86,7 +86,7 @@
         if (!form || !modal) return;
 
         document.getElementById('modalTitle').innerText = 'Tambah Data';
-        form.action = '<?= base_url('backend/master/merkmotor/save'); ?>';
+        form.action = '<?= base_url('backend/master/merk_motor/save'); ?>';
         form.reset();
         modal.show();
     }
@@ -95,7 +95,7 @@
         if (!form || !modal) return;
 
         document.getElementById('modalTitle').innerText = 'Edit Data';
-        form.action = '<?= base_url('backend/master/merkmotor/update'); ?>/' + data.id_merek_motor;
+        form.action = '<?= base_url('backend/master/merk_motor/update'); ?>/' + data.id_merek_motor;
 
         // Pastikan ID input ini sesuai dengan yang ada di form.php Anda
         if (document.getElementById('nama_merek_motor')) {

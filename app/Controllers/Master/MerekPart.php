@@ -17,12 +17,12 @@ class MerekPart extends BaseController
     }
     public function save()
     {
-        $this->model->save(['nama_merek' => $this->request->getPost('nama_merek')]);
+        $this->model->save(['nama_merek_part' => $this->request->getPost('nama_merek_part')]);
         return redirect()->back();
     }
     public function update($id)
     {
-        $this->model->update($id, ['nama_merek' => $this->request->getPost('nama_merek')]);
+        $this->model->update($id, ['nama_merek_part' => $this->request->getPost('nama_merek_part')]);
         return redirect()->back();
     }
     public function delete($id)

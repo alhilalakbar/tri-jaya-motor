@@ -31,7 +31,7 @@
                             <?= $s['nama_part']; ?><br>
                             <small class="text-muted">Kualitas: <?= $s['kualitas_part']; ?></small>
                         </td>
-                        <td><?= $s['nama_kategori']; ?> <br> <small><?= $s['nama_merek']; ?></small></td>
+                        <td><?= $s['nama_kategori']; ?> <br> <small><?= $s['nama_merek_part']; ?></small></td>
                         <td class="text-center">
                             <?php
                             $statusClass = ($s['stok_saat_ini'] <= $s['stok_minimum']) ? 'bg-danger' : 'bg-success';

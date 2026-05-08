@@ -31,7 +31,7 @@
                                 onclick="editData(<?= htmlspecialchars(json_encode($d)); ?>)">
                                 <i class="bi bi-pencil-square"></i>
                             </button>
-                            <a href="<?= base_url('backend/master/jasaservis/delete/' . $d['id_jasa']); ?>"
+                            <a href="<?= base_url('backend/master/jasa_servis/delete/' . $d['id_jasa']); ?>"
                                 class="btn btn-danger btn-sm" onclick="return confirm('Hapus data?')">
                                 <i class="bi bi-trash"></i>
                             </a>
@@ -88,7 +88,7 @@
 
         document.getElementById('modalTitle').innerText = 'Tambah Data Jasa';
         // Endpoint CI4 untuk simpan jasa
-        form.action = '<?= base_url('backend/master/jasaservis/save'); ?>';
+        form.action = '<?= base_url('backend/master/jasa_servis/save'); ?>';
         form.reset();
         modal.show();
     }
@@ -98,7 +98,7 @@
 
         document.getElementById('modalTitle').innerText = 'Edit Data Jasa';
         // Endpoint CI4 untuk update jasa berdasarkan ID
-        form.action = '<?= base_url('backend/master/jasaservis/update'); ?>/' + data.id_jasa;
+        form.action = '<?= base_url('backend/master/jasa_servis/update'); ?>/' + data.id_jasa;
 
         // Mengisi nilai input di dalam modal
         if (document.getElementById('nama_jasa')) {

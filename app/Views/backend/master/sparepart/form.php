@@ -15,7 +15,7 @@
         <label class="form-label">Merek</label>
         <select name="id_merek_part" id="id_merek_part" class="form-select">
             <?php foreach ($merek as $m) : ?>
-                <option value="<?= $m['id_merek_part']; ?>"><?= esc($m['nama_merek']); ?></option>
+                <option value="<?= $m['id_merek_part']; ?>"><?= esc($m['nama_merek_part']); ?></option>
             <?php endforeach; ?>
         </select>
     </div>
