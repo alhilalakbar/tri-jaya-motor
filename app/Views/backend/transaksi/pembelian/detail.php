@@ -75,7 +75,7 @@ foreach ($items as $i): ?>
                 </p>
             </div>
             <div class="col-md-6 text-end">
-                <a href="<?= base_url('transaksi/pembelian'); ?>" class="btn btn-secondary shadow-sm">
+                <a href="<?= base_url('backend/transaksi/pembelian'); ?>" class="btn btn-secondary shadow-sm">
                     <i class="bi bi-arrow-left"></i> Kembali ke Daftar
                 </a>
                 <button type="button" class="btn btn-dark shadow-sm" onclick="window.print()">

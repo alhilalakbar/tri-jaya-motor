@@ -15,40 +15,40 @@
             </div>
         </div>
 
-        <div class="col-lg-3 col-6">
+        <div class="col-lg-2 col-6">
             <div class="small-box text-bg-warning p-3 rounded shadow-sm mb-4 text-dark">
                 <div class="inner">
-                    <p class="mb-1">Unit Sedang Diproses</p>
+                    <p class="mb-1">Unit Proses</p>
                     <h3 class="fw-bold"><?= count($unit_proses); ?> <small class="fs-6">Motor</small></h3>
-                    <small class="opacity-75">Mekanik sedang bekerja</small>
+                    <small class="opacity-75">Sedang dikerjakan</small>
                 </div>
                 <div class="icon text-end opacity-25"><i class="bi bi-gear-wide-connected fs-1"></i></div>
             </div>
         </div>
 
-        <div class="col-lg-3 col-6">
+        <div class="col-lg-2 col-6">
             <div class="small-box text-bg-danger p-3 rounded shadow-sm mb-4">
                 <div class="inner">
                     <p class="mb-1">Stok Perlu Order</p>
                     <h3 class="fw-bold"><?= $stok_kritis_count; ?> <small class="fs-6">Item</small></h3>
-                    <small class="opacity-75">Di bawah batas minimum</small>
+                    <small class="opacity-75">Batas minimum</small>
                 </div>
                 <div class="icon text-end opacity-25"><i class="bi bi-exclamat-triangle-fill fs-1"></i></div>
             </div>
         </div>
 
-        <div class="col-lg-3 col-6">
+        <div class="col-lg-5 col-12">
             <div class="small-box text-bg-dark p-3 rounded shadow-sm mb-4">
                 <div class="inner">
-                    <p class="mb-1">Total Nilai Aset</p>
+                    <p class="mb-1">Total Nilai Aset Gudang</p>
                     <h3 class="fw-bold">Rp <?= number_format($total_aset_gudang, 0, ',', '.'); ?></h3>
-                    <small class="opacity-75">Berdasarkan Harga Modal</small>
+                    <small class="opacity-75">Berdasarkan akumulasi harga modal stok saat ini</small>
                 </div>
                 <div class="icon text-end opacity-25"><i class="bi bi-box-seam fs-1"></i></div>
             </div>
         </div>
     </div>
-
+    
     <div class="row">
         <div class="col-md-8">
             <div class="card shadow-sm border-0">
@@ -69,29 +69,29 @@
                             </thead>
                             <tbody>
                                 <?php foreach ($unit_proses as $up): ?>
-                                <tr>
-                                    <td class="ps-3">
-                                        <span class="badge text-bg-dark font-monospace"><?= $up['nomor_plat']; ?></span>
-                                    </td>
-                                    <td><?= $up['nama_mekanik'] ?? '<i class="text-muted">Belum ditentukan</i>'; ?></td>
-                                    <td><small
-                                            class="text-muted"><?= character_limiter($up['keluhan_awal'], 50); ?></small>
-                                    </td>
-                                    <td class="text-center">
-                                        <span class="badge rounded-pill text-bg-warning px-3">
-                                            <span class="spinner-border spinner-border-sm me-1" role="status"></span>
-                                            Diproses
-                                        </span>
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td class="ps-3">
+                                            <span class="badge text-bg-dark font-monospace"><?= $up['nomor_plat']; ?></span>
+                                        </td>
+                                        <td><?= $up['nama_mekanik'] ?? '<i class="text-muted">Belum ditentukan</i>'; ?></td>
+                                        <td><small
+                                                class="text-muted"><?= character_limiter($up['keluhan_awal'], 50); ?></small>
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="badge rounded-pill text-bg-warning px-3">
+                                                <span class="spinner-border spinner-border-sm me-1" role="status"></span>
+                                                Diproses
+                                            </span>
+                                        </td>
+                                    </tr>
                                 <?php endforeach; ?>
                                 <?php if (empty($unit_proses)): ?>
-                                <tr>
-                                    <td colspan="4" class="text-center py-4 text-muted">
-                                        <i class="bi bi-info-circle me-1"></i> Tidak ada pekerjaan yang sedang
-                                        berlangsung.
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td colspan="4" class="text-center py-4 text-muted">
+                                            <i class="bi bi-info-circle me-1"></i> Tidak ada pekerjaan yang sedang
+                                            berlangsung.
+                                        </td>
+                                    </tr>
                                 <?php endif; ?>
                             </tbody>
                         </table>

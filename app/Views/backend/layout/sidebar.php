@@ -108,6 +108,13 @@
                     </a>
                 </li>
 
+                <li class="nav-item">
+                    <a href="<?= base_url('backend/transaksi/gaji_mekanik') ?>" class="nav-link">
+                        <i class="nav-icon bi bi-cash-stack"></i>
+                        <p>Gaji Mekanik</p>
+                    </a>
+                </li>
+
                 <li class="nav-header">SISTEM</li>
                 <li class="nav-item">
                     <a href="<?= base_url('backend/master/pengguna') ?>" class="nav-link">

@@ -116,6 +116,13 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
         $routes->post('jasa_luar/save', 'Transaksi\JasaLuar::save');
         $routes->post('jasa_luar/update/(:any)', 'Transaksi\JasaLuar::update/$1');
         $routes->get('jasa_luar/delete/(:any)', 'Transaksi\JasaLuar::delete/$1');
+
+        // Gaji Mekanik
+        $routes->get('gaji_mekanik', 'Transaksi\GajiMekanik::index');
+        $routes->post('gaji_mekanik/save', 'Transaksi\GajiMekanik::save');
+        $routes->post('gaji_mekanik/update/(:any)', 'Transaksi\GajiMekanik::update/$1');
+        $routes->get('gaji_mekanik/delete/(:any)', 'Transaksi\GajiMekanik::delete/$1');
+
     });
 
 });
