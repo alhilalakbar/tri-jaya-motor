@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 08, 2026 at 11:28 PM
+-- Generation Time: May 09, 2026 at 09:57 AM
 -- Server version: 8.0.45-0ubuntu0.24.04.1
 -- PHP Version: 8.3.6
 
@@ -39,18 +39,18 @@ CREATE TABLE `counter_kode` (
 INSERT INTO `counter_kode` (`nama_counter`, `counter_value`) VALUES
 ('jasa', 4),
 ('jasa_luar', 0),
-('kategori_part', 6),
-('kendaraan', 2),
+('kategori_part', 7),
+('kendaraan', 3),
 ('mekanik', 1),
 ('merek_motor', 5),
 ('merek_part', 13),
-('pelanggan', 4),
+('pelanggan', 5),
 ('pemasok', 1),
 ('pembelian', 1),
 ('pengguna', 5),
-('sparepart', 1),
-('tipe_motor', 2),
-('transaksi', 1);
+('sparepart', 2),
+('tipe_motor', 3),
+('transaksi', 3);
 
 -- --------------------------------------------------------
 
@@ -71,7 +71,9 @@ CREATE TABLE `detail_jasa_servis` (
 --
 
 INSERT INTO `detail_jasa_servis` (`id_detail_jasa`, `id_transaksi`, `id_jasa`, `harga_saat_transaksi`, `biaya_tambahan`) VALUES
-(1, 1, 4, 10000.00, 0.00);
+(1, 1, 4, 10000.00, 0.00),
+(2, 2, 4, 10000.00, 0.00),
+(3, 3, 1, 250000.00, 0.00);
 
 --
 -- Triggers `detail_jasa_servis`
@@ -230,7 +232,8 @@ CREATE TABLE `detail_penggunaan_part` (
 --
 
 INSERT INTO `detail_penggunaan_part` (`id_detail_part`, `id_transaksi`, `id_part`, `jumlah_pakai`, `harga_satuan_jual`) VALUES
-(1, 1, 1, 1, 86000.00);
+(1, 1, 1, 1, 86000.00),
+(2, 2, 1, 1, 86000.00);
 
 --
 -- Triggers `detail_penggunaan_part`
@@ -335,6 +338,27 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `gaji_harian_mekanik`
+--
+
+CREATE TABLE `gaji_harian_mekanik` (
+  `id_gaji` int NOT NULL,
+  `id_mekanik` int NOT NULL,
+  `tanggal_bayar` date NOT NULL,
+  `nominal` decimal(12,2) NOT NULL,
+  `keterangan` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `gaji_harian_mekanik`
+--
+
+INSERT INTO `gaji_harian_mekanik` (`id_gaji`, `id_mekanik`, `tanggal_bayar`, `nominal`, `keterangan`) VALUES
+(1, 1, '2026-05-09', 150000.00, '');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `jasa_luar_bubut`
 --
 
@@ -420,7 +444,8 @@ INSERT INTO `kategori_part` (`id_kategori`, `kode_kategori`, `nama_kategori`) VA
 (3, 'KAT-003', 'Aki'),
 (4, 'KAT-004', 'Busi'),
 (5, 'KAT-005', 'V-Belt'),
-(6, 'KAT-006', 'Rantai dan Gear');
+(6, 'KAT-006', 'Rantai dan Gear'),
+(7, 'KAT-007', 'shockbreaker');
 
 --
 -- Triggers `kategori_part`
@@ -456,7 +481,8 @@ CREATE TABLE `kendaraan` (
 
 INSERT INTO `kendaraan` (`id_kendaraan`, `kode_kendaraan`, `id_pelanggan`, `id_tipe_motor`, `nomor_plat`) VALUES
 (1, 'KND-0001', 1, 1, 'B 6435 FCR'),
-(2, 'KND-0002', 4, 2, 'B 4552 KGH');
+(2, 'KND-0002', 4, 2, 'B 4552 KGH'),
+(3, 'KND-0003', 5, 1, 'B 7016 JMK');
 
 --
 -- Triggers `kendaraan`
@@ -611,7 +637,8 @@ INSERT INTO `pelanggan` (`id_pelanggan`, `kode_pelanggan`, `nama_pelanggan`, `no
 (1, 'PLG-0001', 'Mabel Fernanda Carelly', '085314127324'),
 (2, 'PLG-0002', 'Nasrul Ulum', '085882798891'),
 (3, 'PLG-0003', 'Muhammad Riyaldi', '081289122541'),
-(4, 'PLG-0004', 'Joseph Agustinus', '08567886235');
+(4, 'PLG-0004', 'Joseph Agustinus', '08567886235'),
+(5, 'PLG-0005', 'Muhammad Ilham rizal', '085770160142');
 
 --
 -- Triggers `pelanggan`
@@ -761,7 +788,8 @@ CREATE TABLE `sparepart` (
 --
 
 INSERT INTO `sparepart` (`id_part`, `kode_part`, `id_kategori`, `id_merek_part`, `nama_part`, `kualitas_part`, `harga_modal`, `harga_jual`, `stok_saat_ini`, `stok_minimum`) VALUES
-(1, 'PRT-00001', 1, 2, 'Yamalube Super Matic (1L)  10W-40', 'Original', 75000.00, 86000.00, 99, 5);
+(1, 'PRT-00001', 1, 2, 'Yamalube Super Matic (1L)  10W-40', 'Original', 75000.00, 86000.00, 98, 5),
+(2, 'PRT-00002', 1, 4, 'oli castrol power1 matic 10W-40 (1L)', 'Original', 0.00, 87.00, 0, 5);
 
 --
 -- Triggers `sparepart`
@@ -797,7 +825,8 @@ CREATE TABLE `tipe_motor` (
 
 INSERT INTO `tipe_motor` (`id_tipe_motor`, `kode_tipe_motor`, `id_merek_motor`, `nama_tipe`, `jenis_kendaraan`) VALUES
 (1, 'TPM-001', 1, 'Vario 125', 'Matic'),
-(2, 'TPM-002', 2, 'Vixion 150 2009', 'Sport');
+(2, 'TPM-002', 2, 'Vixion 150 2009', 'Sport'),
+(3, 'TPM-003', 2, 'Gear 125', 'Matic');
 
 --
 -- Triggers `tipe_motor`
@@ -839,7 +868,9 @@ CREATE TABLE `transaksi_servis` (
 --
 
 INSERT INTO `transaksi_servis` (`id_transaksi`, `kode_transaksi`, `id_kendaraan`, `id_mekanik`, `id_pengguna`, `tanggal_masuk`, `keluhan_awal`, `hasil_pemeriksaan`, `status_pengerjaan`, `metode_pembayaran`, `status_pembayaran`, `total_biaya`) VALUES
-(1, 'TRX-20260509-0001', 2, 1, 1, '2026-05-08 00:00:00', 'mau ganti saja', 'ganti oli', 'Selesai', 'Tunai', 'Lunas', 96000.00);
+(1, 'TRX-20260509-0001', 2, 1, 1, '2026-05-08 00:00:00', 'mau ganti saja', 'ganti oli', 'Selesai', 'Tunai', 'Lunas', 96000.00),
+(2, 'TRX-20260509-0002', 1, 1, 5, '2026-05-09 00:00:00', 'mau ganti oli saja', '-', 'Selesai', 'QRIS', 'Lunas', 96000.00),
+(3, 'TRX-20260509-0003', 3, 1, 4, '2026-05-09 00:00:00', 'Turun mesin', 'Turun mesin', 'Selesai', 'Tunai', 'Lunas', 250000.00);
 
 --
 -- Triggers `transaksi_servis`
@@ -919,6 +950,13 @@ ALTER TABLE `detail_penggunaan_part`
   ADD UNIQUE KEY `unique_part_per_transaksi` (`id_transaksi`,`id_part`),
   ADD KEY `fk_det_pakai_part` (`id_part`),
   ADD KEY `idx_detail_transaksi` (`id_transaksi`);
+
+--
+-- Indexes for table `gaji_harian_mekanik`
+--
+ALTER TABLE `gaji_harian_mekanik`
+  ADD PRIMARY KEY (`id_gaji`),
+  ADD KEY `fk_gaji_mekanik` (`id_mekanik`);
 
 --
 -- Indexes for table `jasa_luar_bubut`
@@ -1042,7 +1080,7 @@ ALTER TABLE `transaksi_servis`
 -- AUTO_INCREMENT for table `detail_jasa_servis`
 --
 ALTER TABLE `detail_jasa_servis`
-  MODIFY `id_detail_jasa` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_detail_jasa` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `detail_pembelian_stok`
@@ -1054,7 +1092,13 @@ ALTER TABLE `detail_pembelian_stok`
 -- AUTO_INCREMENT for table `detail_penggunaan_part`
 --
 ALTER TABLE `detail_penggunaan_part`
-  MODIFY `id_detail_part` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_detail_part` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `gaji_harian_mekanik`
+--
+ALTER TABLE `gaji_harian_mekanik`
+  MODIFY `id_gaji` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `jasa_luar_bubut`
@@ -1072,13 +1116,13 @@ ALTER TABLE `jasa_servis`
 -- AUTO_INCREMENT for table `kategori_part`
 --
 ALTER TABLE `kategori_part`
-  MODIFY `id_kategori` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_kategori` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `kendaraan`
 --
 ALTER TABLE `kendaraan`
-  MODIFY `id_kendaraan` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_kendaraan` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `mekanik`
@@ -1102,7 +1146,7 @@ ALTER TABLE `merek_part`
 -- AUTO_INCREMENT for table `pelanggan`
 --
 ALTER TABLE `pelanggan`
-  MODIFY `id_pelanggan` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_pelanggan` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `pemasok`
@@ -1126,19 +1170,19 @@ ALTER TABLE `pengguna`
 -- AUTO_INCREMENT for table `sparepart`
 --
 ALTER TABLE `sparepart`
-  MODIFY `id_part` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_part` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tipe_motor`
 --
 ALTER TABLE `tipe_motor`
-  MODIFY `id_tipe_motor` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_tipe_motor` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `transaksi_servis`
 --
 ALTER TABLE `transaksi_servis`
-  MODIFY `id_transaksi` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_transaksi` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
@@ -1164,6 +1208,12 @@ ALTER TABLE `detail_pembelian_stok`
 ALTER TABLE `detail_penggunaan_part`
   ADD CONSTRAINT `fk_det_pakai_part` FOREIGN KEY (`id_part`) REFERENCES `sparepart` (`id_part`),
   ADD CONSTRAINT `fk_det_pakai_trans` FOREIGN KEY (`id_transaksi`) REFERENCES `transaksi_servis` (`id_transaksi`);
+
+--
+-- Constraints for table `gaji_harian_mekanik`
+--
+ALTER TABLE `gaji_harian_mekanik`
+  ADD CONSTRAINT `fk_gaji_mekanik` FOREIGN KEY (`id_mekanik`) REFERENCES `mekanik` (`id_mekanik`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 --
 -- Constraints for table `jasa_luar_bubut`
