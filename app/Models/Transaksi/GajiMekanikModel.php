@@ -11,6 +11,7 @@ class GajiMekanikModel extends Model
 
     protected $allowedFields = [
         'id_mekanik',
+        'id_pengguna',
         'tanggal_bayar',
         'nominal',
         'keterangan'

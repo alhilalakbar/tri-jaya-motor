@@ -1,0 +1,134 @@
+<?php
+
+namespace App\Controllers\Transaksi;
+
+use App\Controllers\BaseController;
+
+use App\Models\Transaksi\BiayaOperasionalModel;
+
+class BiayaOperasional extends BaseController
+{
+    protected $db;
+    protected $model;
+
+    public function __construct()
+    {
+        $this->db = \Config\Database::connect();
+
+        $this->model = new BiayaOperasionalModel();
+    }
+
+    public function index()
+    {
+        $data = [
+
+            'title' => 'Biaya Operasional',
+
+            'data' => $this->model
+
+                ->select('
+                    biaya_operasional.*,
+
+                    kategori_biaya_operasional.nama_kategori,
+
+                    pengguna.nama_pengguna
+                ')
+
+                ->join(
+                    'kategori_biaya_operasional',
+
+                    'kategori_biaya_operasional.id_kategori_biaya = biaya_operasional.id_kategori_biaya'
+                )
+
+                ->join(
+                    'pengguna',
+
+                    'pengguna.id_pengguna = biaya_operasional.id_pengguna',
+
+                    'left'
+                )
+
+                ->orderBy(
+                    'id_biaya_operasional',
+                    'DESC'
+                )
+
+                ->findAll(),
+
+            'kategori' => $this->db
+
+                ->table('kategori_biaya_operasional')
+
+                ->orderBy(
+                    'nama_kategori',
+                    'ASC'
+                )
+
+                ->get()
+
+                ->getResultArray(),
+        ];
+
+        return view(
+            'backend/transaksi/biaya_operasional/index',
+            $data
+        );
+    }
+
+    public function save()
+    {
+        $data = [
+
+            'id_kategori_biaya' =>
+                $this->request->getPost('id_kategori_biaya'),
+
+            'id_pengguna' =>
+                session()->get('id_pengguna'),
+
+            'tanggal_biaya' =>
+                $this->request->getPost('tanggal_biaya'),
+
+            'nominal' =>
+                $this->request->getPost('nominal'),
+
+            'keterangan' =>
+                $this->request->getPost('keterangan'),
+        ];
+
+        $this->model->save($data);
+
+        return redirect()->back();
+    }
+
+    public function update($id)
+    {
+        $data = [
+
+            'id_kategori_biaya' =>
+                $this->request->getPost('id_kategori_biaya'),
+
+            'id_pengguna' =>
+                session()->get('id_pengguna'),
+
+            'tanggal_biaya' =>
+                $this->request->getPost('tanggal_biaya'),
+
+            'nominal' =>
+                $this->request->getPost('nominal'),
+
+            'keterangan' =>
+                $this->request->getPost('keterangan'),
+        ];
+
+        $this->model->update($id, $data);
+
+        return redirect()->back();
+    }
+
+    public function delete($id)
+    {
+        $this->model->delete($id);
+
+        return redirect()->back();
+    }
+}

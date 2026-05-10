@@ -94,6 +94,12 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
         $routes->post('pengguna/save', 'Master\Pengguna::save');
         $routes->post('pengguna/update/(:any)', 'Master\Pengguna::update/$1');
         $routes->get('pengguna/delete/(:any)', 'Master\Pengguna::delete/$1');
+
+        // Kategori Biaya Operasional
+        $routes->get('kategori_biaya_operasional', 'Master\KategoriBiayaOperasional::index');
+        $routes->post('kategori_biaya_operasional/save', 'Master\KategoriBiayaOperasional::save');
+        $routes->post('kategori_biaya_operasional/update/(:any)', 'Master\KategoriBiayaOperasional::update/$1');
+        $routes->get('kategori_biaya_operasional/delete/(:any)', 'Master\KategoriBiayaOperasional::delete/$1');
     });
 
     // ----------------------
@@ -110,18 +116,21 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
         $routes->post('servis/create', 'Transaksi\Servis::create');
         $routes->get('servis/detail/(:any)', 'Transaksi\Servis::detail/$1');
         $routes->post('servis/update_status', 'Transaksi\Servis::update_status');
-
         // Jasa Luar (TAMBAHKAN Transaksi\ di depannya)
         $routes->get('jasa_luar', 'Transaksi\JasaLuar::index');
         $routes->post('jasa_luar/save', 'Transaksi\JasaLuar::save');
         $routes->post('jasa_luar/update/(:any)', 'Transaksi\JasaLuar::update/$1');
         $routes->get('jasa_luar/delete/(:any)', 'Transaksi\JasaLuar::delete/$1');
-
         // Gaji Mekanik
         $routes->get('gaji_mekanik', 'Transaksi\GajiMekanik::index');
         $routes->post('gaji_mekanik/save', 'Transaksi\GajiMekanik::save');
         $routes->post('gaji_mekanik/update/(:any)', 'Transaksi\GajiMekanik::update/$1');
         $routes->get('gaji_mekanik/delete/(:any)', 'Transaksi\GajiMekanik::delete/$1');
+        // Biaya Operasional
+        $routes->get('biaya_operasional', 'Transaksi\BiayaOperasional::index');
+        $routes->post('biaya_operasional/save', 'Transaksi\BiayaOperasional::save');
+        $routes->post('biaya_operasional/update/(:any)', 'Transaksi\BiayaOperasional::update/$1');
+        $routes->get('biaya_operasional/delete/(:any)', 'Transaksi\BiayaOperasional::delete/$1');
 
     });
 

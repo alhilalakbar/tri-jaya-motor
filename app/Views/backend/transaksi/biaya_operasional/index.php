@@ -7,7 +7,7 @@
     <div class="card-header d-flex justify-content-between align-items-center">
 
         <h5 class="card-title m-0">
-            Data Gaji Mekanik
+            Data Biaya Operasional
         </h5>
 
         <button type="button" class="btn btn-primary btn-sm" onclick="tambahData()">
@@ -22,15 +22,17 @@
         <table id="tableMaster" class="table table-bordered table-striped">
 
             <thead>
+
                 <tr>
                     <th style="width: 10px">#</th>
-                    <th>Nama Mekanik</th>
-                    <th>Tanggal Bayar</th>
+                    <th>Kategori Biaya</th>
+                    <th>Tanggal</th>
                     <th>Nominal</th>
                     <th>Keterangan</th>
                     <th>Diinput Oleh</th>
                     <th style="width: 100px">Aksi</th>
                 </tr>
+
             </thead>
 
             <tbody>
@@ -46,38 +48,64 @@
                         </td>
 
                         <td>
+
                             <span class="badge text-bg-info">
-                                <?= esc($d['nama_mekanik']); ?>
+
+                                <?= esc($d['nama_kategori']); ?>
+
                             </span>
+
                         </td>
 
                         <td>
-                            <?= date('d-m-Y', strtotime($d['tanggal_bayar'])); ?>
+
+                            <?= date(
+                                'd-m-Y',
+                                strtotime($d['tanggal_biaya'])
+                            ); ?>
+
                         </td>
 
                         <td>
-                            Rp <?= number_format($d['nominal'], 0, ',', '.'); ?>
+
+                            Rp <?= number_format(
+                                $d['nominal'],
+                                0,
+                                ',',
+                                '.'
+                            ); ?>
+
                         </td>
 
                         <td>
+
                             <?= esc($d['keterangan']); ?>
+
                         </td>
 
                         <td>
+
                             <span class="badge text-bg-secondary">
+
                                 <?= esc($d['nama_pengguna'] ?? '-'); ?>
+
                             </span>
+
                         </td>
 
                         <td>
 
                             <button class="btn btn-warning btn-sm" onclick='editData(<?= json_encode($d); ?>)'>
+
                                 <i class="bi bi-pencil-square"></i>
+
                             </button>
 
-                            <a href="<?= base_url('backend/transaksi/gaji_mekanik/delete/' . $d['id_gaji']); ?>"
+                            <a href="<?= base_url('backend/transaksi/biaya_operasional/delete/' . $d['id_biaya_operasional']); ?>"
                                 class="btn btn-danger btn-sm" onclick="return confirm('Hapus data ini?')">
+
                                 <i class="bi bi-trash"></i>
+
                             </a>
 
                         </td>
@@ -107,14 +135,14 @@
                 <div class="modal-header">
 
                     <h5 class="modal-title" id="modalTitle">
-                        Form Gaji Mekanik
+                        Form Biaya Operasional
                     </h5>
 
                 </div>
 
                 <div class="modal-body">
 
-                    <?= $this->include('backend/transaksi/gaji_mekanik/form'); ?>
+                    <?= $this->include('backend/transaksi/biaya_operasional/form'); ?>
 
                 </div>
 
@@ -142,9 +170,11 @@
 
     document.addEventListener('DOMContentLoaded', function () {
 
-        modalElement = document.getElementById('modalMaster');
+        modalElement =
+            document.getElementById('modalMaster');
 
-        form = document.getElementById('formMaster');
+        form =
+            document.getElementById('formMaster');
 
         if (typeof bootstrap !== 'undefined') {
 
@@ -159,10 +189,10 @@
         if (!form || !modal) return;
 
         document.getElementById('modalTitle').innerText =
-            'Tambah Gaji Mekanik';
+            'Tambah Biaya Operasional';
 
         form.action =
-            '<?= base_url('backend/transaksi/gaji_mekanik/save'); ?>';
+            '<?= base_url('backend/transaksi/biaya_operasional/save'); ?>';
 
         form.reset();
 
@@ -175,23 +205,23 @@
         if (!form || !modal) return;
 
         document.getElementById('modalTitle').innerText =
-            'Edit Gaji Mekanik';
+            'Edit Biaya Operasional';
 
         form.action =
-            '<?= base_url('backend/transaksi/gaji_mekanik/update'); ?>/' +
-            data.id_gaji;
+            '<?= base_url('backend/transaksi/biaya_operasional/update'); ?>/' +
+            data.id_biaya_operasional;
 
-        if (document.getElementById('id_mekanik')) {
+        if (document.getElementById('id_kategori_biaya')) {
 
-            document.getElementById('id_mekanik').value =
-                data.id_mekanik;
+            document.getElementById('id_kategori_biaya').value =
+                data.id_kategori_biaya;
 
         }
 
-        if (document.getElementById('tanggal_bayar')) {
+        if (document.getElementById('tanggal_biaya')) {
 
-            document.getElementById('tanggal_bayar').value =
-                data.tanggal_bayar;
+            document.getElementById('tanggal_biaya').value =
+                data.tanggal_biaya;
 
         }
 
