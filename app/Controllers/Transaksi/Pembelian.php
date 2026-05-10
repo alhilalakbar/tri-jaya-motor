@@ -56,36 +56,79 @@ class Pembelian extends BaseController
     public function save()
     {
         $db = \Config\Database::connect();
+
         $db->transBegin();
 
         try {
 
             $header = $this->request->getPost('header');
-            $header['tanggal_pembelian'] = date('Y-m-d H:i:s');
-            $header['id_pengguna'] = session()->get('id_pengguna');
+
+            $header['tanggal_pembelian'] =
+                date('Y-m-d H:i:s');
+
+            $header['id_pengguna'] =
+                session()->get('id_pengguna');
 
             $beliModel = new PembelianStokModel();
 
-            $idBeli = $beliModel->insert($header, true);
+            $idBeli = $beliModel->insert(
+                $header,
+                true
+            );
+
+            if (!$idBeli) {
+
+                throw new \Exception(
+                    'Gagal menyimpan data pembelian.'
+                );
+            }
 
             $detModel = new DetailPembelianModel();
 
-            foreach ($this->request->getPost('items') as $i) {
+            $items = $this->request->getPost('items');
 
-                $i['id_pembelian'] = $idBeli;
+            if (is_array($items)) {
 
-                $detModel->insert($i);
+                foreach ($items as $i) {
+
+                    $i['id_pembelian'] = $idBeli;
+
+                    $detModel->insert($i);
+                }
+            }
+
+            if ($db->transStatus() === false) {
+
+                throw new \Exception(
+                    'Transaksi pembelian gagal disimpan.'
+                );
             }
 
             $db->transCommit();
 
-            return redirect()->to('backend/transaksi/pembelian');
+            return redirect()
 
-        } catch (\Exception $e) {
+                ->to('backend/transaksi/pembelian')
+
+                ->with(
+                    'success',
+                    'Pembelian stok berhasil disimpan.'
+                );
+
+        } catch (\Throwable $e) {
 
             $db->transRollback();
 
-            return redirect()->back();
+            return redirect()
+
+                ->back()
+
+                ->withInput()
+
+                ->with(
+                    'error',
+                    $e->getMessage()
+                );
         }
     }
 

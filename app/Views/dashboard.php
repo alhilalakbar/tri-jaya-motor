@@ -16,7 +16,7 @@
 
                     <p class="mb-1">Omzet Hari Ini</p>
 
-                    <h3 class="fw-bold">
+                    <h3 class="fw-bold fs-4">
                         Rp <?= number_format($omzet_hari_ini, 0, ',', '.'); ?>
                     </h3>
 
@@ -42,7 +42,7 @@
 
                     <p class="mb-1">Laba Bersih</p>
 
-                    <h3 class="fw-bold">
+                    <h3 class="fw-bold fs-4">
                         Rp <?= number_format($laba_bersih, 0, ',', '.'); ?>
                     </h3>
 

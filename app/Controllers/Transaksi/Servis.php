@@ -81,6 +81,13 @@ class Servis extends BaseController
                 }
             }
 
+            if ($db->transStatus() === false) {
+
+                throw new \Exception(
+                    'Stok sparepart tidak mencukupi atau transaksi gagal.'
+                );
+            }
+
             $db->transCommit();
 
             return redirect()
