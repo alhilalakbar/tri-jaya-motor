@@ -6,6 +6,62 @@
 
 <div class="container-fluid">
 
+    <!-- FILTER PERIODE -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+
+        <div>
+
+            <h4 class="fw-bold mb-1">
+                Dashboard Bengkel
+            </h4>
+
+            <small class="text-muted">
+
+                <?php if ($periode == 'bulanan'): ?>
+
+                    Data bulan ini
+                    (<?= date('d M Y', strtotime($tanggal_mulai)); ?>
+                    -
+                    <?= date('d M Y', strtotime($tanggal_selesai)); ?>)
+
+                <?php else: ?>
+
+                    Data hari ini
+                    (<?= date('d M Y'); ?>)
+
+                <?php endif; ?>
+
+            </small>
+
+        </div>
+
+        <div class="btn-group shadow-sm">
+
+            <a href="<?= base_url('dashboard?periode=harian'); ?>" class="btn <?= $periode == 'harian'
+                  ? 'btn-primary'
+                  : 'btn-outline-primary'; ?>">
+
+                <i class="bi bi-calendar-day me-1"></i>
+
+                Harian
+
+            </a>
+
+            <a href="<?= base_url('dashboard?periode=bulanan'); ?>" class="btn <?= $periode == 'bulanan'
+                  ? 'btn-success'
+                  : 'btn-outline-success'; ?>">
+
+                <i class="bi bi-calendar-month me-1"></i>
+
+                Bulanan
+
+            </a>
+
+        </div>
+
+    </div>
+
     <div class="row">
 
         <div class="col-lg-3 col-6">
@@ -14,14 +70,26 @@
 
                 <div class="inner">
 
-                    <p class="mb-1">Omzet Hari Ini</p>
+                    <p class="mb-1">
+
+                        <?= $periode == 'bulanan'
+                            ? 'Omzet Bulan Ini'
+                            : 'Omzet Hari Ini'; ?>
+
+                    </p>
 
                     <h3 class="fw-bold fs-4">
-                        Rp <?= number_format($omzet_hari_ini, 0, ',', '.'); ?>
+
+                        Rp <?= number_format($omzet, 0, ',', '.'); ?>
+
                     </h3>
 
                     <small class="opacity-75">
-                        Transaksi lunas hari ini
+
+                        <?= $periode == 'bulanan'
+                            ? 'Transaksi lunas bulan ini'
+                            : 'Transaksi lunas hari ini'; ?>
+
                     </small>
 
                 </div>
@@ -43,7 +111,9 @@
                     <p class="mb-1">Laba Bersih</p>
 
                     <h3 class="fw-bold fs-4">
+
                         Rp <?= number_format($laba_bersih, 0, ',', '.'); ?>
+
                     </h3>
 
                     <small class="opacity-75">
@@ -69,8 +139,11 @@
                     <p class="mb-1">Unit Aktif</p>
 
                     <h3 class="fw-bold">
+
                         <?= count($unit_proses); ?>
+
                         <small class="fs-6">Motor</small>
+
                     </h3>
 
                     <small class="opacity-75">
@@ -96,8 +169,11 @@
                     <p class="mb-1">Belum Lunas</p>
 
                     <h3 class="fw-bold">
+
                         <?= $belum_lunas; ?>
+
                         <small class="fs-6">Transaksi</small>
+
                     </h3>
 
                     <small class="opacity-75">
@@ -123,8 +199,11 @@
                     <p class="mb-1">Stok Kritis</p>
 
                     <h3 class="fw-bold">
+
                         <?= $stok_kritis_count; ?>
+
                         <small class="fs-6">Item</small>
+
                     </h3>
 
                     <small class="opacity-75">
@@ -152,8 +231,11 @@
                 <div class="card-header bg-white py-3">
 
                     <h6 class="mb-0 fw-bold">
+
                         <i class="bi bi-activity text-primary me-2"></i>
+
                         Monitoring Pekerjaan Mekanik
+
                     </h6>
 
                 </div>
@@ -200,7 +282,9 @@
                                         <td class="ps-3">
 
                                             <span class="badge text-bg-dark font-monospace">
+
                                                 <?= $up['nomor_plat']; ?>
+
                                             </span>
 
                                         </td>
@@ -214,7 +298,9 @@
                                         <td>
 
                                             <small class="text-muted">
+
                                                 <?= character_limiter($up['keluhan_awal'], 50); ?>
+
                                             </small>
 
                                         </td>
@@ -275,8 +361,11 @@
                 <div class="card-header bg-white py-3">
 
                     <h6 class="mb-0 fw-bold">
+
                         <i class="bi bi-pie-chart text-success me-2"></i>
+
                         Rincian Sumber Laba
+
                     </h6>
 
                 </div>
@@ -315,7 +404,7 @@
 
                         <span class="h5 mb-0 fw-bold text-primary">
 
-                            Rp <?= number_format($laba_hari_ini, 0, ',', '.'); ?>
+                            Rp <?= number_format($laba, 0, ',', '.'); ?>
 
                         </span>
 
@@ -333,7 +422,9 @@
 
                         <i class="bi bi-wallet2 text-danger me-2"></i>
 
-                        Pengeluaran Hari Ini
+                        <?= $periode == 'bulanan'
+                            ? 'Pengeluaran Bulan Ini'
+                            : 'Pengeluaran Hari Ini'; ?>
 
                     </h6>
 
@@ -355,11 +446,17 @@
 
                     <div class="d-flex justify-content-between mb-2">
 
-                        <span>Pembelian Stok Hari Ini</span>
+                        <span>
+
+                            <?= $periode == 'bulanan'
+                                ? 'Pembelian Stok Bulan Ini'
+                                : 'Pembelian Stok Hari Ini'; ?>
+
+                        </span>
 
                         <span class="fw-bold text-dark">
 
-                            Rp <?= number_format($pembelian_hari_ini, 0, ',', '.'); ?>
+                            Rp <?= number_format($pembelian, 0, ',', '.'); ?>
 
                         </span>
 

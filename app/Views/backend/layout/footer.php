@@ -1,6 +1,6 @@
 <!-- app/Views/backend/layout/footer.php -->
 <footer class="app-footer shadow-sm border-top">
-    <div class="float-end d-none d-sm-inline">V1.2.0</div>
+    <div class="float-end d-none d-sm-inline">V1.3.0</div>
     <strong>Copyright &copy; 2026 Tri Jaya Motor.</strong>
 </footer>
 

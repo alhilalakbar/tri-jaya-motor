@@ -10,7 +10,22 @@ class Dashboard extends BaseController
     {
         $db = \Config\Database::connect();
 
-        $today = date('Y-m-d');
+        // =========================
+        // FILTER PERIODE
+        // =========================
+
+        $periode = $this->request->getGet('periode') ?? 'harian';
+
+        if ($periode == 'bulanan') {
+
+            $tanggalMulai = date('Y-m-01');
+            $tanggalSelesai = date('Y-m-t');
+
+        } else {
+
+            $tanggalMulai = date('Y-m-d');
+            $tanggalSelesai = date('Y-m-d');
+        }
 
         // =========================
         // LABA JASA
@@ -19,7 +34,8 @@ class Dashboard extends BaseController
         $labaJasa = $db->table('detail_jasa_servis djs')
             ->select('SUM(djs.harga_saat_transaksi + djs.biaya_tambahan) AS total', false)
             ->join('transaksi_servis ts', 'ts.id_transaksi = djs.id_transaksi')
-            ->where('DATE(ts.tanggal_masuk)', $today)
+            ->where('DATE(ts.tanggal_masuk) >=', $tanggalMulai)
+            ->where('DATE(ts.tanggal_masuk) <=', $tanggalSelesai)
             ->where('ts.status_pembayaran', 'Lunas')
             ->where('ts.status_pengerjaan', 'Selesai')
             ->get()->getRow()->total ?? 0;
@@ -32,18 +48,20 @@ class Dashboard extends BaseController
             ->select('SUM(dpp.subtotal - (dpp.jumlah_pakai * s.harga_modal)) AS total', false)
             ->join('sparepart s', 's.id_part = dpp.id_part')
             ->join('transaksi_servis ts', 'ts.id_transaksi = dpp.id_transaksi')
-            ->where('DATE(ts.tanggal_masuk)', $today)
+            ->where('DATE(ts.tanggal_masuk) >=', $tanggalMulai)
+            ->where('DATE(ts.tanggal_masuk) <=', $tanggalSelesai)
             ->where('ts.status_pembayaran', 'Lunas')
             ->where('ts.status_pengerjaan', 'Selesai')
             ->get()->getRow()->total ?? 0;
 
         // =========================
-        // OMZET HARI INI
+        // OMZET
         // =========================
 
-        $omzetHariIni = $db->table('transaksi_servis')
+        $omzet = $db->table('transaksi_servis')
             ->select('SUM(total_biaya) AS total', false)
-            ->where('DATE(tanggal_masuk)', $today)
+            ->where('DATE(tanggal_masuk) >=', $tanggalMulai)
+            ->where('DATE(tanggal_masuk) <=', $tanggalSelesai)
             ->where('status_pembayaran', 'Lunas')
             ->where('status_pengerjaan', 'Selesai')
             ->get()->getRow()->total ?? 0;
@@ -86,7 +104,8 @@ class Dashboard extends BaseController
 
         $biayaOperasional = $db->table('biaya_operasional')
             ->select('SUM(nominal) AS total', false)
-            ->where('tanggal_biaya', $today)
+            ->where('tanggal_biaya >=', $tanggalMulai)
+            ->where('tanggal_biaya <=', $tanggalSelesai)
             ->get()->getRow()->total ?? 0;
 
         // =========================
@@ -95,7 +114,8 @@ class Dashboard extends BaseController
 
         $gajiMekanik = $db->table('gaji_harian_mekanik')
             ->select('SUM(nominal) AS total', false)
-            ->where('tanggal_bayar', $today)
+            ->where('tanggal_bayar >=', $tanggalMulai)
+            ->where('tanggal_bayar <=', $tanggalSelesai)
             ->get()->getRow()->total ?? 0;
 
         // =========================
@@ -119,21 +139,31 @@ class Dashboard extends BaseController
             ->countAllResults();
 
         // =========================
-        // PEMBELIAN STOK HARI INI
+        // PEMBELIAN STOK
         // =========================
 
-        $pembelianHariIni = $db->table('pembelian_stok')
+        $pembelian = $db->table('pembelian_stok')
             ->select('SUM(total_biaya_pembelian) AS total', false)
-            ->where('DATE(tanggal_pembelian)', $today)
+            ->where('DATE(tanggal_pembelian) >=', $tanggalMulai)
+            ->where('DATE(tanggal_pembelian) <=', $tanggalSelesai)
             ->get()->getRow()->total ?? 0;
+
+        // =========================
+        // DATA VIEW
+        // =========================
 
         $data = [
 
             'title' => 'Dashboard Bengkel',
 
-            'omzet_hari_ini' => $omzetHariIni,
+            'periode' => $periode,
 
-            'laba_hari_ini' => $labaJasa + $labaPart,
+            'tanggal_mulai' => $tanggalMulai,
+            'tanggal_selesai' => $tanggalSelesai,
+
+            'omzet' => $omzet,
+
+            'laba' => $labaJasa + $labaPart,
 
             'detail_laba_jasa' => $labaJasa,
 
@@ -143,7 +173,7 @@ class Dashboard extends BaseController
 
             'total_pengeluaran' => $totalPengeluaran,
 
-            'pembelian_hari_ini' => $pembelianHariIni,
+            'pembelian' => $pembelian,
 
             'belum_lunas' => $belumLunas,
 
