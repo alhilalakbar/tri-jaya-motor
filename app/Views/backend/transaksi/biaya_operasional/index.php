@@ -76,7 +76,7 @@
 
                                 <?= date(
                                     'd-m-Y',
-                                    strtotime($d['tanggal_bayar'])
+                                    strtotime($d['tanggal_biaya'])
                                 ); ?>
 
                             </div>
@@ -85,7 +85,7 @@
 
                                 <?= date(
                                     'H:i:s',
-                                    strtotime($d['tanggal_bayar'])
+                                    strtotime($d['tanggal_biaya'])
                                 ); ?>
 
                             </small>
