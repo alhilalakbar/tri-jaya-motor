@@ -36,6 +36,7 @@ class Database extends Config
         'DBDebug'      => true,
         'charset'      => 'utf8mb4',
         'DBCollat'     => 'utf8mb4_general_ci',
+        'initCommand' => "SET time_zone = '+07:00'",
         'swapPre'      => '',
         'encrypt'      => false,
         'compress'     => false,

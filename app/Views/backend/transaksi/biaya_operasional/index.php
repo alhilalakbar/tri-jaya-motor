@@ -11,8 +11,11 @@
         </h5>
 
         <button type="button" class="btn btn-primary btn-sm" onclick="tambahData()">
+
             <i class="bi bi-plus-lg"></i>
+
             Tambah Data
+
         </button>
 
     </div>
@@ -24,13 +27,21 @@
             <thead>
 
                 <tr>
+
                     <th style="width: 10px">#</th>
+
                     <th>Kategori Biaya</th>
-                    <th>Tanggal</th>
+
+                    <th>Tanggal & Jam</th>
+
                     <th>Nominal</th>
+
                     <th>Keterangan</th>
+
                     <th>Diinput Oleh</th>
+
                     <th style="width: 100px">Aksi</th>
+
                 </tr>
 
             </thead>
@@ -44,7 +55,9 @@
                     <tr>
 
                         <td>
+
                             <?= $no++; ?>
+
                         </td>
 
                         <td>
@@ -59,10 +72,23 @@
 
                         <td>
 
-                            <?= date(
-                                'd-m-Y',
-                                strtotime($d['tanggal_biaya'])
-                            ); ?>
+                            <div class="fw-semibold">
+
+                                <?= date(
+                                    'd-m-Y',
+                                    strtotime($d['tanggal_bayar'])
+                                ); ?>
+
+                            </div>
+
+                            <small class="text-muted">
+
+                                <?= date(
+                                    'H:i:s',
+                                    strtotime($d['tanggal_bayar'])
+                                ); ?>
+
+                            </small>
 
                         </td>
 
@@ -135,7 +161,9 @@
                 <div class="modal-header">
 
                     <h5 class="modal-title" id="modalTitle">
+
                         Form Biaya Operasional
+
                     </h5>
 
                 </div>
@@ -149,7 +177,9 @@
                 <div class="modal-footer">
 
                     <button type="submit" class="btn btn-primary">
+
                         Simpan
+
                     </button>
 
                 </div>
@@ -215,13 +245,6 @@
 
             document.getElementById('id_kategori_biaya').value =
                 data.id_kategori_biaya;
-
-        }
-
-        if (document.getElementById('tanggal_biaya')) {
-
-            document.getElementById('tanggal_biaya').value =
-                data.tanggal_biaya;
 
         }
 

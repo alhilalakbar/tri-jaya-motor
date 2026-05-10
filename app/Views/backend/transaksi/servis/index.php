@@ -29,7 +29,27 @@
                             <small class="text-muted"><i class="bi bi-person"></i> Input:
                                 <?= esc($d['nama_pengguna'] ?? ''); ?></small>
                         </td>
-                        <td><?= date('d/m/Y', strtotime($d['tanggal_masuk'])); ?></td>
+                        <td>
+
+                            <div class="fw-semibold">
+
+                                <?= date(
+                                    'd/m/Y',
+                                    strtotime($d['tanggal_masuk'])
+                                ); ?>
+
+                            </div>
+
+                            <small class="text-muted">
+
+                                <?= date(
+                                    'H:i:s',
+                                    strtotime($d['tanggal_masuk'])
+                                ); ?>
+
+                            </small>
+
+                        </td>
                         <td>
                             <strong><?= esc($d['nomor_plat']); ?> (<?= esc($d['nama_pelanggan']); ?>)</strong><br>
                             <small class="text-muted text-truncate d-inline-block" style="max-width: 250px;"
@@ -152,8 +172,8 @@
 <script>
     let modalServis;
     let modalEditStatus;
-    let jasaIdx = 1; 
-    let partIdx = 1; 
+    let jasaIdx = 1;
+    let partIdx = 1;
 
     document.addEventListener('DOMContentLoaded', function () {
         if (typeof bootstrap !== 'undefined') {

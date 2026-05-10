@@ -13,6 +13,7 @@ class GajiMekanik extends BaseController
     public function __construct()
     {
         $this->db = \Config\Database::connect();
+
         $this->model = new GajiMekanikModel();
     }
 
@@ -23,31 +24,42 @@ class GajiMekanik extends BaseController
             'title' => 'Gaji Mekanik',
 
             'data' => $this->model
+
                 ->select('
                     gaji_harian_mekanik.*,
                     mekanik.nama_mekanik,
                     pengguna.nama_pengguna
                 ')
+
                 ->join(
                     'mekanik',
                     'mekanik.id_mekanik = gaji_harian_mekanik.id_mekanik'
                 )
+
                 ->join(
                     'pengguna',
                     'pengguna.id_pengguna = gaji_harian_mekanik.id_pengguna',
                     'left'
                 )
+
                 ->orderBy('id_gaji', 'DESC')
+
                 ->findAll(),
 
             'mekanik' => $this->db
+
                 ->table('mekanik')
+
                 ->get()
+
                 ->getResultArray(),
 
             'pengguna' => $this->db
+
                 ->table('pengguna')
+
                 ->get()
+
                 ->getResultArray(),
         ];
 
@@ -61,15 +73,20 @@ class GajiMekanik extends BaseController
     {
         $data = [
 
-            'id_mekanik' => $this->request->getPost('id_mekanik'),
+            'id_mekanik' =>
+                $this->request->getPost('id_mekanik'),
 
-            'id_pengguna' => session()->get('id_pengguna'),
+            'id_pengguna' =>
+                session()->get('id_pengguna'),
 
-            'tanggal_bayar' => $this->request->getPost('tanggal_bayar'),
+            'tanggal_bayar' =>
+                date('Y-m-d H:i:s'),
 
-            'nominal' => $this->request->getPost('nominal'),
+            'nominal' =>
+                $this->request->getPost('nominal'),
 
-            'keterangan' => $this->request->getPost('keterangan'),
+            'keterangan' =>
+                $this->request->getPost('keterangan'),
         ];
 
         $this->model->save($data);
@@ -83,15 +100,17 @@ class GajiMekanik extends BaseController
     {
         $data = [
 
-            'id_mekanik' => $this->request->getPost('id_mekanik'),
+            'id_mekanik' =>
+                $this->request->getPost('id_mekanik'),
 
-            'id_pengguna' => session()->get('id_pengguna'),
+            'id_pengguna' =>
+                session()->get('id_pengguna'),
 
-            'tanggal_bayar' => $this->request->getPost('tanggal_bayar'),
+            'nominal' =>
+                $this->request->getPost('nominal'),
 
-            'nominal' => $this->request->getPost('nominal'),
-
-            'keterangan' => $this->request->getPost('keterangan'),
+            'keterangan' =>
+                $this->request->getPost('keterangan'),
         ];
 
         $this->model->update($id, $data);

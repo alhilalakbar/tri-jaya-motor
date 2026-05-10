@@ -86,7 +86,7 @@ class BiayaOperasional extends BaseController
                 session()->get('id_pengguna'),
 
             'tanggal_biaya' =>
-                $this->request->getPost('tanggal_biaya'),
+                date('Y-m-d H:i:s'),
 
             'nominal' =>
                 $this->request->getPost('nominal'),
@@ -109,9 +109,6 @@ class BiayaOperasional extends BaseController
 
             'id_pengguna' =>
                 session()->get('id_pengguna'),
-
-            'tanggal_biaya' =>
-                $this->request->getPost('tanggal_biaya'),
 
             'nominal' =>
                 $this->request->getPost('nominal'),

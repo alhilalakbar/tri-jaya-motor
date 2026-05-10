@@ -2,9 +2,6 @@
 namespace App\Controllers\Transaksi;
 use App\Controllers\BaseController;
 use App\Models\Transaksi\Servis\TransaksiServisModel;
-use App\Models\Transaksi\Servis\DetailJasaModel;
-use App\Models\Transaksi\Servis\DetailPartModel;
-
 class Servis extends BaseController
 {
     public function index()
@@ -38,15 +35,17 @@ class Servis extends BaseController
     {
         $db = \Config\Database::connect();
 
-        // Memulai Transaksi Database
         $db->transBegin();
 
         try {
+
             $transModel = new \App\Models\Transaksi\Servis\TransaksiServisModel();
 
             $headerData = $this->request->getPost('header');
 
             $headerData['id_pengguna'] = session()->get('id_pengguna');
+
+            $headerData['tanggal_masuk'] = date('Y-m-d H:i:s');
 
             $idTrans = $transModel->insert($headerData, true);
 
@@ -55,29 +54,47 @@ class Servis extends BaseController
             }
 
             $jasaModel = new \App\Models\Transaksi\Servis\DetailJasaModel();
+
             $listJasa = $this->request->getPost('jasa');
+
             if (is_array($listJasa)) {
+
                 foreach ($listJasa as $j) {
+
                     $j['id_transaksi'] = $idTrans;
+
                     $jasaModel->insert($j);
                 }
             }
 
             $partModel = new \App\Models\Transaksi\Servis\DetailPartModel();
+
             $listPart = $this->request->getPost('part');
+
             if (is_array($listPart)) {
+
                 foreach ($listPart as $p) {
+
                     $p['id_transaksi'] = $idTrans;
+
                     $partModel->insert($p);
                 }
             }
 
             $db->transCommit();
-            return redirect()->to('backend/transaksi/servis')->with('message', 'Data servis berhasil disimpan.');
+
+            return redirect()
+                ->to('backend/transaksi/servis')
+                ->with('message', 'Data servis berhasil disimpan.');
 
         } catch (\Exception $e) {
+
             $db->transRollback();
-            return redirect()->back()->withInput()->with('error', 'Gagal menyimpan data: ' . $e->getMessage());
+
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', 'Gagal menyimpan data: ' . $e->getMessage());
         }
     }
     public function update_status()

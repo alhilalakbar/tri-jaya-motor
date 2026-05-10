@@ -28,17 +28,6 @@
 <div class="mb-3">
 
     <label class="form-label">
-        Tanggal Biaya
-        <span class="text-danger">*</span>
-    </label>
-
-    <input type="date" name="tanggal_biaya" id="tanggal_biaya" class="form-control" required>
-
-</div>
-
-<div class="mb-3">
-
-    <label class="form-label">
         Nominal Biaya
         <span class="text-danger">*</span>
     </label>

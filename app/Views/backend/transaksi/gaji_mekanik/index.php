@@ -11,8 +11,11 @@
         </h5>
 
         <button type="button" class="btn btn-primary btn-sm" onclick="tambahData()">
+
             <i class="bi bi-plus-lg"></i>
+
             Tambah Data
+
         </button>
 
     </div>
@@ -22,15 +25,25 @@
         <table id="tableMaster" class="table table-bordered table-striped">
 
             <thead>
+
                 <tr>
+
                     <th style="width: 10px">#</th>
+
                     <th>Nama Mekanik</th>
-                    <th>Tanggal Bayar</th>
+
+                    <th>Tanggal & Jam</th>
+
                     <th>Nominal</th>
+
                     <th>Keterangan</th>
+
                     <th>Diinput Oleh</th>
+
                     <th style="width: 100px">Aksi</th>
+
                 </tr>
+
             </thead>
 
             <tbody>
@@ -42,42 +55,83 @@
                     <tr>
 
                         <td>
+
                             <?= $no++; ?>
+
                         </td>
 
                         <td>
+
                             <span class="badge text-bg-info">
+
                                 <?= esc($d['nama_mekanik']); ?>
+
                             </span>
+
                         </td>
 
                         <td>
-                            <?= date('d-m-Y', strtotime($d['tanggal_bayar'])); ?>
+
+                            <div class="fw-semibold">
+
+                                <?= date(
+                                    'd-m-Y',
+                                    strtotime($d['tanggal_bayar'])
+                                ); ?>
+
+                            </div>
+
+                            <small class="text-muted">
+
+                                <?= date(
+                                    'H:i:s',
+                                    strtotime($d['tanggal_bayar'])
+                                ); ?>
+
+                            </small>
+
                         </td>
 
                         <td>
-                            Rp <?= number_format($d['nominal'], 0, ',', '.'); ?>
+
+                            Rp <?= number_format(
+                                $d['nominal'],
+                                0,
+                                ',',
+                                '.'
+                            ); ?>
+
                         </td>
 
                         <td>
+
                             <?= esc($d['keterangan']); ?>
+
                         </td>
 
                         <td>
+
                             <span class="badge text-bg-secondary">
+
                                 <?= esc($d['nama_pengguna'] ?? '-'); ?>
+
                             </span>
+
                         </td>
 
                         <td>
 
                             <button class="btn btn-warning btn-sm" onclick='editData(<?= json_encode($d); ?>)'>
+
                                 <i class="bi bi-pencil-square"></i>
+
                             </button>
 
                             <a href="<?= base_url('backend/transaksi/gaji_mekanik/delete/' . $d['id_gaji']); ?>"
                                 class="btn btn-danger btn-sm" onclick="return confirm('Hapus data ini?')">
+
                                 <i class="bi bi-trash"></i>
+
                             </a>
 
                         </td>
@@ -107,7 +161,9 @@
                 <div class="modal-header">
 
                     <h5 class="modal-title" id="modalTitle">
+
                         Form Gaji Mekanik
+
                     </h5>
 
                 </div>
@@ -121,7 +177,9 @@
                 <div class="modal-footer">
 
                     <button type="submit" class="btn btn-primary">
+
                         Simpan
+
                     </button>
 
                 </div>
@@ -142,9 +200,11 @@
 
     document.addEventListener('DOMContentLoaded', function () {
 
-        modalElement = document.getElementById('modalMaster');
+        modalElement =
+            document.getElementById('modalMaster');
 
-        form = document.getElementById('formMaster');
+        form =
+            document.getElementById('formMaster');
 
         if (typeof bootstrap !== 'undefined') {
 
@@ -185,13 +245,6 @@
 
             document.getElementById('id_mekanik').value =
                 data.id_mekanik;
-
-        }
-
-        if (document.getElementById('tanggal_bayar')) {
-
-            document.getElementById('tanggal_bayar').value =
-                data.tanggal_bayar;
 
         }
 
