@@ -6,23 +6,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Tri Jaya Motor | Log in</title>
 
-    <!-- Google Font & Icons[cite: 2] -->
+    <!-- Google Font & Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/source-sans-3@5.0.12/index.css"
         crossorigin="anonymous">
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
         crossorigin="anonymous">
 
+    <!-- AdminLTE -->
     <link rel="stylesheet" href="<?= base_url('assets/adminlte/css/adminlte.css') ?>">
+
+    <style>
+        body.login-page {
+            background: url('<?= base_url('assets/background_login.jpeg') ?>') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        .login-box .card {
+            background: rgba(255, 255, 255, 0.92);
+            border-radius: 10px;
+        }
+    </style>
 </head>
 
-<body class="login-page bg-body-secondary">
+<body class="login-page">
+
     <div class="login-box">
         <div class="card card-outline card-primary">
+
             <div class="card-header text-center">
-                <h1 class="mb-0"><b>Tri Jaya</b> Motor</h1>
+                <h1 class="mb-0">
+                    <b>Tri Jaya</b> Motor
+                </h1>
             </div>
+
             <div class="card-body login-card-body">
-                <p class="login-box-msg">Masuk untuk mengelola bengkel</p>
+                <p class="login-box-msg">
+                    Masuk untuk mengelola bengkel
+                </p>
 
                 <?php if (session()->getFlashdata('error')): ?>
                     <div class="alert alert-danger p-2 small">
@@ -31,31 +52,42 @@
                 <?php endif; ?>
 
                 <form action="<?= base_url('auth/login') ?>" method="post">
-                    <!-- Input Username[cite: 1, 6] -->
+
+                    <!-- Username -->
                     <div class="input-group mb-3">
                         <input type="text" name="nama_pengguna" class="form-control" placeholder="Username" required>
+
                         <div class="input-group-text">
                             <span class="bi bi-person"></span>
                         </div>
                     </div>
-                    <!-- Input Password[cite: 1, 6] -->
+
+                    <!-- Password -->
                     <div class="input-group mb-3">
                         <input type="password" name="kata_sandi" class="form-control" placeholder="Password" required>
+
                         <div class="input-group-text">
                             <span class="bi bi-lock"></span>
                         </div>
                     </div>
+
+                    <!-- Button -->
                     <div class="row">
                         <div class="col-12">
-                            <button type="submit" class="btn btn-primary w-100">Sign In</button>
+                            <button type="submit" class="btn btn-primary w-100">
+                                Sign In
+                            </button>
                         </div>
                     </div>
+
                 </form>
             </div>
         </div>
     </div>
 
+    <!-- AdminLTE JS -->
     <script src="<?= base_url('assets/adminlte/js/adminlte.js') ?>"></script>
+
 </body>
 
 </html>

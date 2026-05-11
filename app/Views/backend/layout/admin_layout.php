@@ -20,7 +20,6 @@
 
     </div>
 
-    <!-- Script tambahan per halaman[cite: 2] -->
     <?= $this->renderSection('scripts'); ?>
 </body>
 

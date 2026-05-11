@@ -2,11 +2,20 @@
 
     <div class="sidebar-brand">
 
-        <a href="<?= base_url('dashboard') ?>" class="brand-link">
+        <a href="<?= base_url('dashboard') ?>" class="brand-link d-flex align-items-center gap-2">
 
-            <span class="brand-text fw-light">
-                TRI JAYA MOTOR
-            </span>
+            <img src="<?= base_url('assets/logo.png') ?>" alt="Logo"
+                style="width:60px; height:60px; object-fit:contain;">
+
+            <div class="d-flex flex-column lh-sm">
+                <span class="fw-bold text-white">
+                    TRI JAYA MOTOR
+                </span>
+
+                <small class="text-secondary">
+                    Sistem Bengkel
+                </small>
+            </div>
 
         </a>
 

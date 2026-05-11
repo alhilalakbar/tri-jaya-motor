@@ -38,8 +38,25 @@ abstract class BaseController extends Controller
 
         // Caution: Do not edit this line.
         parent::initController($request, $response, $logger);
+        $db = \Config\Database::connect();
 
-        // Preload any models, libraries, etc, here.
-        // $this->session = service('session');
+        // 1. Hitung data untuk notifikasi (Global)
+        $stokKritis = $db->table('sparepart')
+            ->where('stok_saat_ini <= stok_minimum')
+            ->countAllResults();
+
+        $belumLunas = $db->table('transaksi_servis')
+            ->where('status_pembayaran', 'Belum Lunas')
+            ->countAllResults();
+
+        // 2. Bagikan data ke SEMUA View secara otomatis
+        $notifGlobal = [
+            'stok_kritis_count' => $stokKritis,
+            'belum_lunas' => $belumLunas,
+            'total_notif' => $stokKritis + $belumLunas
+        ];
+
+        \Config\Services::renderer()->setData($notifGlobal);
+
     }
 }

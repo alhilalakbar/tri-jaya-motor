@@ -1,242 +1,383 @@
-<?php helper('text'); ?>
-
 <?= $this->extend('backend/layout/admin_layout'); ?>
 
 <?= $this->section('content'); ?>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
-<div class="container-fluid">
+<style>
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: #F3F4F6 !important;
+        color: #111827 !important;
+    }
 
-    <!-- FILTER PERIODE -->
+    .card {
+        border: 1px solid #E5E7EB;
+        border-radius: 12px;
+        background: #ffffff;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+    }
 
-    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+    .border-amber {
+        border-left: 6px solid #F59E0B !important;
+    }
 
-        <div>
+    .border-green {
+        border-left: 6px solid #16A34A !important;
+    }
 
-            <h4 class="fw-bold mb-1">
-                Dashboard Bengkel
-            </h4>
+    .border-blue {
+        border-left: 6px solid #2563EB !important;
+    }
 
-            <small class="text-muted">
+    .border-red {
+        border-left: 6px solid #DC2626 !important;
+    }
 
-                <?php if ($periode == 'bulanan'): ?>
+    .border-cyan {
+        border-left: 6px solid #0EA5E9 !important;
+    }
 
-                    Data bulan ini
-                    (<?= date('d M Y', strtotime($tanggal_mulai)); ?>
-                    -
-                    <?= date('d M Y', strtotime($tanggal_selesai)); ?>)
+    .border-secondary {
+        border-left: 6px solid #64748b !important;
+    }
 
-                <?php else: ?>
+    .text-dark-pekat {
+        color: #111827 !important;
+    }
 
-                    Data hari ini
-                    (<?= date('d M Y'); ?>)
+    .text-muted-custom {
+        color: #6B7280 !important;
+    }
 
-                <?php endif; ?>
+    @keyframes spin {
+        from {
+            transform: rotate(0deg);
+        }
 
-            </small>
+        to {
+            transform: rotate(360deg);
+        }
+    }
 
+    .spin-icon {
+        display: inline-block;
+        animation: spin 2s linear infinite;
+    }
+
+    @keyframes tilt {
+
+        0%,
+        100% {
+            transform: rotate(0deg);
+        }
+
+        50% {
+            transform: rotate(15deg);
+        }
+    }
+
+    .tilt-icon {
+        display: inline-block;
+        animation: tilt 1s ease-in-out infinite;
+    }
+
+    @keyframes blink {
+
+        0%,
+        100% {
+            opacity: 1;
+        }
+
+        50% {
+            opacity: 0.3;
+        }
+    }
+
+    .blink-icon {
+        animation: blink 1.5s infinite;
+    }
+
+    @keyframes pulse-status {
+        0% {
+            box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4);
+        }
+
+        70% {
+            box-shadow: 0 0 0 8px rgba(245, 158, 11, 0);
+        }
+
+        100% {
+            box-shadow: 0 0 0 0 rgba(245, 158, 11, 0);
+        }
+    }
+
+    .status-active-pulse {
+        animation: pulse-status 2s infinite;
+    }
+</style>
+
+<div class="container-fluid py-3">
+
+    <div class="row mb-4 align-items-end">
+        <div class="col-md-5">
+            <h1 class="fw-bold mb-0 text-dark-pekat display-5" id="live-clock">00:00:00</h1>
+            <p class="text-dark-pekat fw-bold mb-0">
+                <i class="bi bi-calendar3 me-2 text-primary"></i><?= date('l, d F Y', strtotime($tanggal_mulai)); ?>
+            </p>
         </div>
 
-        <div class="btn-group shadow-sm">
+        <div class="col-md-7 text-end">
+            <form action="" method="GET" class="d-inline-flex gap-2">
+                <div class="input-group input-group-sm w-auto shadow-sm">
+                    <span class="input-group-text bg-white"><i class="bi bi-calendar-event"></i></span>
 
-            <a href="<?= base_url('dashboard?periode=harian'); ?>" class="btn <?= $periode == 'harian'
-                  ? 'btn-primary'
-                  : 'btn-outline-primary'; ?>">
+                    <input type="date" name="tgl_mulai" class="form-control"
+                        value="<?= $tanggal_mulai ?>">
 
-                <i class="bi bi-calendar-day me-1"></i>
+                    <span class="input-group-text bg-white">s/d</span>
 
-                Harian
+                    <input type="date" name="tgl_selesai" class="form-control"
+                        value="<?= $tanggal_selesai ?>">
 
-            </a>
+                    <button type="submit" class="btn btn-primary"
+                        style="background-color: #2563EB;">
+                        FILTER
+                    </button>
+                </div>
 
-            <a href="<?= base_url('dashboard?periode=bulanan'); ?>" class="btn <?= $periode == 'bulanan'
-                  ? 'btn-success'
-                  : 'btn-outline-success'; ?>">
+                <div class="btn-group btn-group-sm shadow-sm">
+                    <a href="?periode=harian"
+                        class="btn <?= $periode == 'harian' ? 'btn-dark' : 'btn-outline-dark' ?>">
+                        HARI INI
+                    </a>
 
-                <i class="bi bi-calendar-month me-1"></i>
-
-                Bulanan
-
-            </a>
-
+                    <a href="?periode=bulanan"
+                        class="btn <?= $periode == 'bulanan' ? 'btn-dark' : 'btn-outline-dark' ?>">
+                        BULAN INI
+                    </a>
+                </div>
+            </form>
         </div>
-
     </div>
 
-    <div class="row">
+    <div class="row mb-4 g-3">
 
-        <div class="col-lg-3 col-6">
+        <div class="col-lg-5">
+            <div class="row g-3 h-100">
 
-            <div class="small-box text-bg-success p-3 rounded shadow-sm mb-4">
+                <div class="col-5">
+                    <div class="card h-100 border-amber shadow-sm">
+                        <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
 
-                <div class="inner">
+                            <h1 style="font-size: 4rem; line-height: 1; color: #F59E0B;"
+                                class="fw-bold mb-1">
+                                <?= count($unit_proses); ?>
+                            </h1>
 
-                    <p class="mb-1">
+                            <p class="fw-bold text-uppercase mb-0 text-muted-custom"
+                                style="font-size: 0.75rem;">
+                                On Process
+                            </p>
 
-                        <?= $periode == 'bulanan'
-                            ? 'Omzet Bulan Ini'
-                            : 'Omzet Hari Ini'; ?>
-
-                    </p>
-
-                    <h3 class="fw-bold fs-4">
-
-                        Rp <?= number_format($omzet, 0, ',', '.'); ?>
-
-                    </h3>
-
-                    <small class="opacity-75">
-
-                        <?= $periode == 'bulanan'
-                            ? 'Transaksi lunas bulan ini'
-                            : 'Transaksi lunas hari ini'; ?>
-
-                    </small>
-
+                        </div>
+                    </div>
                 </div>
 
-                <div class="icon text-end opacity-25">
-                    <i class="bi bi-cash-stack fs-1"></i>
-                </div>
+                <div class="col-7 d-flex flex-column gap-3">
 
+                    <div class="card border-green flex-fill p-3 shadow-sm d-flex flex-column justify-content-center">
+
+                        <h3 class="fw-bold mb-0 text-truncate" style="color: #16A34A;">
+                            Rp <?= number_format($omzet, 0, ',', '.'); ?>
+                        </h3>
+
+                        <small class="text-muted-custom fw-bold text-uppercase"
+                            style="font-size: 0.7rem;">
+                            Omzet
+                        </small>
+
+                    </div>
+
+                    <div class="card border-secondary flex-fill p-3 shadow-sm d-flex flex-column justify-content-center">
+
+                        <h4 class="fw-bold mb-0 text-dark-pekat">
+                            <?= $total_transaksi; ?>
+                        </h4>
+
+                        <small class="text-muted-custom fw-bold text-uppercase"
+                            style="font-size: 0.7rem;">
+                            Total Transaksi
+                        </small>
+
+                    </div>
+
+                </div>
             </div>
-
         </div>
 
-        <div class="col-lg-3 col-6">
+        <div class="col-lg-3">
 
-            <div class="small-box text-bg-primary p-3 rounded shadow-sm mb-4">
+            <div class="card border-blue mb-3 py-3 text-center h-50 shadow-sm"
+                style="border-left: 6px solid <?= $laba_color; ?> !important;">
 
-                <div class="inner">
+                <div class="card-body d-flex flex-column justify-content-center">
 
-                    <p class="mb-1">Laba Bersih</p>
-
-                    <h3 class="fw-bold fs-4">
-
+                    <h4 class="fw-bold mb-0" style="color: <?= $laba_color; ?>;">
                         Rp <?= number_format($laba_bersih, 0, ',', '.'); ?>
+                    </h4>
 
-                    </h3>
-
-                    <small class="opacity-75">
-                        Setelah biaya & gaji
+                    <small class="text-muted-custom fw-bold text-uppercase"
+                        style="font-size: 0.75rem;">
+                        Laba Bersih
                     </small>
 
                 </div>
-
-                <div class="icon text-end opacity-25">
-                    <i class="bi bi-graph-up-arrow fs-1"></i>
-                </div>
-
             </div>
 
+            <div class="card border-secondary py-3 text-center h-50 shadow-sm">
+
+                <div class="card-body d-flex flex-column justify-content-center">
+
+                    <h4 class="fw-bold mb-0 text-dark-pekat">
+                        Rp <?= number_format($laba_kotor, 0, ',', '.'); ?>
+                    </h4>
+
+                    <small class="text-muted-custom fw-bold text-uppercase"
+                        style="font-size: 0.75rem;">
+                        Laba Kotor
+                    </small>
+
+                </div>
+            </div>
         </div>
 
-        <div class="col-lg-2 col-6">
+        <div class="col-lg-4">
 
-            <div class="small-box text-bg-warning p-3 rounded shadow-sm mb-4 text-dark">
+            <div class="card border-red h-100 shadow-sm overflow-hidden">
 
-                <div class="inner">
+                <div class="card-header bg-white border-0 py-2">
 
-                    <p class="mb-1">Unit Aktif</p>
-
-                    <h3 class="fw-bold">
-
-                        <?= count($unit_proses); ?>
-
-                        <small class="fs-6">Motor</small>
-
-                    </h3>
-
-                    <small class="opacity-75">
-                        Sedang diproses
+                    <small class="text-danger fw-bold text-uppercase">
+                        <i class="bi bi-wallet2 me-2"></i>
+                        Rincian Pengeluaran
                     </small>
 
                 </div>
 
-                <div class="icon text-end opacity-25">
-                    <i class="bi bi-tools fs-1"></i>
+                <div class="card-body d-flex flex-column justify-content-center pt-0">
+
+                    <h2 class="fw-bold mb-3" style="color: #DC2626;">
+                        Rp <?= number_format($total_pengeluaran, 0, ',', '.'); ?>
+                    </h2>
+
+                    <div class="d-flex justify-content-between mb-2">
+
+                        <span class="text-muted-custom small fw-bold text-uppercase">
+                            Operasional
+                        </span>
+
+                        <span class="fw-bold small text-dark-pekat">
+                            Rp <?= number_format($biaya_operasional, 0, ',', '.'); ?>
+                        </span>
+
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+
+                        <span class="text-muted-custom small fw-bold text-uppercase">
+                            Gaji Mekanik
+                        </span>
+
+                        <span class="fw-bold small text-dark-pekat">
+                            Rp <?= number_format($gaji_mekanik, 0, ',', '.'); ?>
+                        </span>
+
+                    </div>
+
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4 g-3">
+
+        <div class="col-md-3 text-center">
+
+            <div class="card border-cyan p-3 shadow-sm">
+
+                <small class="text-muted-custom fw-bold d-block mb-1">
+                    ASET GUDANG
+                </small>
+
+                <h6 class="fw-bold mb-0" style="color: #0EA5E9;">
+                    Rp <?= number_format($total_aset_gudang, 0, ',', '.'); ?>
+                </h6>
 
             </div>
-
         </div>
 
-        <div class="col-lg-2 col-6">
+        <div class="col-md-3 text-center">
 
-            <div class="small-box text-bg-danger p-3 rounded shadow-sm mb-4">
+            <div class="card border-green p-3 shadow-sm"
+                style="border-left: 6px solid #10B981 !important;">
 
-                <div class="inner">
+                <small class="text-muted-custom fw-bold d-block text-uppercase">
+                    Belanja Stok
+                </small>
 
-                    <p class="mb-1">Belum Lunas</p>
-
-                    <h3 class="fw-bold">
-
-                        <?= $belum_lunas; ?>
-
-                        <small class="fs-6">Transaksi</small>
-
-                    </h3>
-
-                    <small class="opacity-75">
-                        Menunggu pembayaran
-                    </small>
-
-                </div>
-
-                <div class="icon text-end opacity-25">
-                    <i class="bi bi-exclamation-circle fs-1"></i>
-                </div>
+                <h6 class="fw-bold mb-0" style="color: #10B981;">
+                    Rp <?= number_format($pembelian, 0, ',', '.'); ?>
+                </h6>
 
             </div>
-
         </div>
 
-        <div class="col-lg-2 col-6">
+        <div class="col-md-3 text-center">
 
-            <div class="small-box text-bg-dark p-3 rounded shadow-sm mb-4">
+            <div class="card border-orange p-3 shadow-sm">
 
-                <div class="inner">
+                <small class="text-muted-custom fw-bold d-block text-uppercase">
+                    Piutang
+                </small>
 
-                    <p class="mb-1">Stok Kritis</p>
-
-                    <h3 class="fw-bold">
-
-                        <?= $stok_kritis_count; ?>
-
-                        <small class="fs-6">Item</small>
-
-                    </h3>
-
-                    <small class="opacity-75">
-                        Perlu restock
-                    </small>
-
-                </div>
-
-                <div class="icon text-end opacity-25">
-                    <i class="bi bi-box-seam fs-1"></i>
-                </div>
+                <h6 class="fw-bold mb-0" style="color: #F59E0B;">
+                    <?= $belum_lunas; ?> Transaksi
+                </h6>
 
             </div>
+        </div>
 
+        <div class="col-md-3 text-center">
+
+            <div class="card border-red p-3 shadow-sm">
+
+                <small class="text-muted-custom fw-bold d-block text-uppercase">
+                    Stok Kritis
+                </small>
+
+                <h6 class="fw-bold mb-0" style="color: #DC2626;">
+                    <?= $stok_kritis_count; ?> Item
+                </h6>
+
+            </div>
         </div>
 
     </div>
 
     <div class="row">
 
-        <div class="col-md-8">
+        <div class="col-12">
 
-            <div class="card shadow-sm border-0">
+            <div class="card shadow-sm overflow-hidden">
 
-                <div class="card-header bg-white py-3">
+                <div class="card-header py-3 text-center"
+                    style="background-color: #111827;">
 
-                    <h6 class="mb-0 fw-bold">
-
-                        <i class="bi bi-activity text-primary me-2"></i>
-
-                        Monitoring Pekerjaan Mekanik
-
-                    </h6>
+                    <h5 class="mb-0 fw-bold text-white text-uppercase">
+                        <i class="bi bi-activity me-2 text-warning"></i>
+                        STATUS PEKERJAAN MEKANIK
+                    </h5>
 
                 </div>
 
@@ -246,17 +387,21 @@
 
                         <table class="table table-hover align-middle mb-0">
 
-                            <thead class="table-light">
+                            <thead class="bg-light">
 
-                                <tr>
+                                <tr class="text-muted-custom small fw-bold">
 
-                                    <th class="ps-3">Plat Nomor</th>
+                                    <th width="150" class="ps-4">
+                                        PLAT NOMOR
+                                    </th>
 
-                                    <th>Mekanik</th>
+                                    <th>MEKANIK</th>
 
-                                    <th>Keluhan Awal</th>
+                                    <th>KELUHAN AWAL</th>
 
-                                    <th>Status</th>
+                                    <th width="200" class="text-center">
+                                        STATUS
+                                    </th>
 
                                 </tr>
 
@@ -264,24 +409,14 @@
 
                             <tbody>
 
-                                <?php
-                                $statusColor = [
-                                    'Antre' => 'text-bg-secondary',
-                                    'Diproses' => 'text-bg-warning',
-                                    'Menunggu Part' => 'text-bg-danger',
-                                    'Selesai' => 'text-bg-success',
-                                    'Diambil' => 'text-bg-primary',
-                                    'Dibatalkan' => 'text-bg-dark'
-                                ];
-                                ?>
-
                                 <?php foreach ($unit_proses as $up): ?>
 
                                     <tr>
 
-                                        <td class="ps-3">
+                                        <td class="ps-4">
 
-                                            <span class="badge text-bg-dark font-monospace">
+                                            <span class="badge bg-dark px-3 py-2 font-monospace"
+                                                style="font-size: 0.9rem;">
 
                                                 <?= $up['nomor_plat']; ?>
 
@@ -289,34 +424,55 @@
 
                                         </td>
 
-                                        <td>
-
-                                            <?= $up['nama_mekanik'] ?? '<i class="text-muted">Belum ditentukan</i>'; ?>
-
+                                        <td class="fw-bold text-dark-pekat">
+                                            <?= $up['nama_mekanik'] ?? '-'; ?>
                                         </td>
 
-                                        <td>
-
-                                            <small class="text-muted">
-
-                                                <?= character_limiter($up['keluhan_awal'], 50); ?>
-
-                                            </small>
-
+                                        <td class="text-muted-custom small">
+                                            <?= $up['keluhan_awal']; ?>
                                         </td>
 
-                                        <td>
+                                        <td class="text-center">
 
-                                            <span
-                                                class="badge rounded-pill <?= $statusColor[$up['status_pengerjaan']] ?? 'text-bg-secondary'; ?> px-3">
+                                            <?php
+                                            $st = $up['status_pengerjaan'];
+                                            $style = "";
+                                            $icon = "";
+                                            $pulse = "";
 
-                                                <?php if ($up['status_pengerjaan'] == 'Diproses'): ?>
+                                            switch ($st) {
+                                                case 'Antre':
+                                                    $style = "background: #F3F4F6; color: #6B7280; border: 1px solid #D1D5DB;";
+                                                    $icon = '<i class="bi bi-dot blink-icon fs-5"></i>';
+                                                    break;
 
-                                                    <span class="spinner-border spinner-border-sm me-1" role="status"></span>
+                                                case 'Diproses':
+                                                    $style = "background: #FEF3C7; color: #D97706; border: 1px solid #F59E0B;";
+                                                    $icon = '<i class="bi bi-gear-fill spin-icon me-1"></i>';
+                                                    $pulse = "status-active-pulse";
+                                                    break;
 
-                                                <?php endif; ?>
+                                                case 'Menunggu Part':
+                                                    $style = "background: #FFF7ED; color: #EA580C; border: 1px solid #FB923C;";
+                                                    $icon = '<i class="bi bi-hourglass-split tilt-icon me-1"></i>';
+                                                    break;
 
-                                                <?= esc($up['status_pengerjaan']); ?>
+                                                case 'Selesai':
+                                                    $style = "background: #DCFCE7; color: #16A34A; border: 1px solid #22C55E;";
+                                                    $icon = '<i class="bi bi-check-circle-fill me-1"></i>';
+                                                    break;
+
+                                                case 'Dibatalkan':
+                                                    $style = "background: #FEE2E2; color: #DC2626; border: 1px solid #EF4444;";
+                                                    $icon = '<i class="bi bi-x-circle-fill me-1"></i>';
+                                                    break;
+                                            }
+                                            ?>
+
+                                            <span class="badge rounded-pill px-3 py-2 <?= $pulse ?>"
+                                                style="<?= $style ?>">
+
+                                                <?= $icon . $st ?>
 
                                             </span>
 
@@ -330,11 +486,12 @@
 
                                     <tr>
 
-                                        <td colspan="4" class="text-center py-4 text-muted">
+                                        <td colspan="4"
+                                            class="text-center py-5 text-muted fw-bold">
 
-                                            <i class="bi bi-info-circle me-1"></i>
+                                            <i class="bi bi-info-circle me-2"></i>
 
-                                            Tidak ada pekerjaan yang sedang berlangsung.
+                                            Belum ada motor yang sedang dikerjakan atau mengantre.
 
                                         </td>
 
@@ -347,166 +504,38 @@
                         </table>
 
                     </div>
-
                 </div>
-
             </div>
-
         </div>
-
-        <div class="col-md-4">
-
-            <div class="card shadow-sm border-0 mb-4">
-
-                <div class="card-header bg-white py-3">
-
-                    <h6 class="mb-0 fw-bold">
-
-                        <i class="bi bi-pie-chart text-success me-2"></i>
-
-                        Rincian Sumber Laba
-
-                    </h6>
-
-                </div>
-
-                <div class="card-body">
-
-                    <div class="d-flex justify-content-between mb-2">
-
-                        <span>Laba Jasa (Skill)</span>
-
-                        <span class="fw-bold text-success">
-
-                            + Rp <?= number_format($detail_laba_jasa, 0, ',', '.'); ?>
-
-                        </span>
-
-                    </div>
-
-                    <div class="d-flex justify-content-between mb-3">
-
-                        <span>Laba Sparepart (Margin)</span>
-
-                        <span class="fw-bold text-success">
-
-                            + Rp <?= number_format($detail_laba_part, 0, ',', '.'); ?>
-
-                        </span>
-
-                    </div>
-
-                    <hr>
-
-                    <div class="d-flex justify-content-between align-items-center">
-
-                        <span class="h6 mb-0">Total Laba Kotor</span>
-
-                        <span class="h5 mb-0 fw-bold text-primary">
-
-                            Rp <?= number_format($laba, 0, ',', '.'); ?>
-
-                        </span>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="card shadow-sm border-0 mb-4">
-
-                <div class="card-header bg-white py-3">
-
-                    <h6 class="mb-0 fw-bold">
-
-                        <i class="bi bi-wallet2 text-danger me-2"></i>
-
-                        <?= $periode == 'bulanan'
-                            ? 'Pengeluaran Bulan Ini'
-                            : 'Pengeluaran Hari Ini'; ?>
-
-                    </h6>
-
-                </div>
-
-                <div class="card-body">
-
-                    <div class="d-flex justify-content-between mb-2">
-
-                        <span>Total Pengeluaran</span>
-
-                        <span class="fw-bold text-danger">
-
-                            - Rp <?= number_format($total_pengeluaran, 0, ',', '.'); ?>
-
-                        </span>
-
-                    </div>
-
-                    <div class="d-flex justify-content-between mb-2">
-
-                        <span>
-
-                            <?= $periode == 'bulanan'
-                                ? 'Pembelian Stok Bulan Ini'
-                                : 'Pembelian Stok Hari Ini'; ?>
-
-                        </span>
-
-                        <span class="fw-bold text-dark">
-
-                            Rp <?= number_format($pembelian, 0, ',', '.'); ?>
-
-                        </span>
-
-                    </div>
-
-                    <div class="d-flex justify-content-between mb-2">
-
-                        <span>Total Nilai Aset Gudang</span>
-
-                        <span class="fw-bold text-primary">
-
-                            Rp <?= number_format($total_aset_gudang, 0, ',', '.'); ?>
-
-                        </span>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="card shadow-sm border-0 bg-light p-3">
-
-                <div class="d-flex align-items-center">
-
-                    <i class="bi bi-person-badge fs-2 text-secondary me-3"></i>
-
-                    <div>
-
-                        <p class="mb-0 small text-muted">
-                            Login sebagai:
-                        </p>
-
-                        <h6 class="mb-0 fw-bold">
-
-                            <?= session()->get('nama_pengguna'); ?>
-                            (<?= session()->get('peran'); ?>)
-
-                        </h6>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
     </div>
 
 </div>
+
+<?= $this->endSection(); ?>
+
+<?= $this->section('scripts'); ?>
+
+<script>
+    function updateClock() {
+        const now = new Date();
+
+        const options = {
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+        };
+
+        const clockElement = document.getElementById('live-clock');
+
+        if (clockElement) {
+            clockElement.textContent = now.toLocaleTimeString('id-ID', options);
+        }
+    }
+
+    setInterval(updateClock, 1000);
+
+    updateClock();
+</script>
 
 <?= $this->endSection(); ?>
