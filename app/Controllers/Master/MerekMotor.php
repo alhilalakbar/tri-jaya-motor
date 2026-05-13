@@ -3,7 +3,7 @@ namespace App\Controllers\Master;
 use App\Controllers\BaseController;
 use App\Models\Master\Kendaraan\MerkMotorModel;
 
-class MerkMotor extends BaseController
+class MerekMotor extends BaseController
 {
     protected $model;
     public function __construct()

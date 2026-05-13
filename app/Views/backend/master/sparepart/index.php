@@ -92,7 +92,6 @@
         form.action = '<?= base_url('backend/master/sparepart/save'); ?>';
         form.reset();
 
-        // Pastikan input stok_saat_ini (jika ada di file form) dikunci atau disembunyikan
         if (document.getElementById('stok_saat_ini')) {
             document.getElementById('stok_saat_ini').value = 0;
             document.getElementById('stok_saat_ini').readOnly = true;

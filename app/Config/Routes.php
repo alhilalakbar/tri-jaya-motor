@@ -17,7 +17,9 @@ $routes->get('auth/logout', 'Auth::logout');
 // ======================
 // DASHBOARD
 // ======================
+// Agar tidak error 404 saat klik logo yang mengarah ke backend/dashboard
 $routes->get('dashboard', 'Dashboard::index', ['filter' => 'auth']);
+$routes->get('backend/dashboard', 'Dashboard::index', ['filter' => 'auth']);
 
 // ======================
 // BACKEND & TRANSAKSI
@@ -25,7 +27,7 @@ $routes->get('dashboard', 'Dashboard::index', ['filter' => 'auth']);
 $routes->group('', ['filter' => 'auth'], function ($routes) {
 
     // ----------------------
-    // MASTER DATA (Namespace: App\Controllers\Master)
+    // MASTER DATA (Sesuaikan dengan Sidebar)
     // ----------------------
     $routes->group('backend/master', function ($routes) {
 
@@ -53,11 +55,11 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
         $routes->post('tipe_motor/update/(:any)', 'Master\TipeMotor::update/$1');
         $routes->get('tipe_motor/delete/(:any)', 'Master\TipeMotor::delete/$1');
 
-        // Merk Motor
-        $routes->get('merk_motor', 'Master\MerkMotor::index');
-        $routes->post('merk_motor/save', 'Master\MerkMotor::save');
-        $routes->post('merk_motor/update/(:any)', 'Master\MerkMotor::update/$1');
-        $routes->get('merk_motor/delete/(:any)', 'Master\MerkMotor::delete/$1');
+        // Merek Motor (FIXED: Tambah 'e' agar sesuai sidebar)
+        $routes->get('merek_motor', 'Master\MerekMotor::index');
+        $routes->post('merek_motor/save', 'Master\MerekMotor::save');
+        $routes->post('merek_motor/update/(:any)', 'Master\MerekMotor::update/$1');
+        $routes->get('merek_motor/delete/(:any)', 'Master\MerekMotor::delete/$1');
 
         // Jasa Servis
         $routes->get('jasa_servis', 'Master\JasaServis::index');
@@ -77,11 +79,11 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
         $routes->post('kategori_part/update/(:any)', 'Master\KategoriPart::update/$1');
         $routes->get('kategori_part/delete/(:any)', 'Master\KategoriPart::delete/$1');
 
-        // Merek Part
-        $routes->get('merk_part', 'Master\MerekPart::index');
-        $routes->post('merk_part/save', 'Master\MerekPart::save');
-        $routes->post('merk_part/update/(:any)', 'Master\MerekPart::update/$1');
-        $routes->get('merk_part/delete/(:any)', 'Master\MerekPart::delete/$1');
+        // Merek Part (FIXED: Tambah 'e' agar sesuai sidebar)
+        $routes->get('merek_part', 'Master\MerekPart::index');
+        $routes->post('merek_part/save', 'Master\MerekPart::save');
+        $routes->post('merek_part/update/(:any)', 'Master\MerekPart::update/$1');
+        $routes->get('merek_part/delete/(:any)', 'Master\MerekPart::delete/$1');
 
         // Pemasok
         $routes->get('pemasok', 'Master\Pemasok::index');
@@ -94,12 +96,20 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
         $routes->post('pengguna/save', 'Master\Pengguna::save');
         $routes->post('pengguna/update/(:any)', 'Master\Pengguna::update/$1');
         $routes->get('pengguna/delete/(:any)', 'Master\Pengguna::delete/$1');
+    });
 
-        // Kategori Biaya Operasional
-        $routes->get('kategori_biaya_operasional', 'Master\KategoriBiayaOperasional::index');
-        $routes->post('kategori_biaya_operasional/save', 'Master\KategoriBiayaOperasional::save');
-        $routes->post('kategori_biaya_operasional/update/(:any)', 'Master\KategoriBiayaOperasional::update/$1');
-        $routes->get('kategori_biaya_operasional/delete/(:any)', 'Master\KategoriBiayaOperasional::delete/$1');
+    // ----------------------
+    // LAPORAN
+    // ----------------------
+    // Bagian LAPORAN
+    $routes->group('backend/laporan', ['namespace' => 'App\Controllers\Laporan'], function ($routes) {
+        $routes->get('transaksi', 'Laporan::transaksi');
+        $routes->get('stok', 'Laporan::stok');
+        $routes->get('mekanik', 'Laporan::mekanik');
+        $routes->get('pembelian', 'Laporan::pembelian');
+        $routes->get('pengeluaran', 'Laporan::pengeluaran');
+        $routes->get('loyalitas', 'Laporan::loyalitas');
+        $routes->get('laba-rugi', 'Laporan::labaRugi');
     });
 
     // ----------------------
@@ -111,27 +121,30 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
         $routes->get('pembelian', 'Transaksi\Pembelian::index');
         $routes->post('pembelian/save', 'Transaksi\Pembelian::save');
         $routes->get('pembelian/detail/(:any)', 'Transaksi\Pembelian::detail/$1');
+
         // Servis
         $routes->get('servis', 'Transaksi\Servis::index');
         $routes->post('servis/create', 'Transaksi\Servis::create');
         $routes->get('servis/detail/(:any)', 'Transaksi\Servis::detail/$1');
         $routes->post('servis/update_status', 'Transaksi\Servis::update_status');
-        // Jasa Luar (TAMBAHKAN Transaksi\ di depannya)
+
+        // Jasa Luar
         $routes->get('jasa_luar', 'Transaksi\JasaLuar::index');
         $routes->post('jasa_luar/save', 'Transaksi\JasaLuar::save');
         $routes->post('jasa_luar/update/(:any)', 'Transaksi\JasaLuar::update/$1');
         $routes->get('jasa_luar/delete/(:any)', 'Transaksi\JasaLuar::delete/$1');
+
         // Gaji Mekanik
         $routes->get('gaji_mekanik', 'Transaksi\GajiMekanik::index');
         $routes->post('gaji_mekanik/save', 'Transaksi\GajiMekanik::save');
         $routes->post('gaji_mekanik/update/(:any)', 'Transaksi\GajiMekanik::update/$1');
         $routes->get('gaji_mekanik/delete/(:any)', 'Transaksi\GajiMekanik::delete/$1');
+
         // Biaya Operasional
         $routes->get('biaya_operasional', 'Transaksi\BiayaOperasional::index');
         $routes->post('biaya_operasional/save', 'Transaksi\BiayaOperasional::save');
         $routes->post('biaya_operasional/update/(:any)', 'Transaksi\BiayaOperasional::update/$1');
         $routes->get('biaya_operasional/delete/(:any)', 'Transaksi\BiayaOperasional::delete/$1');
-
     });
 
 });
