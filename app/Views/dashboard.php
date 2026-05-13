@@ -338,7 +338,7 @@
             <div class="card border-orange p-3 shadow-sm">
 
                 <small class="text-muted-custom fw-bold d-block text-uppercase">
-                    Piutang
+                    Belum Lunas
                 </small>
 
                 <h6 class="fw-bold mb-0" style="color: #F59E0B;">
