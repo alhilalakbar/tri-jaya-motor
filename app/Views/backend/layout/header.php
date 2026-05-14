@@ -2,33 +2,33 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            <?php
+    document.addEventListener('DOMContentLoaded', function() {
+        <?php
             $stok_kritis = $stok_kritis_count ?? 0;
             $piutang = $belum_lunas ?? 0;
             ?>
 
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'bottom-end',
-                showConfirmButton: false,
-                timer: 6000, // Saya perlama sedikit agar sempat diklik
-                timerProgressBar: true,
-                showCloseButton: true,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-            });
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'bottom-end',
+            showConfirmButton: false,
+            timer: 6000, // Saya perlama sedikit agar sempat diklik
+            timerProgressBar: true,
+            showCloseButton: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        });
 
-            const sudahMuncul = sessionStorage.getItem('notif_pop_up');
+        const sudahMuncul = sessionStorage.getItem('notif_pop_up');
 
-            <?php if ($stok_kritis > 0 || $piutang > 0): ?>
-                if (!sudahMuncul) {
-                    Toast.fire({
-                        icon: 'warning',
-                        title: 'Pemberitahuan Sistem',
-                        html: `
+        <?php if ($stok_kritis > 0 || $piutang > 0): ?>
+        if (!sudahMuncul) {
+            Toast.fire({
+                icon: 'warning',
+                title: 'Pemberitahuan Sistem',
+                html: `
                         <div style="font-size: 0.85rem; text-align: left;">
                             <?php if ($stok_kritis > 0): ?>
                                 <i class="bi bi-box-seam text-danger"></i> <b><?= $stok_kritis ?></b> stok kritis<br>
@@ -43,12 +43,12 @@
                             </a>
                         </div>
                     `
-                    });
+            });
 
-                    sessionStorage.setItem('notif_pop_up', 'true');
-                }
-            <?php endif; ?>
-        });
+            sessionStorage.setItem('notif_pop_up', 'true');
+        }
+        <?php endif; ?>
+    });
     </script>
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -79,9 +79,9 @@
                 <a class="nav-link" data-bs-toggle="dropdown" href="#" aria-expanded="false">
                     <i class="bi bi-bell fs-5"></i>
                     <?php if (isset($total_notif) && $total_notif > 0): ?>
-                        <span class="navbar-badge badge text-bg-danger fw-bold">
-                            <?= $total_notif; ?>
-                        </span>
+                    <span class="navbar-badge badge text-bg-danger fw-bold">
+                        <?= $total_notif; ?>
+                    </span>
                     <?php endif; ?>
                 </a>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end shadow border-0">
@@ -89,23 +89,23 @@
                     <div class="dropdown-divider"></div>
 
                     <?php if (isset($stok_kritis_count) && $stok_kritis_count > 0): ?>
-                        <a href="<?= base_url('backend/master/sparepart'); ?>" class="dropdown-item">
-                            <i class="bi bi-box-seam me-2 text-danger"></i>
-                            <?= $stok_kritis_count; ?> Item Stok Kritis
-                        </a>
+                    <a href="<?= base_url('backend/master/sparepart'); ?>" class="dropdown-item">
+                        <i class="bi bi-box-seam me-2 text-danger"></i>
+                        <?= $stok_kritis_count; ?> Item Stok Kritis
+                    </a>
                     <?php endif; ?>
 
                     <?php if (isset($belum_lunas) && $belum_lunas > 0): ?>
-                        <a href="<?= base_url('backend/master/transaksi'); ?>" class="dropdown-item">
-                            <i class="bi bi-exclamation-circle me-2 text-warning"></i>
-                            <?= $belum_lunas; ?> Transaksi Belum Lunas
-                        </a>
+                    <a href="<?= base_url('backend/master/transaksi'); ?>" class="dropdown-item">
+                        <i class="bi bi-exclamation-circle me-2 text-warning"></i>
+                        <?= $belum_lunas; ?> Transaksi Belum Lunas
+                    </a>
                     <?php endif; ?>
 
                     <?php if (!isset($total_notif) || $total_notif == 0): ?>
-                        <div class="dropdown-item text-center text-muted small py-3">
-                            Tidak ada masalah stok atau tagihan.
-                        </div>
+                    <div class="dropdown-item text-center text-muted small py-3">
+                        Tidak ada masalah stok atau tagihan.
+                    </div>
                     <?php endif; ?>
 
                     <div class="dropdown-divider"></div>

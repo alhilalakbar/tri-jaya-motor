@@ -110,6 +110,8 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
         $routes->get('pengeluaran', 'Laporan::pengeluaran');
         $routes->get('loyalitas', 'Laporan::loyalitas');
         $routes->get('laba-rugi', 'Laporan::labaRugi');
+        $routes->get('export/excel/(:segment)', 'Laporan::exportExcel/$1');
+        $routes->get('export/pdf/(:segment)', 'Laporan::exportPdf/$1');
     });
 
     // ----------------------
