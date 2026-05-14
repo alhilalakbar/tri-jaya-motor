@@ -13,7 +13,17 @@ class KategoriPart extends BaseController
 
     public function index()
     {
-        return view('backend/master/kategori_part/index', ['data' => $this->model->findAll()]);
+        $keyword = $this->request->getGet('keyword');
+        $builder = $this->model;
+
+        if ($keyword) {
+            $builder->like('nama_kategori', $keyword);
+        }
+
+        return view('backend/master/kategori_part/index', [
+            'data' => $builder->findAll(),
+            'keyword' => $keyword
+        ]);
     }
     public function save()
     {

@@ -13,7 +13,21 @@ class Pemasok extends BaseController
 
     public function index()
     {
-        return view('backend/master/pemasok/index', ['data' => $this->model->findAll()]);
+        $keyword = $this->request->getGet('keyword');
+        $builder = $this->model;
+
+        if ($keyword) {
+            $builder->groupStart()
+                ->like('nama_pemasok', $keyword)
+                ->orLike('nomor_hp_pemasok', $keyword)
+                ->orLike('alamat_pemasok', $keyword)
+                ->groupEnd();
+        }
+
+        return view('backend/master/pemasok/index', [
+            'data' => $builder->findAll(),
+            'keyword' => $keyword
+        ]);
     }
     public function save()
     {

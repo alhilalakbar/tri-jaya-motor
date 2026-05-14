@@ -13,7 +13,17 @@ class MerekMotor extends BaseController
 
     public function index()
     {
-        return view('backend/master/merk_motor/index', ['data' => $this->model->findAll()]);
+        $keyword = $this->request->getGet('keyword');
+        $builder = $this->model;
+
+        if ($keyword) {
+            $builder->like('nama_merek_motor', $keyword);
+        }
+
+        return view('backend/master/merk_motor/index', [
+            'data' => $builder->findAll(),
+            'keyword' => $keyword
+        ]);
     }
     public function save()
     {

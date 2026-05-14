@@ -13,7 +13,17 @@ class Mekanik extends BaseController
 
     public function index()
     {
-        return view('backend/master/mekanik/index', ['data' => $this->model->findAll()]);
+        $keyword = $this->request->getGet('keyword');
+        $builder = $this->model;
+
+        if ($keyword) {
+            $builder->like('nama_mekanik', $keyword);
+        }
+
+        return view('backend/master/mekanik/index', [
+            'data' => $builder->findAll(),
+            'keyword' => $keyword
+        ]);
     }
     public function save()
     {

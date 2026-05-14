@@ -13,7 +13,20 @@ class Pelanggan extends BaseController
 
     public function index()
     {
-        return view('backend/master/pelanggan/index', ['data' => $this->model->findAll()]);
+        $keyword = $this->request->getGet('keyword');
+        $builder = $this->model;
+
+        if ($keyword) {
+            $builder->groupStart()
+                ->like('nama_pelanggan', $keyword)
+                ->orLike('nomor_hp', $keyword)
+                ->groupEnd();
+        }
+
+        return view('backend/master/pelanggan/index', [
+            'data' => $builder->findAll(),
+            'keyword' => $keyword
+        ]);
     }
     public function save()
     {

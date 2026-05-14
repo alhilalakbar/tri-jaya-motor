@@ -26,6 +26,11 @@
 
         <?= $this->include('backend/layout/footer'); ?>
     </div>
+    <style>
+    :root {
+        --lte-sidebar-width: 275px;
+    }
+</style>
 
     <!-- JQuery -->
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>

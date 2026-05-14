@@ -74,10 +74,16 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
         $routes->get('sparepart/delete/(:any)', 'Master\Sparepart::delete/$1');
 
         // Kategori Part
-        $routes->get('kategori_part', 'Master\KategoriPart::index');
+        $routes->get('part', 'Master\KategoriPart::index');
         $routes->post('kategori_part/save', 'Master\KategoriPart::save');
         $routes->post('kategori_part/update/(:any)', 'Master\KategoriPart::update/$1');
         $routes->get('kategori_part/delete/(:any)', 'Master\KategoriPart::delete/$1');
+
+        // Kategori Biaya Operasional 
+        $routes->get('kategori_biaya_operasional', 'Master\KategoriBiayaOperasional::index');
+        $routes->post('kategori_biaya_operasional/save', 'Master\KategoriBiayaOperasional::save');
+        $routes->post('kategori_biaya_operasional/update/(:any)', 'Master\KategoriBiayaOperasional::update/$1');
+        $routes->get('kategori_biaya_operasional/delete/(:any)', 'Master\KategoriBiayaOperasional::delete/$1');
 
         // Merek Part (FIXED: Tambah 'e' agar sesuai sidebar)
         $routes->get('merek_part', 'Master\MerekPart::index');

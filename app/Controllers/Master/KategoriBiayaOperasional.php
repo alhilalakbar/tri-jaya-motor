@@ -16,19 +16,20 @@ class KategoriBiayaOperasional extends BaseController
 
     public function index()
     {
+        $keyword = $this->request->getGet('keyword');
+        $builder = $this->model->orderBy('id_kategori_biaya', 'DESC');
+
+        if ($keyword) {
+            $builder->like('nama_kategori', $keyword);
+        }
+
         $data = [
-
             'title' => 'Kategori Biaya Operasional',
-
-            'data' => $this->model
-                ->orderBy('id_kategori_biaya', 'DESC')
-                ->findAll(),
+            'data' => $builder->findAll(),
+            'keyword' => $keyword
         ];
 
-        return view(
-            'backend/master/kategori_biaya_operasional/index',
-            $data
-        );
+        return view('backend/master/kategori_biaya_operasional/index', $data);
     }
 
     public function save()

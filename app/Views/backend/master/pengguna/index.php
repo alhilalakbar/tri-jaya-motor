@@ -2,11 +2,15 @@
 
 <?= $this->section('content'); ?>
 <div class="card card-primary card-outline">
-    <div class="card-header d-flex justify-content-between align-items-center">
-        <h5 class="card-title m-0">Manajemen Pengguna Sistem</h5>
-        <button type="button" class="btn btn-primary btn-sm" onclick="tambahData()">
-            <i class="bi bi-plus-lg"></i> Tambah Pengguna
+    <div class="card-header d-flex align-items-center">
+        <h5 class="card-title m-0">Daftar Data</h5>
+        <button type="button" class="btn btn-primary btn-sm ms-2" onclick="tambahData()">
+            <i class="bi bi-plus-lg"></i> Tambah Data
         </button>
+
+        <div class="ms-auto">
+            <?= $this->include('backend/layout/search') ?>
+        </div>
     </div>
     <div class="card-body">
         <table id="tableMaster" class="table table-bordered table-striped">

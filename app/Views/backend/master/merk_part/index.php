@@ -4,28 +4,20 @@
 
 <div class="card card-primary card-outline">
 
-    <div class="card-header d-flex justify-content-between align-items-center">
-
-        <h5 class="card-title m-0">
-            Daftar Data
-        </h5>
-
-        <button
-            type="button"
-            class="btn btn-primary btn-sm"
-            onclick="tambahData()">
-
-            <i class="bi bi-plus-lg"></i>
-            Tambah Data
+    <div class="card-header d-flex align-items-center">
+        <h5 class="card-title m-0">Daftar Data</h5>
+        <button type="button" class="btn btn-primary btn-sm ms-2" onclick="tambahData()">
+            <i class="bi bi-plus-lg"></i> Tambah Data
         </button>
 
+        <div class="ms-auto">
+            <?= $this->include('backend/layout/search') ?>
+        </div>
     </div>
 
     <div class="card-body">
 
-        <table
-            id="tableMaster"
-            class="table table-bordered table-striped">
+        <table id="tableMaster" class="table table-bordered table-striped">
 
             <thead>
                 <tr>
@@ -40,7 +32,7 @@
 
                 <?php $no = 1; ?>
 
-                <?php foreach ($data as $d) : ?>
+                <?php foreach ($data as $d): ?>
 
                     <tr>
 
@@ -58,18 +50,14 @@
 
                         <td>
 
-                            <button
-                                type="button"
-                                class="btn btn-warning btn-sm"
+                            <button type="button" class="btn btn-warning btn-sm"
                                 onclick='editData(<?= json_encode($d); ?>)'>
 
                                 <i class="bi bi-pencil-square"></i>
                             </button>
 
-                            <a
-                                href="<?= base_url('backend/master/merk_part/delete/' . $d['id_merek_part']); ?>"
-                                class="btn btn-danger btn-sm"
-                                onclick="return confirm('Hapus data?')">
+                            <a href="<?= base_url('backend/master/merk_part/delete/' . $d['id_merek_part']); ?>"
+                                class="btn btn-danger btn-sm" onclick="return confirm('Hapus data?')">
 
                                 <i class="bi bi-trash"></i>
                             </a>
@@ -87,18 +75,11 @@
     </div>
 </div>
 
-<div
-    class="modal fade"
-    id="modalMaster"
-    tabindex="-1"
-    aria-hidden="true">
+<div class="modal fade" id="modalMaster" tabindex="-1" aria-hidden="true">
 
     <div class="modal-dialog">
 
-        <form
-            action=""
-            method="post"
-            id="formMaster">
+        <form action="" method="post" id="formMaster">
 
             <?= csrf_field(); ?>
 
@@ -106,17 +87,12 @@
 
                 <div class="modal-header">
 
-                    <h5
-                        class="modal-title"
-                        id="modalTitle">
+                    <h5 class="modal-title" id="modalTitle">
 
                         Form Data
                     </h5>
 
-                    <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal">
                     </button>
 
                 </div>
@@ -129,17 +105,12 @@
 
                 <div class="modal-footer">
 
-                    <button
-                        type="button"
-                        class="btn btn-secondary"
-                        data-bs-dismiss="modal">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
 
                         Tutup
                     </button>
 
-                    <button
-                        type="submit"
-                        class="btn btn-primary">
+                    <button type="submit" class="btn btn-primary">
 
                         Simpan
                     </button>

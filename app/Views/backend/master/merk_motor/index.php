@@ -2,11 +2,15 @@
 
 <?= $this->section('content'); ?>
 <div class="card card-primary card-outline">
-    <div class="card-header d-flex justify-content-between align-items-center">
+    <div class="card-header d-flex align-items-center">
         <h5 class="card-title m-0">Daftar Data</h5>
-        <button type="button" class="btn btn-primary btn-sm" onclick="tambahData()">
+        <button type="button" class="btn btn-primary btn-sm ms-2" onclick="tambahData()">
             <i class="bi bi-plus-lg"></i> Tambah Data
         </button>
+
+        <div class="ms-auto">
+            <?= $this->include('backend/layout/search') ?>
+        </div>
     </div>
     <div class="card-body">
         <table id="tableMaster" class="table table-bordered table-striped">
@@ -65,8 +69,8 @@
 
 <script>
     // 1. Deklarasikan variabel secara global agar bisa diakses oleh fungsi lain
-    let modalElement; 
-    let modal; 
+    let modalElement;
+    let modal;
     let form;
 
     document.addEventListener('DOMContentLoaded', function () {
@@ -101,7 +105,7 @@
         if (document.getElementById('nama_merek_motor')) {
             document.getElementById('nama_merek_motor').value = data.nama_merek_motor;
         }
-        
+
         if (data.biaya_standar && document.getElementById('biaya_standar')) {
             document.getElementById('biaya_standar').value = data.biaya_standar;
         }

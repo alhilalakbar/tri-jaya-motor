@@ -15,15 +15,29 @@ class Sparepart extends BaseController
 
     public function index()
     {
+        $keyword = $this->request->getGet('keyword');
         $kat = new KategoriPartModel();
         $merk = new MerekPartModel();
+
+        $builder = $this->model->select('sparepart.*, kategori_part.nama_kategori, merek_part.nama_merek_part')
+            ->join('kategori_part', 'kategori_part.id_kategori = sparepart.id_kategori')
+            ->join('merek_part', 'merek_part.id_merek_part = sparepart.id_merek_part', 'left');
+
+        if ($keyword) {
+            $builder->groupStart()
+                ->like('sparepart.nama_part', $keyword)
+                ->orLike('kategori_part.nama_kategori', $keyword)
+                ->orLike('merek_part.nama_merek_part', $keyword)
+                ->groupEnd();
+        }
+
         $data = [
-            'sparepart' => $this->model->select('sparepart.*, kategori_part.nama_kategori, merek_part.nama_merek_part')
-                ->join('kategori_part', 'kategori_part.id_kategori = sparepart.id_kategori')
-                ->join('merek_part', 'merek_part.id_merek_part = sparepart.id_merek_part', 'left')->findAll(),
+            'sparepart' => $builder->findAll(),
             'kategori' => $kat->findAll(),
-            'merek' => $merk->findAll()
+            'merek' => $merk->findAll(),
+            'keyword' => $keyword
         ];
+
         return view('backend/master/sparepart/index', $data);
     }
     public function save()

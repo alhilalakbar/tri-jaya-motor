@@ -80,6 +80,11 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="<?= base_url('backend/master/kategori_biaya_operasional') ?>" class="nav-link">
+                                <i class="nav-icon bi bi-circle"></i><p>Kategori Biaya Operasional</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="<?= base_url('backend/master/merek_part') ?>" class="nav-link">
                                 <i class="nav-icon bi bi-circle"></i><p>Merek Part</p>
                             </a>
@@ -167,7 +172,7 @@
                 <li class="nav-header">SISTEM</li>
                 <li class="nav-item">
                     <a href="<?= base_url('backend/master/pengguna') ?>" class="nav-link">
-                        <i class="nav-icon bi bi-person-gear-fill"></i>
+                        <i class="nav-icon bi bi-people-fill"></i>
                         <p>Manajemen Pengguna</p>
                     </a>
                 </li>

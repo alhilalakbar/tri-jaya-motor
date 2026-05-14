@@ -170,29 +170,37 @@ class Laporan extends BaseController
 
         return $maps[$jenis] ?? [];
     }
-    
+
     private function formatValue($key, $value)
     {
         $currencyFields = [
-            'total_biaya',
-            'harga_beli_satuan',
-            'subtotal',
-            'total_biaya_pembelian',
-            'total_pendapatan',
-            'total_pembelian',
-            'total_operasional',
-            'total_gaji',
-            'estimasi_laba_bersih'
+            'total_biaya',           
+            'harga_beli_satuan',     
+            'subtotal',              
+            'total_biaya_pembelian', 
+            'total_pendapatan',      
+            'total_pembelian',       
+            'total_operasional',     
+            'total_gaji',            
+            'estimasi_laba_bersih',  
+            'nominal',               
+            'total_pengeluaran',     
+            'total_pendapatan_jasa', 
+            'harga_jual',           
+            'harga_modal',           
+            'biaya_standar'          
         ];
 
         $dateFields = [
             'tanggal_masuk',
             'tanggal_pembelian',
-            'tanggal'
+            'tanggal',
+            'tanggal_biaya',
+            'tanggal_bayar'
         ];
 
         if (in_array($key, $currencyFields)) {
-            return 'Rp ' . number_format((float)$value, 0, ',', '.');
+            return 'Rp' . number_format((float) $value, 0, ',', '.');
         }
 
         if (in_array($key, $dateFields) && !empty($value)) {
@@ -201,7 +209,7 @@ class Laporan extends BaseController
 
         return $value;
     }
-    
+
     private function getExportData($jenis)
     {
         $range = $this->getDateRange();
@@ -235,7 +243,7 @@ class Laporan extends BaseController
                 return (new StokSparepartLaporanModel())->findAll();
 
             case 'laba-rugi':
-                return [(array)(new LabaRugiLaporanModel())->first()];
+                return [(array) (new LabaRugiLaporanModel())->first()];
 
             default:
                 return [];
@@ -257,7 +265,7 @@ class Laporan extends BaseController
         $sheet->getStyle('A1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
 
         if (!empty($data)) {
-            $keys = array_keys((array)$data[0]);
+            $keys = array_keys((array) $data[0]);
 
             $col = 'A';
             foreach ($keys as $key) {
@@ -286,7 +294,7 @@ class Laporan extends BaseController
             foreach ($data as $item) {
                 $col = 'A';
 
-                foreach ((array)$item as $key => $value) {
+                foreach ((array) $item as $key => $value) {
                     $sheet->setCellValue($col . $row, $this->formatValue($key, $value));
                     $col++;
                 }
@@ -308,14 +316,14 @@ class Laporan extends BaseController
                 ]);
         }
 
-    $writer = new Xlsx($spreadsheet);
+        $writer = new Xlsx($spreadsheet);
 
-    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    header('Content-Disposition: attachment; filename="laporan-' . $jenis . '.xlsx"');
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="laporan-' . $jenis . '.xlsx"');
 
-    $writer->save('php://output');
-    exit;
-}
+        $writer->save('php://output');
+        exit;
+    }
     public function exportPdf($jenis)
     {
         $data = $this->getExportData($jenis);
@@ -360,7 +368,7 @@ class Laporan extends BaseController
         $html .= '<table>';
 
         if (!empty($data)) {
-            $keys = array_keys((array)$data[0]);
+            $keys = array_keys((array) $data[0]);
 
             $html .= '<tr>';
 
@@ -374,7 +382,7 @@ class Laporan extends BaseController
             foreach ($data as $item) {
                 $html .= '<tr>';
 
-                foreach ((array)$item as $key => $value) {
+                foreach ((array) $item as $key => $value) {
                     $html .= '<td>' . $this->formatValue($key, $value) . '</td>';
                 }
 

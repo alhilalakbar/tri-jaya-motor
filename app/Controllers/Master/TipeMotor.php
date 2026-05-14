@@ -14,11 +14,26 @@ class TipeMotor extends BaseController
 
     public function index()
     {
+        $keyword = $this->request->getGet('keyword');
         $merk = new MerkMotorModel();
+
+        $builder = $this->model->select('tipe_motor.*, merek_motor.nama_merek_motor')
+            ->join('merek_motor', 'merek_motor.id_merek_motor = tipe_motor.id_merek_motor');
+
+        if ($keyword) {
+            $builder->groupStart()
+                ->like('tipe_motor.nama_tipe', $keyword)
+                ->orLike('tipe_motor.jenis_kendaraan', $keyword)
+                ->orLike('merek_motor.nama_merek_motor', $keyword)
+                ->groupEnd();
+        }
+
         $data = [
-            'tipe' => $this->model->select('tipe_motor.*, merek_motor.nama_merek_motor')->join('merek_motor', 'merek_motor.id_merek_motor = tipe_motor.id_merek_motor')->findAll(),
-            'merk' => $merk->findAll()
+            'tipe' => $builder->findAll(),
+            'merk' => $merk->findAll(),
+            'keyword' => $keyword
         ];
+
         return view('backend/master/tipe_motor/index', $data);
     }
     public function save()

@@ -13,7 +13,19 @@ class JasaServis extends BaseController
 
     public function index()
     {
-        return view('backend/master/jasa_servis/index', ['data' => $this->model->findAll()]);
+        $keyword = $this->request->getGet('keyword');
+        $builder = $this->model;
+
+        if ($keyword) {
+            $builder->like('nama_jasa', $keyword);
+        }
+
+        $data = [
+            'data' => $builder->findAll(),
+            'keyword' => $keyword
+        ];
+
+        return view('backend/master/jasa_servis/index', $data);
     }
     public function save()
     {
