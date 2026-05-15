@@ -4,8 +4,8 @@
         <select name="header[id_kendaraan]" class="form-select select2" required>
             <option value="">-- Pilih Kendaraan --</option>
             <?php foreach ($kendaraan as $k): ?>
-                <option value="<?= $k['id_kendaraan']; ?>"><?= esc($k['nomor_plat']); ?> - <?= esc($k['nama_pelanggan']); ?>
-                </option>
+            <option value="<?= $k['id_kendaraan']; ?>"><?= esc($k['nomor_plat']); ?> - <?= esc($k['nama_pelanggan']); ?>
+            </option>
             <?php endforeach; ?>
         </select>
     </div>
@@ -14,7 +14,7 @@
         <select name="header[id_mekanik]" class="form-select" required>
             <option value="">-- Pilih Mekanik --</option>
             <?php foreach ($mekanik as $m): ?>
-                <option value="<?= $m['id_mekanik']; ?>"><?= esc($m['nama_mekanik']); ?></option>
+            <option value="<?= $m['id_mekanik']; ?>"><?= esc($m['nama_mekanik']); ?></option>
             <?php endforeach; ?>
         </select>
     </div>
@@ -66,14 +66,14 @@
 </div>
 
 <hr>
-
 <div class="mb-4">
     <h6><i class="bi bi-wrench-adjustable text-primary"></i> Detail Jasa Servis</h6>
     <table class="table table-sm table-bordered" id="tableJasa">
         <thead class="table-light">
             <tr>
                 <th>Nama Jasa</th>
-                <th style="width: 200px">Biaya (Rp)</th>
+                <th style="width: 180px">Biaya Jasa (Rp)</th>
+                <th style="width: 180px">Biaya Tambahan (Rp)</th>
                 <th style="width: 50px"></th>
             </tr>
         </thead>
@@ -83,21 +83,35 @@
                     <select name="jasa[0][id_jasa]" class="form-select form-select-sm select-jasa" required>
                         <option value="">-- Pilih Jasa --</option>
                         <?php foreach ($jasa_list as $j): ?>
-                            <option value="<?= $j['id_jasa']; ?>" data-price="<?= $j['biaya_standar']; ?>">
-                                <?= esc($j['nama_jasa']); ?>
-                            </option>
+                        <option value="<?= $j['id_jasa']; ?>" data-price="<?= $j['biaya_standar']; ?>">
+                            <?= esc($j['nama_jasa']); ?>
+                        </option>
                         <?php endforeach; ?>
                     </select>
                 </td>
-                <td><input type="number" name="jasa[0][harga_saat_transaksi]"
-                        class="form-control form-control-sm biaya-input" value="0" min="0"></td>
-                <td class="text-center"><button type="button" class="btn btn-outline-danger btn-sm disabled"><i
-                            class="bi bi-trash"></i></button></td>
+
+                <td>
+                    <input type="number" name="jasa[0][harga_saat_transaksi]"
+                        class="form-control form-control-sm biaya-input" value="0" min="0">
+                </td>
+
+                <td>
+                    <input type="number" name="jasa[0][biaya_tambahan]" class="form-control form-control-sm" value="0"
+                        min="0">
+                </td>
+
+                <td class="text-center">
+                    <button type="button" class="btn btn-outline-danger btn-sm disabled">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </td>
             </tr>
         </tbody>
     </table>
-    <button type="button" class="btn btn-outline-primary btn-sm" onclick="addRow('tableJasa')"><i
-            class="bi bi-plus"></i> Tambah Jasa</button>
+
+    <button type="button" class="btn btn-outline-primary btn-sm" onclick="addRow('tableJasa')">
+        <i class="bi bi-plus"></i> Tambah Jasa
+    </button>
 </div>
 
 <div>
@@ -117,9 +131,9 @@
                     <select name="part[0][id_part]" class="form-select form-select-sm select-part">
                         <option value="">-- Pilih Part (Opsional) --</option>
                         <?php foreach ($part_list as $p): ?>
-                            <option value="<?= $p['id_part']; ?>" data-price="<?= $p['harga_jual']; ?>">
-                                <?= esc($p['nama_part']); ?>
-                            </option>
+                        <option value="<?= $p['id_part']; ?>" data-price="<?= $p['harga_jual']; ?>">
+                            <?= esc($p['nama_part']); ?>
+                        </option>
                         <?php endforeach; ?>
                     </select>
                 </td>

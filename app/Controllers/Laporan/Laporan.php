@@ -65,9 +65,13 @@ class Laporan extends BaseController
 
         return view('backend/laporan/mekanik', [
             'judul' => 'Laporan Performa Mekanik',
-            'laporan' => $model->findAll(),
+            'laporan' => $model->getPerformaMekanik(
+                $range['tgl_mulai'],
+                $range['tgl_akhir']
+            ),
             'tgl_mulai' => $range['tgl_mulai'],
             'tgl_akhir' => $range['tgl_akhir']
+
         ]);
     }
 
@@ -112,7 +116,10 @@ class Laporan extends BaseController
 
         return view('backend/laporan/loyalitas', [
             'judul' => 'Laporan Loyalitas Pelanggan',
-            'laporan' => $model->findAll(),
+            'laporan' => $model->getLoyalitas(
+                $range['tgl_mulai'],
+                $range['tgl_akhir']
+            ),
             'tgl_mulai' => $range['tgl_mulai'],
             'tgl_akhir' => $range['tgl_akhir']
         ]);
@@ -125,9 +132,13 @@ class Laporan extends BaseController
 
         return view('backend/laporan/laba_rugi', [
             'judul' => 'Laporan Laba Rugi',
-            'laba' => $model->first(),
+            'laba' => $model->getLabaRugi(
+                $range['tgl_mulai'],
+                $range['tgl_akhir']
+            ),
             'tgl_mulai' => $range['tgl_mulai'],
             'tgl_akhir' => $range['tgl_akhir']
+
         ]);
     }
 
@@ -145,7 +156,7 @@ class Laporan extends BaseController
                 'status_pengerjaan' => 'Status Pengerjaan',
                 'status_pembayaran' => 'Status Pembayaran',
                 'metode_pembayaran' => 'Metode Pembayaran',
-                'total_biaya' => 'Total Biaya',
+                'total_hpp' => 'HPP Sparepart',
             ],
 
             'pembelian' => [
@@ -174,21 +185,21 @@ class Laporan extends BaseController
     private function formatValue($key, $value)
     {
         $currencyFields = [
-            'total_biaya',           
-            'harga_beli_satuan',     
-            'subtotal',              
-            'total_biaya_pembelian', 
-            'total_pendapatan',      
-            'total_pembelian',       
-            'total_operasional',     
-            'total_gaji',            
-            'estimasi_laba_bersih',  
-            'nominal',               
-            'total_pengeluaran',     
-            'total_pendapatan_jasa', 
-            'harga_jual',           
-            'harga_modal',           
-            'biaya_standar'          
+            'total_biaya',
+            'harga_beli_satuan',
+            'subtotal',
+            'total_biaya_pembelian',
+            'total_pendapatan',
+            'total_hpp',
+            'total_operasional',
+            'total_gaji',
+            'estimasi_laba_bersih',
+            'nominal',
+            'total_pengeluaran',
+            'total_pendapatan_jasa',
+            'harga_jual',
+            'harga_modal',
+            'biaya_standar'
         ];
 
         $dateFields = [
@@ -234,16 +245,30 @@ class Laporan extends BaseController
                     ->findAll();
 
             case 'mekanik':
-                return (new PerformaMekanikLaporanModel())->findAll();
+                return (new PerformaMekanikLaporanModel())
+                ->getPerformaMekanik(
+                    $range['tgl_mulai'],
+                    $range['tgl_akhir']
+                );
 
             case 'loyalitas':
-                return (new LoyalitasLaporanModel())->findAll();
+                return (new LoyalitasLaporanModel())
+                ->getLoyalitas(
+                    $range['tgl_mulai'],
+                    $range['tgl_akhir']
+                );
 
             case 'stok':
                 return (new StokSparepartLaporanModel())->findAll();
 
             case 'laba-rugi':
-                return [(array) (new LabaRugiLaporanModel())->first()];
+                return [
+                    (array) (new LabaRugiLaporanModel())
+                ->getLabaRugi(
+                    $range['tgl_mulai'],
+                    $range['tgl_akhir']
+                )
+                    ];
 
             default:
                 return [];

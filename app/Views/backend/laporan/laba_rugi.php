@@ -58,7 +58,7 @@
                     </tr>
                     <tr>
                         <th class="bg-light">HPP Sparepart (Modal Barang Terjual)</th>
-                        <td class="text-end text-danger">Rp <?= number_format($laba->total_pembelian, 0, ',', '.'); ?>
+                        <td class="text-end text-danger">Rp <?= number_format($laba->total_hpp, 0, ',', '.'); ?>
                         </td>
                     </tr>
                     <tr>

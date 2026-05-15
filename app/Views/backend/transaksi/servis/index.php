@@ -23,42 +23,42 @@
             </thead>
             <tbody>
                 <?php foreach ($data as $d): ?>
-                    <tr>
-                        <td>
-                            <span class="fw-bold text-primary"><?= $d['kode_transaksi']; ?></span><br>
-                            <small class="text-muted"><i class="bi bi-person"></i> Input:
-                                <?= esc($d['nama_pengguna'] ?? ''); ?></small>
-                        </td>
-                        <td>
+                <tr>
+                    <td>
+                        <span class="fw-bold text-primary"><?= $d['kode_transaksi']; ?></span><br>
+                        <small class="text-muted"><i class="bi bi-person"></i> Input:
+                            <?= esc($d['nama_pengguna'] ?? ''); ?></small>
+                    </td>
+                    <td>
 
-                            <div class="fw-semibold">
+                        <div class="fw-semibold">
 
-                                <?= date(
+                            <?= date(
                                     'd/m/Y',
                                     strtotime($d['tanggal_masuk'])
                                 ); ?>
 
-                            </div>
+                        </div>
 
-                            <small class="text-muted">
+                        <small class="text-muted">
 
-                                <?= date(
+                            <?= date(
                                     'H:i:s',
                                     strtotime($d['tanggal_masuk'])
                                 ); ?>
 
-                            </small>
+                        </small>
 
-                        </td>
-                        <td>
-                            <strong><?= esc($d['nomor_plat']); ?> (<?= esc($d['nama_pelanggan']); ?>)</strong><br>
-                            <small class="text-muted text-truncate d-inline-block" style="max-width: 250px;"
-                                title="<?= esc($d['keluhan_awal']); ?>">
-                                K: <?= esc($d['keluhan_awal'] ?: '-'); ?>
-                            </small>
-                        </td>
-                        <td>
-                            <?php
+                    </td>
+                    <td>
+                        <strong><?= esc($d['nomor_plat']); ?> (<?= esc($d['nama_pelanggan']); ?>)</strong><br>
+                        <small class="text-muted text-truncate d-inline-block" style="max-width: 250px;"
+                            title="<?= esc($d['keluhan_awal']); ?>">
+                            K: <?= esc($d['keluhan_awal'] ?: '-'); ?>
+                        </small>
+                    </td>
+                    <td>
+                        <?php
                             $statusColor = [
                                 'Antre' => 'bg-secondary',
                                 'Diproses' => 'bg-info',
@@ -68,33 +68,33 @@
                                 'Dibatalkan' => 'bg-danger'
                             ];
                             ?>
-                            <span class="badge <?= $statusColor[$d['status_pengerjaan']] ?? 'bg-secondary'; ?>">
-                                <?= $d['status_pengerjaan'] ?: 'Antre'; ?>
-                            </span><br>
-                            <small class="text-muted">Mek: <?= esc($d['nama_mekanik'] ?? '-'); ?></small>
-                        </td>
-                        <td>
-                            <span
-                                class="badge <?= $d['status_pembayaran'] == 'Lunas' ? 'text-success border border-success' : 'text-danger border border-danger'; ?>">
-                                <?= $d['status_pembayaran']; ?>
-                            </span><br>
-                            <small class="text-muted"><?= $d['metode_pembayaran']; ?></small>
-                        </td>
-                        <td class="fw-bold">Rp <?= number_format($d['total_biaya'], 0, ',', '.'); ?></td>
-                        <td class="text-center">
-                            <div class="btn-group" role="group">
-                                <a href="<?= base_url('backend/transaksi/servis/detail/' . $d['id_transaksi']); ?>"
-                                    class="btn btn-info btn-sm text-white" title="Lihat Detail">
-                                    <i class="bi bi-eye"></i>
-                                </a>
-                                <button type="button" class="btn btn-warning btn-sm"
-                                    onclick="editStatus(<?= htmlspecialchars(json_encode($d)); ?>)"
-                                    title="Update Status/Bayar">
-                                    <i class="bi bi-pencil-square"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
+                        <span class="badge <?= $statusColor[$d['status_pengerjaan']] ?? 'bg-secondary'; ?>">
+                            <?= $d['status_pengerjaan'] ?: 'Antre'; ?>
+                        </span><br>
+                        <small class="text-muted">Mek: <?= esc($d['nama_mekanik'] ?? '-'); ?></small>
+                    </td>
+                    <td>
+                        <span
+                            class="badge <?= $d['status_pembayaran'] == 'Lunas' ? 'text-success border border-success' : 'text-danger border border-danger'; ?>">
+                            <?= $d['status_pembayaran']; ?>
+                        </span><br>
+                        <small class="text-muted"><?= $d['metode_pembayaran']; ?></small>
+                    </td>
+                    <td class="fw-bold">Rp <?= number_format($d['total_biaya'], 0, ',', '.'); ?></td>
+                    <td class="text-center">
+                        <div class="btn-group" role="group">
+                            <a href="<?= base_url('backend/transaksi/servis/detail/' . $d['id_transaksi']); ?>"
+                                class="btn btn-info btn-sm text-white" title="Lihat Detail">
+                                <i class="bi bi-eye"></i>
+                            </a>
+                            <button type="button" class="btn btn-warning btn-sm"
+                                onclick="editStatus(<?= htmlspecialchars(json_encode($d)); ?>)"
+                                title="Update Status/Bayar">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
@@ -170,66 +170,95 @@
 </div>
 
 <script>
-    let modalServis;
-    let modalEditStatus;
-    let jasaIdx = 1;
-    let partIdx = 1;
+let modalServis;
+let modalEditStatus;
+let jasaIdx = 1;
+let partIdx = 1;
 
-    document.addEventListener('DOMContentLoaded', function () {
-        if (typeof bootstrap !== 'undefined') {
-            modalServis = new bootstrap.Modal(document.getElementById('modalServis'));
-            modalEditStatus = new bootstrap.Modal(document.getElementById('modalEditStatus'));
-        }
-    });
+document.addEventListener('DOMContentLoaded', function() {
+    if (typeof bootstrap !== 'undefined') {
+        modalServis = new bootstrap.Modal(document.getElementById('modalServis'));
+        modalEditStatus = new bootstrap.Modal(document.getElementById('modalEditStatus'));
+    }
+});
 
-    function tambahServis() {
-        modalServis.show();
+function tambahServis() {
+    modalServis.show();
+}
+
+function editStatus(data) {
+    document.getElementById('edit_id_transaksi').value = data.id_transaksi;
+    document.getElementById('edit_status_pengerjaan').value = data.status_pengerjaan;
+    document.getElementById('edit_metode_pembayaran').value = data.metode_pembayaran;
+    document.getElementById('edit_status_pembayaran').value = data.status_pembayaran;
+    modalEditStatus.show();
+}
+
+// LOGIKA AUTOFILL (MENDETEKSI PERUBAHAN DROPDOWN)
+document.addEventListener('change', function(e) {
+    // Jika yang berubah adalah dropdown Jasa
+    if (e.target.classList.contains('select-jasa')) {
+        const price = e.target.options[e.target.selectedIndex].dataset.price || 0;
+        const row = e.target.closest('tr');
+        row.querySelector('.biaya-input').value = price;
     }
 
-    function editStatus(data) {
-        document.getElementById('edit_id_transaksi').value = data.id_transaksi;
-        document.getElementById('edit_status_pengerjaan').value = data.status_pengerjaan;
-        document.getElementById('edit_metode_pembayaran').value = data.metode_pembayaran;
-        document.getElementById('edit_status_pembayaran').value = data.status_pembayaran;
-        modalEditStatus.show();
+    // Jika yang berubah adalah dropdown Sparepart
+    if (e.target.classList.contains('select-part')) {
+        const price = e.target.options[e.target.selectedIndex].dataset.price || 0;
+        const row = e.target.closest('tr');
+        row.querySelector('.harga-input').value = price;
     }
+});
 
-    // LOGIKA AUTOFILL (MENDETEKSI PERUBAHAN DROPDOWN)
-    document.addEventListener('change', function (e) {
-        // Jika yang berubah adalah dropdown Jasa
-        if (e.target.classList.contains('select-jasa')) {
-            const price = e.target.options[e.target.selectedIndex].dataset.price || 0;
-            const row = e.target.closest('tr');
-            row.querySelector('.biaya-input').value = price;
-        }
+// FUNGSI TAMBAH BARIS
+function addRow(tableId) {
+    const table = document.getElementById(tableId).getElementsByTagName('tbody')[0];
+    let row = '';
 
-        // Jika yang berubah adalah dropdown Sparepart
-        if (e.target.classList.contains('select-part')) {
-            const price = e.target.options[e.target.selectedIndex].dataset.price || 0;
-            const row = e.target.closest('tr');
-            row.querySelector('.harga-input').value = price;
-        }
-    });
-
-    // FUNGSI TAMBAH BARIS
-    function addRow(tableId) {
-        const table = document.getElementById(tableId).getElementsByTagName('tbody')[0];
-        let row = '';
-
-        if (tableId === 'tableJasa') {
-            row = `<tr>
-                <td><select name="jasa[${jasaIdx}][id_jasa]" class="form-select form-select-sm select-jasa" required>
+    if (tableId === 'tableJasa') {
+        row = `<tr>
+            <td>
+                <select name="jasa[${jasaIdx}][id_jasa]" class="form-select form-select-sm select-jasa" required>
                     <option value="">-- Pilih Jasa --</option>
                     <?php foreach ($jasa_list as $j): ?>
-                        <option value="<?= $j['id_jasa']; ?>" data-price="<?= $j['biaya_standar']; ?>"><?= esc($j['nama_jasa']); ?></option>
+                        <option value="<?= $j['id_jasa']; ?>" data-price="<?= $j['biaya_standar']; ?>">
+                            <?= esc($j['nama_jasa']); ?>
+                        </option>
                     <?php endforeach; ?>
-                </select></td>
-                <td><input type="number" name="jasa[${jasaIdx}][harga_saat_transaksi]" class="form-control form-control-sm biaya-input" value="0"></td>
-                <td class="text-center"><button type="button" class="btn btn-danger btn-sm" onclick="this.closest('tr').remove()"><i class="bi bi-trash"></i></button></td>
-            </tr>`;
-            jasaIdx++;
-        } else {
-            row = `<tr>
+                </select>
+            </td>
+
+            <td>
+                <input
+                    type="number"
+                    name="jasa[${jasaIdx}][harga_saat_transaksi]"
+                    class="form-control form-control-sm biaya-input"
+                    value="0"
+                    min="0">
+            </td>
+
+            <td>
+                <input
+                    type="number"
+                    name="jasa[${jasaIdx}][biaya_tambahan]"
+                    class="form-control form-control-sm"
+                    value="0"
+                    min="0">
+            </td>
+
+            <td class="text-center">
+                <button
+                    type="button"
+                    class="btn btn-danger btn-sm"
+                    onclick="this.closest('tr').remove()">
+                    <i class="bi bi-trash"></i>
+                </button>
+            </td>
+        </tr>`;
+        jasaIdx++;
+    } else {
+        row = `<tr>
                 <td><select name="part[${partIdx}][id_part]" class="form-select form-select-sm select-part">
                     <option value="">-- Pilih Part --</option>
                     <?php foreach ($part_list as $p): ?>
@@ -240,9 +269,9 @@
                 <td><input type="number" name="part[${partIdx}][harga_satuan_jual]" class="form-control form-control-sm harga-input" value="0"></td>
                 <td class="text-center"><button type="button" class="btn btn-danger btn-sm" onclick="this.closest('tr').remove()"><i class="bi bi-trash"></i></button></td>
             </tr>`;
-            partIdx++;
-        }
-        table.insertAdjacentHTML('beforeend', row);
+        partIdx++;
     }
+    table.insertAdjacentHTML('beforeend', row);
+}
 </script>
 <?= $this->endSection(); ?>
