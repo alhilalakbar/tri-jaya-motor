@@ -6,11 +6,14 @@
 
     <div class="card-header d-flex align-items-center">
         <h5 class="card-title m-0">Daftar Data</h5>
-        <button type="button" class="btn btn-primary btn-sm ms-2" onclick="tambahData()">
-            <i class="bi bi-plus-lg"></i> Tambah Data
-        </button>
 
-        <div class="ms-auto">
+        <div class="flex-grow-1 d-flex justify-content-center">
+            <button type="button" class="btn btn-primary btn-sm" onclick="tambahData()">
+                <i class="bi bi-plus-lg"></i> Tambah Data
+            </button>
+        </div>
+
+        <div>
             <?= $this->include('backend/layout/search') ?>
         </div>
     </div>
@@ -34,40 +37,40 @@
 
                 <?php foreach ($data as $d): ?>
 
-                    <tr>
+                <tr>
 
-                        <td>
-                            <?= $no++; ?>
-                        </td>
+                    <td>
+                        <?= $no++; ?>
+                    </td>
 
-                        <td>
+                    <td>
 
-                            <span class="badge text-bg-info">
+                        <span class="badge text-bg-info">
 
-                                <?= esc($d['nama_kategori']); ?>
+                            <?= esc($d['nama_kategori']); ?>
 
-                            </span>
+                        </span>
 
-                        </td>
+                    </td>
 
-                        <td>
+                    <td>
 
-                            <button class="btn btn-warning btn-sm" onclick='editData(<?= json_encode($d); ?>)'>
+                        <button class="btn btn-warning btn-sm" onclick='editData(<?= json_encode($d); ?>)'>
 
-                                <i class="bi bi-pencil-square"></i>
+                            <i class="bi bi-pencil-square"></i>
 
-                            </button>
+                        </button>
 
-                            <a href="<?= base_url('backend/master/kategori_biaya_operasional/delete/' . $d['id_kategori_biaya']); ?>"
-                                class="btn btn-danger btn-sm" onclick="return confirm('Hapus data ini?')">
+                        <a href="<?= base_url('backend/master/kategori_biaya_operasional/delete/' . $d['id_kategori_biaya']); ?>"
+                            class="btn btn-danger btn-sm" onclick="return confirm('Hapus data ini?')">
 
-                                <i class="bi bi-trash"></i>
+                            <i class="bi bi-trash"></i>
 
-                            </a>
+                        </a>
 
-                        </td>
+                    </td>
 
-                    </tr>
+                </tr>
 
                 <?php endforeach; ?>
 
@@ -120,65 +123,63 @@
 </div>
 
 <script>
+let modalElement;
+let modal;
+let form;
 
-    let modalElement;
-    let modal;
-    let form;
+document.addEventListener('DOMContentLoaded', function() {
 
-    document.addEventListener('DOMContentLoaded', function () {
+    modalElement =
+        document.getElementById('modalMaster');
 
-        modalElement =
-            document.getElementById('modalMaster');
+    form =
+        document.getElementById('formMaster');
 
-        form =
-            document.getElementById('formMaster');
+    if (typeof bootstrap !== 'undefined') {
 
-        if (typeof bootstrap !== 'undefined') {
-
-            modal = new bootstrap.Modal(modalElement);
-
-        }
-
-    });
-
-    function tambahData() {
-
-        if (!form || !modal) return;
-
-        document.getElementById('modalTitle').innerText =
-            'Tambah Kategori Biaya Operasional';
-
-        form.action =
-            '<?= base_url('backend/master/kategori_biaya_operasional/save'); ?>';
-
-        form.reset();
-
-        modal.show();
+        modal = new bootstrap.Modal(modalElement);
 
     }
 
-    function editData(data) {
+});
 
-        if (!form || !modal) return;
+function tambahData() {
 
-        document.getElementById('modalTitle').innerText =
-            'Edit Kategori Biaya Operasional';
+    if (!form || !modal) return;
 
-        form.action =
-            '<?= base_url('backend/master/kategori_biaya_operasional/update'); ?>/' +
-            data.id_kategori_biaya;
+    document.getElementById('modalTitle').innerText =
+        'Tambah Kategori Biaya Operasional';
 
-        if (document.getElementById('nama_kategori')) {
+    form.action =
+        '<?= base_url('backend/master/kategori_biaya_operasional/save'); ?>';
 
-            document.getElementById('nama_kategori').value =
-                data.nama_kategori;
+    form.reset();
 
-        }
+    modal.show();
 
-        modal.show();
+}
+
+function editData(data) {
+
+    if (!form || !modal) return;
+
+    document.getElementById('modalTitle').innerText =
+        'Edit Kategori Biaya Operasional';
+
+    form.action =
+        '<?= base_url('backend/master/kategori_biaya_operasional/update'); ?>/' +
+        data.id_kategori_biaya;
+
+    if (document.getElementById('nama_kategori')) {
+
+        document.getElementById('nama_kategori').value =
+            data.nama_kategori;
 
     }
 
+    modal.show();
+
+}
 </script>
 
 <?= $this->endSection(); ?>
