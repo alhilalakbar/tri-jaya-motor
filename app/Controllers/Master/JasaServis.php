@@ -1,11 +1,14 @@
 <?php
+
 namespace App\Controllers\Master;
-use App\Controllers\BaseController;
+
+use App\Controllers\BaseCrudController;
 use App\Models\Master\Layanan\JasaServisModel;
 
-class JasaServis extends BaseController
+class JasaServis extends BaseCrudController
 {
     protected $model;
+
     public function __construct()
     {
         $this->model = new JasaServisModel();
@@ -20,26 +23,24 @@ class JasaServis extends BaseController
             $builder->like('nama_jasa', $keyword);
         }
 
-        $data = [
+        return view('backend/master/jasa_servis/index', [
             'data' => $builder->findAll(),
             'keyword' => $keyword
-        ];
-
-        return view('backend/master/jasa_servis/index', $data);
+        ]);
     }
+
     public function save()
     {
-        $this->model->save($this->request->getPost());
-        return redirect()->back();
+        return $this->handleSave($this->request->getPost());
     }
+
     public function update($id)
     {
-        $this->model->update($id, $this->request->getPost());
-        return redirect()->back();
+        return $this->handleUpdate($id, $this->request->getPost());
     }
+
     public function delete($id)
     {
-        $this->model->delete($id);
-        return redirect()->back();
+        return $this->handleDelete($id);
     }
 }

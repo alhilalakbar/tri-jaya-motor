@@ -74,7 +74,7 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
         $routes->get('sparepart/delete/(:any)', 'Master\Sparepart::delete/$1');
 
         // Kategori Part
-        $routes->get('part', 'Master\KategoriPart::index');
+        $routes->get('kategori_part', 'Master\KategoriPart::index');
         $routes->post('kategori_part/save', 'Master\KategoriPart::save');
         $routes->post('kategori_part/update/(:any)', 'Master\KategoriPart::update/$1');
         $routes->get('kategori_part/delete/(:any)', 'Master\KategoriPart::delete/$1');

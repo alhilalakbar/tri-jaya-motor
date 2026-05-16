@@ -1,11 +1,14 @@
 <?php
+
 namespace App\Controllers\Master;
-use App\Controllers\BaseController;
+
+use App\Controllers\BaseCrudController;
 use App\Models\Master\Part\KategoriPartModel;
 
-class KategoriPart extends BaseController
+class KategoriPart extends BaseCrudController
 {
     protected $model;
+
     public function __construct()
     {
         $this->model = new KategoriPartModel();
@@ -25,19 +28,23 @@ class KategoriPart extends BaseController
             'keyword' => $keyword
         ]);
     }
+
     public function save()
     {
-        $this->model->save(['nama_kategori' => $this->request->getPost('nama_kategori')]);
-        return redirect()->back();
+        return $this->handleSave([
+            'nama_kategori' => $this->request->getPost('nama_kategori')
+        ]);
     }
+
     public function update($id)
     {
-        $this->model->update($id, ['nama_kategori' => $this->request->getPost('nama_kategori')]);
-        return redirect()->back();
+        return $this->handleUpdate($id, [
+            'nama_kategori' => $this->request->getPost('nama_kategori')
+        ]);
     }
+
     public function delete($id)
     {
-        $this->model->delete($id);
-        return redirect()->back();
+        return $this->handleDelete($id);
     }
 }

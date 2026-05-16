@@ -1,11 +1,14 @@
 <?php
+
 namespace App\Controllers\Master;
-use App\Controllers\BaseController;
+
+use App\Controllers\BaseCrudController;
 use App\Models\Master\Kendaraan\MerkMotorModel;
 
-class MerekMotor extends BaseController
+class MerekMotor extends BaseCrudController
 {
     protected $model;
+
     public function __construct()
     {
         $this->model = new MerkMotorModel();
@@ -20,24 +23,28 @@ class MerekMotor extends BaseController
             $builder->like('nama_merek_motor', $keyword);
         }
 
-        return view('backend/master/merk_motor/index', [
+        return view('backend/master/merek_motor/index', [
             'data' => $builder->findAll(),
             'keyword' => $keyword
         ]);
     }
+
     public function save()
     {
-        $this->model->save(['nama_merek_motor' => $this->request->getPost('nama_merek_motor')]);
-        return redirect()->back();
+        return $this->handleSave([
+            'nama_merek_motor' => $this->request->getPost('nama_merek_motor')
+        ]);
     }
+
     public function update($id)
     {
-        $this->model->update($id, ['nama_merek_motor' => $this->request->getPost('nama_merek_motor')]);
-        return redirect()->back();
+        return $this->handleUpdate($id, [
+            'nama_merek_motor' => $this->request->getPost('nama_merek_motor')
+        ]);
     }
+
     public function delete($id)
     {
-        $this->model->delete($id);
-        return redirect()->back();
+        return $this->handleDelete($id);
     }
 }

@@ -1,13 +1,16 @@
 <?php
+
 namespace App\Controllers\Master;
-use App\Controllers\BaseController;
+
+use App\Controllers\BaseCrudController;
 use App\Models\Master\Kendaraan\KendaraanModel;
 use App\Models\Master\Entitas\PelangganModel;
 use App\Models\Master\Kendaraan\TipeMotorModel;
 
-class Kendaraan extends BaseController
+class Kendaraan extends BaseCrudController
 {
     protected $model;
+
     public function __construct()
     {
         $this->model = new KendaraanModel();
@@ -16,10 +19,12 @@ class Kendaraan extends BaseController
     public function index()
     {
         $keyword = $this->request->getGet('keyword');
-        $pel = new \App\Models\Master\Entitas\PelangganModel();
-        $tipe = new \App\Models\Master\Kendaraan\TipeMotorModel();
 
-        $builder = $this->model->select('kendaraan.*, pelanggan.nama_pelanggan, tipe_motor.nama_tipe')
+        $pel = new PelangganModel();
+        $tipe = new TipeMotorModel();
+
+        $builder = $this->model
+            ->select('kendaraan.*, pelanggan.nama_pelanggan, tipe_motor.nama_tipe')
             ->join('pelanggan', 'pelanggan.id_pelanggan = kendaraan.id_pelanggan')
             ->join('tipe_motor', 'tipe_motor.id_tipe_motor = kendaraan.id_tipe_motor');
 
@@ -31,27 +36,26 @@ class Kendaraan extends BaseController
                 ->groupEnd();
         }
 
-        $data = [
+        return view('backend/master/kendaraan/index', [
             'kendaraan' => $builder->findAll(),
             'pelanggan' => $pel->findAll(),
             'tipe' => $tipe->findAll(),
             'keyword' => $keyword
-        ];
-        return view('backend/master/kendaraan/index', $data);
+        ]);
     }
+
     public function save()
     {
-        $this->model->save($this->request->getPost());
-        return redirect()->back();
+        return $this->handleSave($this->request->getPost());
     }
+
     public function update($id)
     {
-        $this->model->update($id, $this->request->getPost());
-        return redirect()->back();
+        return $this->handleUpdate($id, $this->request->getPost());
     }
+
     public function delete($id)
     {
-        $this->model->delete($id);
-        return redirect()->back();
+        return $this->handleDelete($id);
     }
 }

@@ -59,7 +59,7 @@
                             <i class="bi bi-pencil-square"></i>
                         </button>
 
-                        <a href="<?= base_url('backend/master/merk_part/delete/' . $d['id_merek_part']); ?>"
+                        <a href="<?= base_url('backend/master/merek_part/delete/' . $d['id_merek_part']); ?>"
                             class="btn btn-danger btn-sm" onclick="return confirm('Hapus data?')">
 
                             <i class="bi bi-trash"></i>
@@ -102,7 +102,7 @@
 
                 <div class="modal-body">
 
-                    <?= $this->include('backend/master/merk_part/form'); ?>
+                    <?= $this->include('backend/master/merek_part/form'); ?>
 
                 </div>
 
@@ -216,7 +216,7 @@ function tambahData() {
     ).innerText = 'Tambah Data';
 
     form.action =
-        '<?= base_url('backend/master/merk_part/save'); ?>';
+        '<?= base_url('backend/master/merek_part/save'); ?>';
 
     modal.show();
 }
@@ -243,7 +243,7 @@ function editData(data) {
 
     // Action
     form.action =
-        '<?= base_url('backend/master/merk_part/update'); ?>/' +
+        '<?= base_url('backend/master/merek_part/update'); ?>/' +
         data.id_merek_part;
 
     // =========================

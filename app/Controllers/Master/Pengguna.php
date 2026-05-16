@@ -1,11 +1,14 @@
 <?php
+
 namespace App\Controllers\Master;
-use App\Controllers\BaseController;
+
+use App\Controllers\BaseCrudController;
 use App\Models\Master\Entitas\PenggunaModel;
 
-class Pengguna extends BaseController
+class Pengguna extends BaseCrudController
 {
     protected $model;
+
     public function __construct()
     {
         $this->model = new PenggunaModel();
@@ -28,26 +31,37 @@ class Pengguna extends BaseController
             'keyword' => $keyword
         ]);
     }
+
     public function save()
     {
         $data = $this->request->getPost();
-        $data['kata_sandi'] = password_hash($data['kata_sandi'], PASSWORD_DEFAULT);
-        $this->model->save($data);
-        return redirect()->back();
+
+        $data['kata_sandi'] = password_hash(
+            $data['kata_sandi'],
+            PASSWORD_DEFAULT
+        );
+
+        return $this->handleSave($data);
     }
+
     public function update($id)
     {
         $data = $this->request->getPost();
-        if (!empty($data['kata_sandi']))
-            $data['kata_sandi'] = password_hash($data['kata_sandi'], PASSWORD_DEFAULT);
-        else
+
+        if (!empty($data['kata_sandi'])) {
+            $data['kata_sandi'] = password_hash(
+                $data['kata_sandi'],
+                PASSWORD_DEFAULT
+            );
+        } else {
             unset($data['kata_sandi']);
-        $this->model->update($id, $data);
-        return redirect()->back();
+        }
+
+        return $this->handleUpdate($id, $data);
     }
+
     public function delete($id)
     {
-        $this->model->delete($id);
-        return redirect()->back();
+        return $this->handleDelete($id);
     }
 }

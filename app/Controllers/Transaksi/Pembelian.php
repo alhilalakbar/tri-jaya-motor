@@ -12,10 +12,9 @@ class Pembelian extends BaseController
     {
         $db = \Config\Database::connect();
 
-        $model = new \App\Models\Transaksi\Stok\PembelianStokModel();
+        $model = new PembelianStokModel();
 
         $data = [
-
             'title' => 'Pembelian Stok',
 
             'data' => $model
@@ -47,10 +46,7 @@ class Pembelian extends BaseController
                 ->getResultArray(),
         ];
 
-        return view(
-            'backend/transaksi/pembelian/index',
-            $data
-        );
+        return view('backend/transaksi/pembelian/index', $data);
     }
 
     public function save()
@@ -60,75 +56,70 @@ class Pembelian extends BaseController
         $db->transBegin();
 
         try {
-
             $header = $this->request->getPost('header');
+            $items = $this->request->getPost('items');
 
-            $header['tanggal_pembelian'] =
-                date('Y-m-d H:i:s');
+            if (empty($header['id_pemasok'])) {
+                throw new \Exception('Pemasok wajib dipilih.');
+            }
 
-            $header['id_pengguna'] =
-                session()->get('id_pengguna');
+            if (!is_array($items) || empty($items)) {
+                throw new \Exception('Minimal satu sparepart harus dipilih.');
+            }
+
+            foreach ($items as $item) {
+                if (
+                    empty($item['id_part']) ||
+                    empty($item['jumlah_beli']) ||
+                    empty($item['harga_beli_satuan'])
+                ) {
+                    throw new \Exception('Data detail pembelian tidak lengkap.');
+                }
+
+                if ((int)$item['jumlah_beli'] <= 0) {
+                    throw new \Exception('Jumlah pembelian harus lebih dari 0.');
+                }
+
+                if ((float)$item['harga_beli_satuan'] <= 0) {
+                    throw new \Exception('Harga beli harus lebih dari 0.');
+                }
+            }
+
+            $header['tanggal_pembelian'] = date('Y-m-d H:i:s');
+            $header['id_pengguna'] = session()->get('id_pengguna');
 
             $beliModel = new PembelianStokModel();
 
-            $idBeli = $beliModel->insert(
-                $header,
-                true
-            );
+            $idBeli = $beliModel->insert($header, true);
 
             if (!$idBeli) {
-
-                throw new \Exception(
-                    'Gagal menyimpan data pembelian.'
-                );
+                throw new \Exception('Gagal menyimpan data pembelian.');
             }
 
             $detModel = new DetailPembelianModel();
 
-            $items = $this->request->getPost('items');
-
-            if (is_array($items)) {
-
-                foreach ($items as $i) {
-
-                    $i['id_pembelian'] = $idBeli;
-
-                    $detModel->insert($i);
-                }
+            foreach ($items as $item) {
+                $item['id_pembelian'] = $idBeli;
+                $detModel->insert($item);
             }
 
             if ($db->transStatus() === false) {
-
-                throw new \Exception(
-                    'Transaksi pembelian gagal disimpan.'
-                );
+                throw new \Exception('Transaksi pembelian gagal disimpan.');
             }
 
             $db->transCommit();
 
             return redirect()
-
                 ->to('backend/transaksi/pembelian')
-
-                ->with(
-                    'success',
-                    'Pembelian stok berhasil disimpan.'
-                );
+                ->with('success', 'Pembelian stok berhasil disimpan.');
 
         } catch (\Throwable $e) {
-
             $db->transRollback();
 
             return redirect()
-
                 ->back()
-
                 ->withInput()
-
-                ->with(
-                    'error',
-                    $e->getMessage()
-                );
+                ->with('error', $e->getMessage());
         }
     }
 

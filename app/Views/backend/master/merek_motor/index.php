@@ -38,7 +38,7 @@
                             onclick="editData(<?= htmlspecialchars(json_encode($d)); ?>)">
                             <i class="bi bi-pencil-square"></i>
                         </button>
-                        <a href="<?= base_url('backend/master/merk_motor/delete/' . $d['id_merek_motor']); ?>"
+                        <a href="<?= base_url('backend/master/merek_motor/delete/' . $d['id_merek_motor']); ?>"
                             class="btn btn-danger btn-sm" onclick="return confirm('Hapus data?')">
                             <i class="bi bi-trash"></i>
                         </a>
@@ -60,7 +60,7 @@
                     <h5 class="modal-title" id="modalTitle">Form Data</h5>
                 </div>
                 <div class="modal-body">
-                    <?= $this->include('backend/master/merk_motor/form'); ?>
+                    <?= $this->include('backend/master/merek_motor/form'); ?>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Simpan</button>
@@ -93,7 +93,7 @@ function tambahData() {
     if (!form || !modal) return;
 
     document.getElementById('modalTitle').innerText = 'Tambah Data';
-    form.action = '<?= base_url('backend/master/merk_motor/save'); ?>';
+    form.action = '<?= base_url('backend/master/merek_motor/save'); ?>';
     form.reset();
     modal.show();
 }
@@ -102,7 +102,7 @@ function editData(data) {
     if (!form || !modal) return;
 
     document.getElementById('modalTitle').innerText = 'Edit Data';
-    form.action = '<?= base_url('backend/master/merk_motor/update'); ?>/' + data.id_merek_motor;
+    form.action = '<?= base_url('backend/master/merek_motor/update'); ?>/' + data.id_merek_motor;
 
     // Pastikan ID input ini sesuai dengan yang ada di form.php Anda
     if (document.getElementById('nama_merek_motor')) {

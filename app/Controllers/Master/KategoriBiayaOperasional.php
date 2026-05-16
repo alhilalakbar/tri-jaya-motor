@@ -2,10 +2,10 @@
 
 namespace App\Controllers\Master;
 
-use App\Controllers\BaseController;
+use App\Controllers\BaseCrudController;
 use App\Models\Master\KategoriBiayaOperasionalModel;
 
-class KategoriBiayaOperasional extends BaseController
+class KategoriBiayaOperasional extends BaseCrudController
 {
     protected $model;
 
@@ -23,49 +23,29 @@ class KategoriBiayaOperasional extends BaseController
             $builder->like('nama_kategori', $keyword);
         }
 
-        $data = [
+        return view('backend/master/kategori_biaya_operasional/index', [
             'title' => 'Kategori Biaya Operasional',
             'data' => $builder->findAll(),
             'keyword' => $keyword
-        ];
-
-        return view('backend/master/kategori_biaya_operasional/index', $data);
+        ]);
     }
 
     public function save()
     {
-        $data = [
-
-            'nama_kategori' => $this->request->getPost('nama_kategori'),
-        ];
-
-        $this->model->save($data);
-
-        return redirect()->to(
-            base_url('backend/master/kategori_biaya_operasional')
-        );
+        return $this->handleSave([
+            'nama_kategori' => $this->request->getPost('nama_kategori')
+        ]);
     }
 
     public function update($id)
     {
-        $data = [
-
-            'nama_kategori' => $this->request->getPost('nama_kategori'),
-        ];
-
-        $this->model->update($id, $data);
-
-        return redirect()->to(
-            base_url('backend/master/kategori_biaya_operasional')
-        );
+        return $this->handleUpdate($id, [
+            'nama_kategori' => $this->request->getPost('nama_kategori')
+        ]);
     }
 
     public function delete($id)
     {
-        $this->model->delete($id);
-
-        return redirect()->to(
-            base_url('backend/master/kategori_biaya_operasional')
-        );
+        return $this->handleDelete($id);
     }
 }

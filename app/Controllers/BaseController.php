@@ -40,7 +40,6 @@ abstract class BaseController extends Controller
         parent::initController($request, $response, $logger);
         $db = \Config\Database::connect();
 
-        // 1. Hitung data untuk notifikasi (Global)
         $stokKritis = $db->table('sparepart')
             ->where('stok_saat_ini <= stok_minimum')
             ->countAllResults();
@@ -49,7 +48,6 @@ abstract class BaseController extends Controller
             ->where('status_pembayaran', 'Belum Lunas')
             ->countAllResults();
 
-        // 2. Bagikan data ke SEMUA View secara otomatis
         $notifGlobal = [
             'stok_kritis_count' => $stokKritis,
             'belum_lunas' => $belumLunas,

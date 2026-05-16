@@ -1,13 +1,16 @@
 <?php
+
 namespace App\Controllers\Master;
-use App\Controllers\BaseController;
+
+use App\Controllers\BaseCrudController;
 use App\Models\Master\Part\SparepartModel;
 use App\Models\Master\Part\KategoriPartModel;
 use App\Models\Master\Part\MerekPartModel;
 
-class Sparepart extends BaseController
+class Sparepart extends BaseCrudController
 {
     protected $model;
+
     public function __construct()
     {
         $this->model = new SparepartModel();
@@ -19,7 +22,8 @@ class Sparepart extends BaseController
         $kat = new KategoriPartModel();
         $merk = new MerekPartModel();
 
-        $builder = $this->model->select('sparepart.*, kategori_part.nama_kategori, merek_part.nama_merek_part')
+        $builder = $this->model
+            ->select('sparepart.*, kategori_part.nama_kategori, merek_part.nama_merek_part')
             ->join('kategori_part', 'kategori_part.id_kategori = sparepart.id_kategori')
             ->join('merek_part', 'merek_part.id_merek_part = sparepart.id_merek_part', 'left');
 
@@ -31,28 +35,26 @@ class Sparepart extends BaseController
                 ->groupEnd();
         }
 
-        $data = [
+        return view('backend/master/sparepart/index', [
             'sparepart' => $builder->findAll(),
             'kategori' => $kat->findAll(),
             'merek' => $merk->findAll(),
             'keyword' => $keyword
-        ];
-
-        return view('backend/master/sparepart/index', $data);
+        ]);
     }
+
     public function save()
     {
-        $this->model->save($this->request->getPost());
-        return redirect()->back();
+        return $this->handleSave($this->request->getPost());
     }
+
     public function update($id)
     {
-        $this->model->update($id, $this->request->getPost());
-        return redirect()->back();
+        return $this->handleUpdate($id, $this->request->getPost());
     }
+
     public function delete($id)
     {
-        $this->model->delete($id);
-        return redirect()->back();
+        return $this->handleDelete($id);
     }
 }

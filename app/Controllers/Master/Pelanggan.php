@@ -1,11 +1,14 @@
 <?php
+
 namespace App\Controllers\Master;
-use App\Controllers\BaseController;
+
+use App\Controllers\BaseCrudController;
 use App\Models\Master\Entitas\PelangganModel;
 
-class Pelanggan extends BaseController
+class Pelanggan extends BaseCrudController
 {
     protected $model;
+
     public function __construct()
     {
         $this->model = new PelangganModel();
@@ -28,19 +31,19 @@ class Pelanggan extends BaseController
             'keyword' => $keyword
         ]);
     }
+
     public function save()
     {
-        $this->model->save($this->request->getPost());
-        return redirect()->back();
+        return $this->handleSave($this->request->getPost());
     }
+
     public function update($id)
     {
-        $this->model->update($id, $this->request->getPost());
-        return redirect()->back();
+        return $this->handleUpdate($id, $this->request->getPost());
     }
+
     public function delete($id)
     {
-        $this->model->delete($id);
-        return redirect()->back();
+        return $this->handleDelete($id);
     }
 }
