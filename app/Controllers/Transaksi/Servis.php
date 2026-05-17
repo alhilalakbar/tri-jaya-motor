@@ -85,9 +85,15 @@ class Servis extends BaseController
                 );
             }
 
+            /*
+            |--------------------------------------------------------------------------
+            | VALIDASI JASA
+            |--------------------------------------------------------------------------
+            */
             if (is_array($listJasa)) {
                 foreach ($listJasa as $j) {
 
+                    // skip dummy row kosong
                     if (
                         empty($j['id_jasa']) &&
                         empty($j['harga_saat_transaksi']) &&
@@ -120,21 +126,17 @@ class Servis extends BaseController
                 }
             }
 
+            /*
+            |--------------------------------------------------------------------------
+            | VALIDASI SPAREPART
+            |--------------------------------------------------------------------------
+            */
             if (is_array($listPart)) {
                 foreach ($listPart as $p) {
 
-                    if (
-                        empty($p['id_part']) &&
-                        empty($p['jumlah_pakai']) &&
-                        empty($p['harga_saat_transaksi'])
-                    ) {
-                        continue;
-                    }
-
+                    // skip dummy row kosong
                     if (empty($p['id_part'])) {
-                        throw new \Exception(
-                            'Sparepart harus dipilih.'
-                        );
+                        continue;
                     }
 
                     if ((int)$p['jumlah_pakai'] <= 0) {
@@ -167,19 +169,40 @@ class Servis extends BaseController
                 );
             }
 
+            /*
+            |--------------------------------------------------------------------------
+            | INSERT DETAIL JASA
+            |--------------------------------------------------------------------------
+            */
             $jasaModel = new \App\Models\Transaksi\Servis\DetailJasaModel();
 
             if (is_array($listJasa)) {
                 foreach ($listJasa as $j) {
+
+                    // skip dummy row kosong
+                    if (empty($j['id_jasa'])) {
+                        continue;
+                    }
+
                     $j['id_transaksi'] = $idTrans;
                     $jasaModel->insert($j);
                 }
             }
 
+            /*
+            |--------------------------------------------------------------------------
+            | INSERT DETAIL SPAREPART
+            |--------------------------------------------------------------------------
+            */
             $partModel = new \App\Models\Transaksi\Servis\DetailPartModel();
 
             if (is_array($listPart)) {
                 foreach ($listPart as $p) {
+
+                    if (empty($p['id_part'])) {
+                        continue;
+                    }
+
                     $p['id_transaksi'] = $idTrans;
                     $partModel->insert($p);
                 }

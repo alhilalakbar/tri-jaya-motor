@@ -45,12 +45,69 @@ class Sparepart extends BaseCrudController
 
     public function save()
     {
-        return $this->handleSave($this->request->getPost());
+        $data = $this->request->getPost();
+
+        $nama = preg_replace('/\s+/', ' ', trim($data['nama_part']));
+
+        if ((float)$data['harga_jual'] < 0) {
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Harga jual tidak boleh negatif.');
+        }
+
+        if ((int)$data['stok_minimum'] < 0) {
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Stok minimum tidak boleh negatif.');
+        }
+
+        $existing = $this->model
+            ->where('TRIM(nama_part)', $nama)
+            ->first();
+
+        if ($existing) {
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Nama sparepart sudah terdaftar.');
+        }
+
+        $data['nama_part'] = $nama;
+
+        return $this->handleSave($data);
     }
 
     public function update($id)
     {
-        return $this->handleUpdate($id, $this->request->getPost());
+        $data = $this->request->getPost();
+
+        $nama = preg_replace('/\s+/', ' ', trim($data['nama_part']));
+
+        if ((float)$data['harga_jual'] < 0) {
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Harga jual tidak boleh negatif.');
+        }
+
+        if ((int)$data['stok_minimum'] < 0) {
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Stok minimum tidak boleh negatif.');
+        }
+
+        $existing = $this->model
+            ->where('TRIM(nama_part)', $nama)
+            ->where('id_part !=', $id)
+            ->first();
+
+        if ($existing) {
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Nama sparepart sudah terdaftar.');
+        }
+
+        $data['nama_part'] = $nama;
+
+        return $this->handleUpdate($id, $data);
     }
 
     public function delete($id)

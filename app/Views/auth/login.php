@@ -17,62 +17,62 @@
     <link rel="stylesheet" href="<?= base_url('assets/adminlte/css/adminlte.css') ?>">
 
     <style>
-        body.login-page {
-            position: relative;
-            min-height: 100vh;
-            background: url('<?= base_url('assets/background_login.jpeg') ?>') no-repeat center center fixed;
-            background-size: cover;
-            overflow: hidden;
-        }
+    body.login-page {
+        position: relative;
+        min-height: 100vh;
+        background: url('<?= base_url('assets/background_login.jpeg') ?>') no-repeat center center fixed;
+        background-size: cover;
+        overflow: hidden;
+    }
 
-        body.login-page::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: rgba(255, 255, 255, 0.5);
-            z-index: 0;
-        }
+    body.login-page::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: rgba(255, 255, 255, 0.5);
+        z-index: 0;
+    }
 
-        .login-box {
-            position: relative;
-            z-index: 1;
-        }
+    .login-box {
+        position: relative;
+        z-index: 1;
+    }
 
-        .login-box .card {
-            background: rgba(255, 255, 255, 0.92);
-            border-radius: 12px;
-            border: none;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-        }
+    .login-box .card {
+        background: rgba(255, 255, 255, 0.92);
+        border-radius: 12px;
+        border: none;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    }
 
-        .card-header {
-            border-bottom: none;
-            padding-top: 25px;
-        }
+    .card-header {
+        border-bottom: none;
+        padding-top: 25px;
+    }
 
-        .card-header h1 {
-            font-weight: 700;
-            font-size: 2rem;
-            color: #111;
-        }
+    .card-header h1 {
+        font-weight: 700;
+        font-size: 2rem;
+        color: #111;
+    }
 
-        .login-box-msg {
-            color: #666;
-            margin-bottom: 20px;
-        }
+    .login-box-msg {
+        color: #666;
+        margin-bottom: 20px;
+    }
 
-        .form-control {
-            border-radius: 6px;
-        }
+    .form-control {
+        border-radius: 6px;
+    }
 
-        .input-group-text {
-            border-radius: 0 6px 6px 0;
-        }
+    .input-group-text {
+        border-radius: 0 6px 6px 0;
+    }
 
-        .btn-primary {
-            border-radius: 6px;
-            font-weight: 600;
-        }
+    .btn-primary {
+        border-radius: 6px;
+        font-weight: 600;
+    }
     </style>
 </head>
 
@@ -101,9 +101,9 @@
                 </p>
 
                 <?php if (session()->getFlashdata('error')): ?>
-                    <div class="alert alert-danger p-2 small">
-                        <?= session()->getFlashdata('error') ?>
-                    </div>
+                <div class="alert alert-danger p-2 small">
+                    <?= session()->getFlashdata('error') ?>
+                </div>
                 <?php endif; ?>
 
                 <form action="<?= base_url('auth/login') ?>" method="post">
