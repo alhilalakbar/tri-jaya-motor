@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 15, 2026 at 08:58 PM
+-- Generation Time: May 20, 2026 at 12:29 AM
 -- Server version: 8.0.45-0ubuntu0.24.04.1
 -- PHP Version: 8.3.6
 
@@ -56,13 +56,13 @@ INSERT INTO `counter_kode` (`nama_counter`, `counter_value`) VALUES
 ('jasa_luar', 0),
 ('kategori_part', 0),
 ('kendaraan', 0),
-('mekanik', 1),
+('mekanik', 0),
 ('merek_motor', 0),
 ('merek_part', 0),
 ('pelanggan', 0),
 ('pemasok', 0),
 ('pembelian', 0),
-('pengguna', 1),
+('pengguna', 0),
 ('sparepart', 0),
 ('tipe_motor', 0),
 ('transaksi', 0);
@@ -475,13 +475,6 @@ CREATE TABLE `mekanik` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data for table `mekanik`
---
-
-INSERT INTO `mekanik` (`id_mekanik`, `kode_mekanik`, `nama_mekanik`) VALUES
-(1, 'MKN-001', 'Lexy Rony Alexcius');
-
---
 -- Triggers `mekanik`
 --
 DELIMITER $$
@@ -653,13 +646,6 @@ CREATE TABLE `pengguna` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data for table `pengguna`
---
-
-INSERT INTO `pengguna` (`id_pengguna`, `kode_pengguna`, `nama_pengguna`, `kata_sandi`, `peran`) VALUES
-(1, 'USR-0001', 'hilal', '$2y$10$OvHn.mwyhg6GKsr1rCKW3eXlNqVkD8X1uTad7QFmSM.72InF5HoMG', 'Admin');
-
---
 -- Triggers `pengguna`
 --
 DELIMITER $$
@@ -806,13 +792,13 @@ DELIMITER ;
 -- (See below for the actual view)
 --
 CREATE TABLE `view_laporan_laba_rugi` (
-`kode_transaksi` varchar(20)
-,`tanggal_masuk` datetime
-,`status_pembayaran` enum('Lunas','Belum Lunas')
-,`total_biaya` decimal(15,2)
-,`jumlah_pakai` bigint
-,`harga_modal` decimal(12,2)
+`harga_modal` decimal(12,2)
 ,`hpp_sparepart` decimal(22,2)
+,`jumlah_pakai` bigint
+,`kode_transaksi` varchar(20)
+,`status_pembayaran` enum('Lunas','Belum Lunas')
+,`tanggal_masuk` datetime
+,`total_biaya` decimal(15,2)
 );
 
 -- --------------------------------------------------------
@@ -822,12 +808,12 @@ CREATE TABLE `view_laporan_laba_rugi` (
 -- (See below for the actual view)
 --
 CREATE TABLE `view_laporan_loyalitas_pelanggan` (
-`kode_transaksi` varchar(20)
-,`tanggal_masuk` datetime
-,`kode_pelanggan` varchar(10)
+`kode_pelanggan` varchar(10)
+,`kode_transaksi` varchar(20)
 ,`nama_pelanggan` varchar(100)
-,`total_biaya` decimal(15,2)
 ,`status_pembayaran` enum('Lunas','Belum Lunas')
+,`tanggal_masuk` datetime
+,`total_biaya` decimal(15,2)
 );
 
 -- --------------------------------------------------------
@@ -837,13 +823,13 @@ CREATE TABLE `view_laporan_loyalitas_pelanggan` (
 -- (See below for the actual view)
 --
 CREATE TABLE `view_laporan_pembelian_stok` (
-`kode_pembelian` varchar(20)
-,`tanggal_pembelian` datetime
-,`nama_pemasok` varchar(100)
-,`nama_part` varchar(100)
+`harga_beli_satuan` decimal(12,2)
 ,`jumlah_beli` int
-,`harga_beli_satuan` decimal(12,2)
+,`kode_pembelian` varchar(20)
+,`nama_part` varchar(100)
+,`nama_pemasok` varchar(100)
 ,`subtotal` decimal(22,2)
+,`tanggal_pembelian` datetime
 ,`total_biaya_pembelian` decimal(15,2)
 );
 
@@ -855,10 +841,10 @@ CREATE TABLE `view_laporan_pembelian_stok` (
 --
 CREATE TABLE `view_laporan_pengeluaran` (
 `jenis_pengeluaran` varchar(17)
-,`tanggal` datetime
-,`nominal` decimal(12,2)
 ,`keterangan` varchar(255)
 ,`nama_kategori` varchar(100)
+,`nominal` decimal(12,2)
+,`tanggal` datetime
 );
 
 -- --------------------------------------------------------
@@ -868,12 +854,12 @@ CREATE TABLE `view_laporan_pengeluaran` (
 -- (See below for the actual view)
 --
 CREATE TABLE `view_laporan_performa_mekanik` (
-`kode_transaksi` varchar(20)
-,`tanggal_masuk` datetime
-,`kode_mekanik` varchar(10)
-,`nama_mekanik` varchar(100)
+`biaya_tambahan` decimal(12,2)
 ,`harga_saat_transaksi` decimal(12,2)
-,`biaya_tambahan` decimal(12,2)
+,`kode_mekanik` varchar(10)
+,`kode_transaksi` varchar(20)
+,`nama_mekanik` varchar(100)
+,`tanggal_masuk` datetime
 );
 
 -- --------------------------------------------------------
@@ -883,15 +869,15 @@ CREATE TABLE `view_laporan_performa_mekanik` (
 -- (See below for the actual view)
 --
 CREATE TABLE `view_laporan_stok_sparepart` (
-`kode_part` varchar(10)
-,`nama_part` varchar(100)
+`harga_jual` decimal(12,2)
+,`kode_part` varchar(10)
+,`kualitas_part` enum('Original','OEM','KW')
 ,`nama_kategori` varchar(50)
 ,`nama_merek_part` varchar(50)
-,`kualitas_part` enum('Original','OEM','KW')
-,`harga_jual` decimal(12,2)
-,`stok_saat_ini` int
-,`stok_minimum` int
+,`nama_part` varchar(100)
 ,`status_stok` varchar(11)
+,`stok_minimum` int
+,`stok_saat_ini` int
 );
 
 -- --------------------------------------------------------
@@ -902,15 +888,15 @@ CREATE TABLE `view_laporan_stok_sparepart` (
 --
 CREATE TABLE `view_laporan_transaksi_servis` (
 `kode_transaksi` varchar(20)
-,`tanggal_masuk` datetime
-,`nama_pelanggan` varchar(100)
-,`nomor_plat` varchar(15)
-,`nama_merek_motor` varchar(50)
-,`nama_tipe` varchar(100)
-,`nama_mekanik` varchar(100)
-,`status_pengerjaan` enum('Antre','Diproses','Menunggu Part','Selesai','Diambil','Dibatalkan')
-,`status_pembayaran` enum('Lunas','Belum Lunas')
 ,`metode_pembayaran` enum('Tunai','QRIS')
+,`nama_mekanik` varchar(100)
+,`nama_merek_motor` varchar(50)
+,`nama_pelanggan` varchar(100)
+,`nama_tipe` varchar(100)
+,`nomor_plat` varchar(15)
+,`status_pembayaran` enum('Lunas','Belum Lunas')
+,`status_pengerjaan` enum('Antre','Diproses','Menunggu Part','Selesai','Diambil','Dibatalkan')
+,`tanggal_masuk` datetime
 ,`total_biaya` decimal(15,2)
 );
 
@@ -1062,6 +1048,7 @@ ALTER TABLE `pengguna`
 --
 ALTER TABLE `sparepart`
   ADD PRIMARY KEY (`id_part`),
+  ADD UNIQUE KEY `uq_nama_part` (`nama_part`),
   ADD UNIQUE KEY `kode_part` (`kode_part`),
   ADD KEY `id_kategori` (`id_kategori`),
   ADD KEY `id_merek_part` (`id_merek_part`);
@@ -1153,7 +1140,7 @@ ALTER TABLE `kendaraan`
 -- AUTO_INCREMENT for table `mekanik`
 --
 ALTER TABLE `mekanik`
-  MODIFY `id_mekanik` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_mekanik` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `merek_motor`
@@ -1189,7 +1176,7 @@ ALTER TABLE `pembelian_stok`
 -- AUTO_INCREMENT for table `pengguna`
 --
 ALTER TABLE `pengguna`
-  MODIFY `id_pengguna` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_pengguna` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `sparepart`
