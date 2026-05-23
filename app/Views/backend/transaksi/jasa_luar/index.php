@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function tambahData() {
     if (!form || !modal) return;
     document.getElementById('modalTitle').innerText = 'Tambah Jasa Luar';
-    form.action = '<?= base_url('backend/transaksi/jasa_luar/save'); ?>';
+    form.action = '<?= base_url('transaksi/jasa_luar/save'); ?>';
     form.reset();
     modal.show();
 }

@@ -59,7 +59,7 @@
                             <i class="bi bi-pencil-square"></i>
                         </button>
 
-                        <a href="<?= base_url('backend/master/merek_part/delete/' . $d['id_merek_part']); ?>"
+                        <a href="<?= base_url('master/merek_part/delete/' . $d['id_merek_part']); ?>"
                             class="btn btn-danger btn-sm" onclick="return confirm('Hapus data?')">
 
                             <i class="bi bi-trash"></i>
@@ -216,7 +216,7 @@ function tambahData() {
     ).innerText = 'Tambah Data';
 
     form.action =
-        '<?= base_url('backend/master/merek_part/save'); ?>';
+        '<?= base_url('master/merek_part/save'); ?>';
 
     modal.show();
 }
@@ -236,21 +236,14 @@ function editData(data) {
 
     console.log(data);
 
-    // Title
     document.getElementById(
         'modalTitle'
     ).innerText = 'Edit Data';
 
-    // Action
     form.action =
-        '<?= base_url('backend/master/merek_part/update'); ?>/' +
+        '<?= base_url('master/merek_part/update'); ?>/' +
         data.id_merek_part;
 
-    // =========================
-    // SET VALUE
-    // =========================
-
-    // ID
     if (
         document.getElementById(
             'id_merek_part'
@@ -263,7 +256,6 @@ function editData(data) {
             data.id_merek_part ?? '';
     }
 
-    // Kode
     if (
         document.getElementById(
             'kode_merek_part'
@@ -276,7 +268,6 @@ function editData(data) {
             data.kode_merek_part ?? '';
     }
 
-    // Nama
     if (
         document.getElementById(
             'nama_merek_part'
@@ -289,13 +280,10 @@ function editData(data) {
             data.nama_merek_part ?? '';
     }
 
-    // Show modal
     modal.show();
 }
 
-// =========================
-// CLEANUP BACKDROP
-// =========================
+
 
 modalElement?.addEventListener(
     'hidden.bs.modal',

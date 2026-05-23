@@ -78,19 +78,19 @@
 
                             foreach ($jasa as $j):
                                 ?>
-                                <tr>
-                                    <td><?= $no++; ?></td>
+                            <tr>
+                                <td><?= $no++; ?></td>
 
-                                    <td>
-                                        <?= esc($j['nama_jasa']); ?>
-                                    </td>
+                                <td>
+                                    <?= esc($j['nama_jasa']); ?>
+                                </td>
 
-                                    <td class="text-end">
-                                        Rp <?= number_format($j['harga_saat_transaksi'], 0, ',', '.'); ?>
-                                    </td>
-                                </tr>
+                                <td class="text-end">
+                                    Rp <?= number_format($j['harga_saat_transaksi'], 0, ',', '.'); ?>
+                                </td>
+                            </tr>
 
-                                <?php
+                            <?php
                                 $subJasa += $j['harga_saat_transaksi'];
                                 ?>
                             <?php endforeach; ?>
@@ -130,27 +130,27 @@
 
                             foreach ($part as $p):
                                 ?>
-                                <tr>
-                                    <td><?= $no++; ?></td>
+                            <tr>
+                                <td><?= $no++; ?></td>
 
-                                    <td>
-                                        <?= esc($p['nama_part']); ?>
-                                    </td>
+                                <td>
+                                    <?= esc($p['nama_part']); ?>
+                                </td>
 
-                                    <td>
-                                        <?= $p['jumlah_pakai']; ?>
-                                    </td>
+                                <td>
+                                    <?= $p['jumlah_pakai']; ?>
+                                </td>
 
-                                    <td class="text-end">
-                                        Rp <?= number_format($p['harga_satuan_jual'], 0, ',', '.'); ?>
-                                    </td>
+                                <td class="text-end">
+                                    Rp <?= number_format($p['harga_satuan_jual'], 0, ',', '.'); ?>
+                                </td>
 
-                                    <td class="text-end">
-                                        Rp <?= number_format($p['subtotal'], 0, ',', '.'); ?>
-                                    </td>
-                                </tr>
+                                <td class="text-end">
+                                    Rp <?= number_format($p['subtotal'], 0, ',', '.'); ?>
+                                </td>
+                            </tr>
 
-                                <?php
+                            <?php
                                 $subPart += $p['subtotal'];
                                 ?>
                             <?php endforeach; ?>
@@ -214,7 +214,7 @@
         <div class="row mt-4 no-print">
             <div class="col-12 text-end">
 
-                <a href="<?= base_url('backend/transaksi/servis'); ?>" class="btn btn-secondary shadow-sm">
+                <a href="<?= base_url('transaksi/servis'); ?>" class="btn btn-secondary shadow-sm">
 
                     <i class="bi bi-arrow-left"></i>
                     Kembali
@@ -234,63 +234,63 @@
 
 <!-- STYLE PRINT -->
 <style>
-    @media print {
+@media print {
 
-        /* Hilangkan elemen admin */
-        .no-print,
-        .main-footer,
-        .app-header,
-        .app-sidebar,
-        .sidebar,
-        .navbar,
-        .main-sidebar {
-            display: none !important;
-        }
-
-        /* Full halaman */
-        body,
-        .wrapper,
-        .content-wrapper,
-        .app-main,
-        .main-content {
-            margin: 0 !important;
-            padding: 0 !important;
-            width: 100% !important;
-            background: #fff !important;
-        }
-
-        /* Rapikan invoice */
-        .invoice {
-            border: none !important;
-            box-shadow: none !important;
-            margin: 0 !important;
-            padding: 10px !important;
-        }
-
-        /* Tabel print */
-        table {
-            width: 100% !important;
-            border-collapse: collapse !important;
-        }
-
-        .table td,
-        .table th {
-            padding: 8px !important;
-            border: 1px solid #000 !important;
-        }
-
-        .table-dark {
-            background: #000 !important;
-            color: #fff !important;
-        }
-
-        /* Hindari kepotong */
-        tr,
-        td,
-        th {
-            page-break-inside: avoid !important;
-        }
+    /* Hilangkan elemen admin */
+    .no-print,
+    .main-footer,
+    .app-header,
+    .app-sidebar,
+    .sidebar,
+    .navbar,
+    .main-sidebar {
+        display: none !important;
     }
+
+    /* Full halaman */
+    body,
+    .wrapper,
+    .content-wrapper,
+    .app-main,
+    .main-content {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        background: #fff !important;
+    }
+
+    /* Rapikan invoice */
+    .invoice {
+        border: none !important;
+        box-shadow: none !important;
+        margin: 0 !important;
+        padding: 10px !important;
+    }
+
+    /* Tabel print */
+    table {
+        width: 100% !important;
+        border-collapse: collapse !important;
+    }
+
+    .table td,
+    .table th {
+        padding: 8px !important;
+        border: 1px solid #000 !important;
+    }
+
+    .table-dark {
+        background: #000 !important;
+        color: #fff !important;
+    }
+
+    /* Hindari kepotong */
+    tr,
+    td,
+    th {
+        page-break-inside: avoid !important;
+    }
+}
 </style>
 
 <?= $this->endSection(); ?>

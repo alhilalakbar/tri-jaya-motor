@@ -39,7 +39,7 @@
                             onclick="editData(<?= htmlspecialchars(json_encode($d)); ?>)">
                             <i class="bi bi-pencil-square"></i>
                         </button>
-                        <a href="<?= base_url('backend/master/pemasok/delete/' . $d['id_pemasok']); ?>"
+                        <a href="<?= base_url('master/pemasok/delete/' . $d['id_pemasok']); ?>"
                             class="btn btn-danger btn-sm" onclick="return confirm('Hapus data?')">
                             <i class="bi bi-trash"></i>
                         </a>
@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function tambahData() {
     if (!form || !modal) return;
     document.getElementById('modalTitle').innerText = 'Tambah Pemasok';
-    form.action = '<?= base_url('backend/master/pemasok/save'); ?>';
+    form.action = '<?= base_url('master/pemasok/save'); ?>';
     form.reset();
     modal.show();
 }
@@ -92,13 +92,13 @@ function tambahData() {
 function editData(data) {
     if (!form || !modal) return;
     document.getElementById('modalTitle').innerText = 'Edit Pemasok';
-    form.action = '<?= base_url('backend/master/pemasok/update'); ?>/' + data.id_pemasok;
+    form.action = '<?= base_url('master/pemasok/update'); ?>/' + data.id_pemasok;
 
     if (document.getElementById('nama_pemasok')) document.getElementById('nama_pemasok').value = data.nama_pemasok;
     if (document.getElementById('nomor_hp_pemasok')) document.getElementById('nomor_hp_pemasok').value = data
         .nomor_hp_pemasok;
     if (document.getElementById('alamat_pemasok')) document.getElementById('alamat_pemasok').value = data
-    .alamat_pemasok;
+        .alamat_pemasok;
 
     modal.show();
 }

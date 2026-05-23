@@ -4,7 +4,7 @@
 
 <div class="card mb-3 shadow-sm border-0">
     <div class="card-body">
-        <form action="<?= base_url('backend/laporan/stok'); ?>" method="get" class="row g-3 align-items-end">
+        <form action="<?= base_url('laporan/stok'); ?>" method="get" class="row g-3 align-items-end">
             <div class="col-md-3">
                 <label class="form-label small fw-bold text-secondary">Tanggal Mulai</label>
                 <input type="date" name="tgl_mulai" id="tgl_mulai" class="form-control" value="<?= $tgl_mulai; ?>">
@@ -16,11 +16,14 @@
             <div class="col-md-6">
                 <div class="btn-group me-2">
                     <button type="submit" class="btn btn-primary shadow-sm"><i class="bi bi-filter"></i> Filter</button>
-                    <a href="<?= base_url('backend/laporan/stok'); ?>" class="btn btn-secondary shadow-sm"><i class="bi bi-arrow-clockwise"></i> Reset</a>
+                    <a href="<?= base_url('laporan/stok'); ?>" class="btn btn-secondary shadow-sm"><i
+                            class="bi bi-arrow-clockwise"></i> Reset</a>
                 </div>
                 <div class="btn-group">
-                    <button type="button" class="btn btn-outline-info btn-sm" onclick="setRange('today')">Hari Ini</button>
-                    <button type="button" class="btn btn-outline-info btn-sm" onclick="setRange('month')">Bulan Ini</button>
+                    <button type="button" class="btn btn-outline-info btn-sm" onclick="setRange('today')">Hari
+                        Ini</button>
+                    <button type="button" class="btn btn-outline-info btn-sm" onclick="setRange('month')">Bulan
+                        Ini</button>
                 </div>
             </div>
         </form>
@@ -29,13 +32,13 @@
 
 <div class="mb-3">
     <div class="btn-group">
-        <a href="<?= base_url('backend/laporan/export/excel/stok?tgl_mulai=' . $tgl_mulai . '&tgl_akhir=' . $tgl_akhir); ?>" 
-           class="btn btn-success shadow-sm">
+        <a href="<?= base_url('laporan/export/excel/stok?tgl_mulai=' . $tgl_mulai . '&tgl_akhir=' . $tgl_akhir); ?>"
+            class="btn btn-success shadow-sm">
             <i class="bi bi-file-earmark-excel"></i> Export Excel
         </a>
 
-        <a href="<?= base_url('backend/laporan/export/pdf/stok?tgl_mulai=' . $tgl_mulai . '&tgl_akhir=' . $tgl_akhir); ?>" 
-           class="btn btn-danger shadow-sm">
+        <a href="<?= base_url('laporan/export/pdf/stok?tgl_mulai=' . $tgl_mulai . '&tgl_akhir=' . $tgl_akhir); ?>"
+            class="btn btn-danger shadow-sm">
             <i class="bi bi-file-earmark-pdf"></i> Export PDF
         </a>
     </div>

@@ -33,12 +33,12 @@
         </div>
 
         <div class="btn-group ms-2">
-            <a href="<?= base_url('backend/laporan/export/excel/loyalitas?tgl_mulai=' . $tgl_mulai . '&tgl_akhir=' . $tgl_akhir); ?>"
+            <a href="<?= base_url('laporan/export/excel/loyalitas?tgl_mulai=' . $tgl_mulai . '&tgl_akhir=' . $tgl_akhir); ?>"
                 class="btn btn-success shadow-sm">
                 <i class="bi bi-file-earmark-excel"></i> Export Excel
             </a>
 
-            <a href="<?= base_url('backend/laporan/export/pdf/loyalitas?tgl_mulai=' . $tgl_mulai . '&tgl_akhir=' . $tgl_akhir); ?>"
+            <a href="<?= base_url('laporan/export/pdf/loyalitas?tgl_mulai=' . $tgl_mulai . '&tgl_akhir=' . $tgl_akhir); ?>"
                 class="btn btn-danger shadow-sm">
                 <i class="bi bi-file-earmark-pdf"></i> Export PDF
             </a>

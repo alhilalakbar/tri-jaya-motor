@@ -56,7 +56,7 @@
                                 <i class="bi bi-pencil-square text-white"></i>
                             </button>
 
-                            <a href="<?= base_url('backend/master/sparepart/delete/' . $s['id_part']); ?>"
+                            <a href="<?= base_url('master/sparepart/delete/' . $s['id_part']); ?>"
                                 class="btn btn-danger btn-sm" onclick="return confirm('Hapus data?')">
                                 <i class="bi bi-trash"></i>
                             </a>
@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function tambahData() {
     if (!form || !modal) return;
     document.getElementById('modalTitle').innerText = 'Tambah Sparepart';
-    form.action = '<?= base_url('backend/master/sparepart/save'); ?>';
+    form.action = '<?= base_url('master/sparepart/save'); ?>';
     form.reset();
 
     if (document.getElementById('stok_saat_ini')) {
@@ -115,7 +115,7 @@ function tambahData() {
 function editData(data) {
     if (!form || !modal) return;
     document.getElementById('modalTitle').innerText = 'Edit Sparepart';
-    form.action = '<?= base_url('backend/master/sparepart/update'); ?>/' + data.id_part;
+    form.action = '<?= base_url('master/sparepart/update'); ?>/' + data.id_part;
 
     document.getElementById('nama_part').value = data.nama_part;
     document.getElementById('id_kategori').value = data.id_kategori;

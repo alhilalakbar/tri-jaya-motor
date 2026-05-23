@@ -39,7 +39,7 @@
                             onclick="editData(<?= htmlspecialchars(json_encode($d)); ?>)">
                             <i class="bi bi-pencil-square"></i>
                         </button>
-                        <a href="<?= base_url('backend/master/pelanggan/delete/' . $d['id_pelanggan']); ?>"
+                        <a href="<?= base_url('master/pelanggan/delete/' . $d['id_pelanggan']); ?>"
                             class="btn btn-danger btn-sm" onclick="return confirm('Hapus data?')">
                             <i class="bi bi-trash"></i>
                         </a>
@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function tambahData() {
     if (!form || !modal) return;
     document.getElementById('modalTitle').innerText = 'Tambah Pelanggan';
-    form.action = '<?= base_url('backend/master/pelanggan/save'); ?>';
+    form.action = '<?= base_url('master/pelanggan/save'); ?>';
     form.reset();
     modal.show();
 }
@@ -94,10 +94,10 @@ function tambahData() {
 function editData(data) {
     if (!form || !modal) return;
     document.getElementById('modalTitle').innerText = 'Edit Pelanggan';
-    form.action = '<?= base_url('backend/master/pelanggan/update'); ?>/' + data.id_pelanggan;
+    form.action = '<?= base_url('master/pelanggan/update'); ?>/' + data.id_pelanggan;
 
     if (document.getElementById('nama_pelanggan')) document.getElementById('nama_pelanggan').value = data
-    .nama_pelanggan;
+        .nama_pelanggan;
     if (document.getElementById('nomor_hp')) document.getElementById('nomor_hp').value = data.nomor_hp;
 
     modal.show();

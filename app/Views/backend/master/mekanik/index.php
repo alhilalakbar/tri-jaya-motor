@@ -37,7 +37,7 @@
                             onclick="editData(<?= htmlspecialchars(json_encode($d)); ?>)">
                             <i class="bi bi-pencil-square"></i>
                         </button>
-                        <a href="<?= base_url('backend/master/mekanik/delete/' . $d['id_mekanik']); ?>"
+                        <a href="<?= base_url('master/mekanik/delete/' . $d['id_mekanik']); ?>"
                             class="btn btn-danger btn-sm" onclick="return confirm('Hapus data?')">
                             <i class="bi bi-trash"></i>
                         </a>
@@ -92,7 +92,7 @@ function tambahData() {
     }
 
     document.getElementById('modalTitle').innerText = 'Tambah Data';
-    form.action = '<?= base_url('backend/master/mekanik/save'); ?>';
+    form.action = '<?= base_url('master/mekanik/save'); ?>';
     form.reset();
     modal.show();
 }
@@ -101,7 +101,7 @@ function editData(data) {
     if (!form || !modal) return;
 
     document.getElementById('modalTitle').innerText = 'Edit Data';
-    form.action = '<?= base_url('backend/master/mekanik/update'); ?>/' + data.id_mekanik;
+    form.action = '<?= base_url('master/mekanik/update'); ?>/' + data.id_mekanik;
 
     if (document.getElementById('nama_mekanik')) {
         document.getElementById('nama_mekanik').value = data.nama_mekanik;

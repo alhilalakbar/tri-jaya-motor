@@ -7,9 +7,26 @@ use App\Models\Master\Part\MerekPartModel;
 
 class MerekPart extends BaseCrudController
 {
+    protected $model;
+
     public function __construct()
     {
         $this->model = new MerekPartModel();
+    }
+
+    public function index()
+    {
+        $keyword = $this->request->getGet('keyword');
+        $builder = $this->model;
+
+        if ($keyword) {
+            $builder->like('nama_merek_part', $keyword);
+        }
+
+        return view('backend/master/merek_part/index', [
+            'data' => $builder->findAll(),
+            'keyword' => $keyword
+        ]);
     }
 
     public function save()

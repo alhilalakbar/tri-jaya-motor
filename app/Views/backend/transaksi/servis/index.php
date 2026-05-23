@@ -83,7 +83,7 @@
                     <td class="fw-bold">Rp <?= number_format($d['total_biaya'], 0, ',', '.'); ?></td>
                     <td class="text-center">
                         <div class="btn-group" role="group">
-                            <a href="<?= base_url('backend/transaksi/servis/detail/' . $d['id_transaksi']); ?>"
+                            <a href="<?= base_url('transaksi/servis/detail/' . $d['id_transaksi']); ?>"
                                 class="btn btn-info btn-sm text-white" title="Lihat Detail">
                                 <i class="bi bi-eye"></i>
                             </a>
@@ -103,7 +103,7 @@
 
 <div class="modal fade" id="modalServis" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-xl">
-        <form action="<?= base_url('backend/transaksi/servis/create'); ?>" method="post">
+        <form action="<?= base_url('transaksi/servis/create'); ?>" method="post">
             <?= csrf_field(); ?>
             <div class="modal-content shadow-lg">
                 <div class="modal-header bg-primary text-white">
@@ -125,7 +125,7 @@
 
 <div class="modal fade" id="modalEditStatus" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
-        <form action="<?= base_url('backend/transaksi/servis/update_status'); ?>" method="post">
+        <form action="<?= base_url('transaksi/servis/update_status'); ?>" method="post">
             <?= csrf_field(); ?>
             <input type="hidden" name="id_transaksi" id="edit_id_transaksi">
             <div class="modal-content shadow-lg">

@@ -28,6 +28,7 @@ class Filters extends BaseFilters
         'csrf' => \CodeIgniter\Filters\CSRF::class,
         'toolbar' => \CodeIgniter\Filters\DebugToolbar::class,
         'auth' => \App\Filters\AuthFilter::class,
+        'role' => \App\Filters\RoleFilter::class,
         'honeypot' => Honeypot::class,
         'invalidchars' => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,

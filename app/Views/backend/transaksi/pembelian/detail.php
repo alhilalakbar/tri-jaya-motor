@@ -45,14 +45,14 @@
                     <tbody>
                         <?php $no = 1;
 foreach ($items as $i): ?>
-                            <tr>
-                                <td><?= $no++; ?></td>
-                                <td><?= esc($i['nama_part']); ?></td>
-                                <td class="text-center"><?= $i['jumlah']; ?></td>
-                                <td class="text-end">Rp <?= number_format($i['harga_beli'], 0, ',', '.'); ?></td>
-                                <td class="text-end">Rp <?= number_format($i['jumlah'] * $i['harga_beli'], 0, ',', '.'); ?>
-                                </td>
-                            </tr>
+                        <tr>
+                            <td><?= $no++; ?></td>
+                            <td><?= esc($i['nama_part']); ?></td>
+                            <td class="text-center"><?= $i['jumlah']; ?></td>
+                            <td class="text-end">Rp <?= number_format($i['harga_beli'], 0, ',', '.'); ?></td>
+                            <td class="text-end">Rp <?= number_format($i['jumlah'] * $i['harga_beli'], 0, ',', '.'); ?>
+                            </td>
+                        </tr>
                         <?php endforeach; ?>
                     </tbody>
                     <tfoot>
@@ -75,7 +75,7 @@ foreach ($items as $i): ?>
                 </p>
             </div>
             <div class="col-md-6 text-end">
-                <a href="<?= base_url('backend/transaksi/pembelian'); ?>" class="btn btn-secondary shadow-sm">
+                <a href="<?= base_url('transaksi/pembelian'); ?>" class="btn btn-secondary shadow-sm">
                     <i class="bi bi-arrow-left"></i> Kembali ke Daftar
                 </a>
                 <button type="button" class="btn btn-dark shadow-sm" onclick="window.print()">
@@ -88,25 +88,25 @@ foreach ($items as $i): ?>
 </div>
 
 <style>
-    @media print {
+@media print {
 
-        .no-print,
-        .main-footer,
-        .app-header,
-        .app-sidebar {
-            display: none !important;
-        }
-
-        .content-wrapper,
-        .app-main {
-            margin-left: 0 !important;
-            padding: 0 !important;
-        }
-
-        .invoice {
-            border: none !important;
-            box-shadow: none !important;
-        }
+    .no-print,
+    .main-footer,
+    .app-header,
+    .app-sidebar {
+        display: none !important;
     }
+
+    .content-wrapper,
+    .app-main {
+        margin-left: 0 !important;
+        padding: 0 !important;
+    }
+
+    .invoice {
+        border: none !important;
+        box-shadow: none !important;
+    }
+}
 </style>
 <?= $this->endSection(); ?>

@@ -5,7 +5,7 @@
 <!-- Filter Tanggal -->
 <div class="card mb-3 shadow-sm border-0">
     <div class="card-body">
-        <form action="<?= base_url('backend/laporan/pengeluaran'); ?>" method="get" class="row g-3 align-items-end">
+        <form action="<?= base_url('laporan/pengeluaran'); ?>" method="get" class="row g-3 align-items-end">
             <div class="col-md-3">
                 <label class="form-label small fw-bold text-secondary">Tanggal Mulai</label>
                 <input type="date" name="tgl_mulai" id="tgl_mulai" class="form-control" value="<?= $tgl_mulai; ?>">
@@ -17,7 +17,7 @@
             <div class="col-md-6">
                 <div class="btn-group me-2">
                     <button type="submit" class="btn btn-primary shadow-sm"><i class="bi bi-filter"></i> Filter</button>
-                    <a href="<?= base_url('backend/laporan/pengeluaran'); ?>" class="btn btn-secondary shadow-sm"><i
+                    <a href="<?= base_url('laporan/pengeluaran'); ?>" class="btn btn-secondary shadow-sm"><i
                             class="bi bi-arrow-clockwise"></i> Reset</a>
                 </div>
                 <div class="btn-group">
@@ -32,12 +32,12 @@
 </div>
 
 <div class="btn-group ms-2">
-    <a href="<?= base_url('backend/laporan/export/excel/pengeluaran?tgl_mulai=' . $tgl_mulai . '&tgl_akhir=' . $tgl_akhir); ?>"
+    <a href="<?= base_url('laporan/export/excel/pengeluaran?tgl_mulai=' . $tgl_mulai . '&tgl_akhir=' . $tgl_akhir); ?>"
         class="btn btn-success shadow-sm">
         <i class="bi bi-file-earmark-excel"></i> Export Excel
     </a>
 
-    <a href="<?= base_url('backend/laporan/export/pdf/pengeluaran?tgl_mulai=' . $tgl_mulai . '&tgl_akhir=' . $tgl_akhir); ?>"
+    <a href="<?= base_url('laporan/export/pdf/pengeluaran?tgl_mulai=' . $tgl_mulai . '&tgl_akhir=' . $tgl_akhir); ?>"
         class="btn btn-danger shadow-sm">
         <i class="bi bi-file-earmark-pdf"></i> Export PDF
     </a>

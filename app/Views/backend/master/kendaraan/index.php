@@ -39,7 +39,7 @@
                             onclick="editData(<?= htmlspecialchars(json_encode($d)); ?>)">
                             <i class="bi bi-pencil-square"></i>
                         </button>
-                        <a href="<?= base_url('backend/master/kendaraan/delete/' . $d['id_kendaraan']); ?>"
+                        <a href="<?= base_url('master/kendaraan/delete/' . $d['id_kendaraan']); ?>"
                             class="btn btn-danger btn-sm" onclick="return confirm('Hapus data?')">
                             <i class="bi bi-trash"></i>
                         </a>
@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function tambahData() {
     if (!form || !modal) return;
     document.getElementById('modalTitle').innerText = 'Tambah Kendaraan';
-    form.action = '<?= base_url('backend/master/kendaraan/save'); ?>';
+    form.action = '<?= base_url('master/kendaraan/save'); ?>';
     form.reset();
     modal.show();
 }
@@ -91,7 +91,7 @@ function tambahData() {
 function editData(data) {
     if (!form || !modal) return;
     document.getElementById('modalTitle').innerText = 'Edit Kendaraan';
-    form.action = '<?= base_url('backend/master/kendaraan/update'); ?>/' + data.id_kendaraan;
+    form.action = '<?= base_url('master/kendaraan/update'); ?>/' + data.id_kendaraan;
 
     document.getElementById('id_pelanggan').value = data.id_pelanggan;
     document.getElementById('id_tipe_motor').value = data.id_tipe_motor;

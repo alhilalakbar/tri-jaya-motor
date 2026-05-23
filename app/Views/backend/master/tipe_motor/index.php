@@ -41,7 +41,7 @@
                             onclick="editData(<?= htmlspecialchars(json_encode($t)); ?>)">
                             <i class="bi bi-pencil-square"></i>
                         </button>
-                        <a href="<?= base_url('backend/master/tipe_motor/delete/' . $t['id_tipe_motor']); ?>"
+                        <a href="<?= base_url('master/tipe_motor/delete/' . $t['id_tipe_motor']); ?>"
                             class="btn btn-danger btn-sm" onclick="return confirm('Hapus data?')">
                             <i class="bi bi-trash"></i>
                         </a>
@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function tambahData() {
     if (!form || !modal) return;
     document.getElementById('modalTitle').innerText = 'Tambah Tipe Motor';
-    form.action = '<?= base_url('backend/master/tipe_motor/save'); ?>';
+    form.action = '<?= base_url('master/tipe_motor/save'); ?>';
     form.reset();
     modal.show();
 }
@@ -94,10 +94,10 @@ function tambahData() {
 function editData(data) {
     if (!form || !modal) return;
     document.getElementById('modalTitle').innerText = 'Edit Tipe Motor';
-    form.action = '<?= base_url('backend/master/tipe_motor/update'); ?>/' + data.id_tipe_motor;
+    form.action = '<?= base_url('master/tipe_motor/update'); ?>/' + data.id_tipe_motor;
 
     if (document.getElementById('id_merek_motor')) document.getElementById('id_merek_motor').value = data
-    .id_merek_motor;
+        .id_merek_motor;
     if (document.getElementById('nama_tipe')) document.getElementById('nama_tipe').value = data.nama_tipe;
     if (document.getElementById('jenis_kendaraan')) document.getElementById('jenis_kendaraan').value = data
         .jenis_kendaraan;

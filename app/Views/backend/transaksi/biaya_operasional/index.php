@@ -52,91 +52,91 @@
 
                 <?php foreach ($data as $d): ?>
 
-                    <tr>
+                <tr>
 
-                        <td>
+                    <td>
 
-                            <?= $no++; ?>
+                        <?= $no++; ?>
 
-                        </td>
+                    </td>
 
-                        <td>
+                    <td>
 
-                            <span class="badge text-bg-info">
+                        <span class="badge text-bg-info">
 
-                                <?= esc($d['nama_kategori']); ?>
+                            <?= esc($d['nama_kategori']); ?>
 
-                            </span>
+                        </span>
 
-                        </td>
+                    </td>
 
-                        <td>
+                    <td>
 
-                            <div class="fw-semibold">
+                        <div class="fw-semibold">
 
-                                <?= date(
+                            <?= date(
                                     'd-m-Y',
                                     strtotime($d['tanggal_biaya'])
                                 ); ?>
 
-                            </div>
+                        </div>
 
-                            <small class="text-muted">
+                        <small class="text-muted">
 
-                                <?= date(
+                            <?= date(
                                     'H:i:s',
                                     strtotime($d['tanggal_biaya'])
                                 ); ?>
 
-                            </small>
+                        </small>
 
-                        </td>
+                    </td>
 
-                        <td>
+                    <td>
 
-                            Rp <?= number_format(
+                        Rp <?= number_format(
                                 $d['nominal'],
                                 0,
                                 ',',
                                 '.'
                             ); ?>
 
-                        </td>
+                    </td>
 
-                        <td>
+                    <td>
 
-                            <?= esc($d['keterangan']); ?>
+                        <?= esc($d['keterangan']); ?>
 
-                        </td>
+                    </td>
 
-                        <td>
+                    <td>
 
-                            <span class="badge text-bg-secondary">
+                        <span class="badge text-bg-secondary">
 
-                                <?= esc($d['nama_pengguna'] ?? '-'); ?>
+                            <?= esc($d['nama_pengguna'] ?? '-'); ?>
 
-                            </span>
+                        </span>
 
-                        </td>
+                    </td>
 
-                        <td>
+                    <td>
 
-                            <button class="btn btn-warning btn-sm" onclick='editData(<?= json_encode($d); ?>)'>
+                        <button class="btn btn-warning btn-sm" onclick='editData(<?= json_encode($d); ?>)'>
 
-                                <i class="bi bi-pencil-square"></i>
+                            <i class="bi bi-pencil-square"></i>
 
-                            </button>
+                        </button>
 
-                            <a href="<?= base_url('backend/transaksi/biaya_operasional/delete/' . $d['id_biaya_operasional']); ?>"
-                                class="btn btn-danger btn-sm" onclick="return confirm('Hapus data ini?')">
+                        <a href="<?= base_url('transaksi/biaya_operasional/delete/' . $d['id_biaya_operasional']); ?>"
+                            class="btn btn-danger btn-sm" onclick="return confirm('Hapus data ini?')">
 
-                                <i class="bi bi-trash"></i>
+                            <i class="bi bi-trash"></i>
 
-                            </a>
+                        </a>
 
-                        </td>
+                    </td>
 
-                    </tr>
+                </tr>
 
                 <?php endforeach; ?>
 
@@ -193,79 +193,77 @@
 </div>
 
 <script>
+let modalElement;
+let modal;
+let form;
 
-    let modalElement;
-    let modal;
-    let form;
+document.addEventListener('DOMContentLoaded', function() {
 
-    document.addEventListener('DOMContentLoaded', function () {
+    modalElement =
+        document.getElementById('modalMaster');
 
-        modalElement =
-            document.getElementById('modalMaster');
+    form =
+        document.getElementById('formMaster');
 
-        form =
-            document.getElementById('formMaster');
+    if (typeof bootstrap !== 'undefined') {
 
-        if (typeof bootstrap !== 'undefined') {
-
-            modal = new bootstrap.Modal(modalElement);
-
-        }
-
-    });
-
-    function tambahData() {
-
-        if (!form || !modal) return;
-
-        document.getElementById('modalTitle').innerText =
-            'Tambah Biaya Operasional';
-
-        form.action =
-            '<?= base_url('backend/transaksi/biaya_operasional/save'); ?>';
-
-        form.reset();
-
-        modal.show();
+        modal = new bootstrap.Modal(modalElement);
 
     }
 
-    function editData(data) {
+});
 
-        if (!form || !modal) return;
+function tambahData() {
 
-        document.getElementById('modalTitle').innerText =
-            'Edit Biaya Operasional';
+    if (!form || !modal) return;
 
-        form.action =
-            '<?= base_url('backend/transaksi/biaya_operasional/update'); ?>/' +
-            data.id_biaya_operasional;
+    document.getElementById('modalTitle').innerText =
+        'Tambah Biaya Operasional';
 
-        if (document.getElementById('id_kategori_biaya')) {
+    form.action =
+        '<?= base_url('transaksi/biaya_operasional/save'); ?>';
 
-            document.getElementById('id_kategori_biaya').value =
-                data.id_kategori_biaya;
+    form.reset();
 
-        }
+    modal.show();
 
-        if (document.getElementById('nominal')) {
+}
 
-            document.getElementById('nominal').value =
-                data.nominal;
+function editData(data) {
 
-        }
+    if (!form || !modal) return;
 
-        if (document.getElementById('keterangan')) {
+    document.getElementById('modalTitle').innerText =
+        'Edit Biaya Operasional';
 
-            document.getElementById('keterangan').value =
-                data.keterangan;
+    form.action =
+        '<?= base_url('transaksi/biaya_operasional/update'); ?>/' +
+        data.id_biaya_operasional;
 
-        }
+    if (document.getElementById('id_kategori_biaya')) {
 
-        modal.show();
+        document.getElementById('id_kategori_biaya').value =
+            data.id_kategori_biaya;
 
     }
 
+    if (document.getElementById('nominal')) {
+
+        document.getElementById('nominal').value =
+            data.nominal;
+
+    }
+
+    if (document.getElementById('keterangan')) {
+
+        document.getElementById('keterangan').value =
+            data.keterangan;
+
+    }
+
+    modal.show();
+
+}
 </script>
 
 <?= $this->endSection(); ?>

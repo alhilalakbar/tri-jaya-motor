@@ -40,54 +40,54 @@
 
                 <?php foreach ($data as $d): ?>
 
-                    <tr>
+                <tr>
 
-                        <td>
-                            <span class="badge text-bg-dark fs-6">
-                                <?= $d['kode_pembelian']; ?>
-                            </span>
-                        </td>
+                    <td>
+                        <span class="badge text-bg-dark fs-6">
+                            <?= $d['kode_pembelian']; ?>
+                        </span>
+                    </td>
 
-                        <td>
-                            <div class="fw-semibold">
-                                <?= date('d/m/Y', strtotime($d['tanggal_pembelian'])); ?>
-                            </div>
+                    <td>
+                        <div class="fw-semibold">
+                            <?= date('d/m/Y', strtotime($d['tanggal_pembelian'])); ?>
+                        </div>
 
-                            <small class="text-muted">
-                                <?= date('H:i:s', strtotime($d['tanggal_pembelian'])); ?>
-                            </small>
-                        </td>
+                        <small class="text-muted">
+                            <?= date('H:i:s', strtotime($d['tanggal_pembelian'])); ?>
+                        </small>
+                    </td>
 
-                        <td>
-                            <div class="fw-semibold">
-                                <?= esc($d['nama_pemasok']); ?>
-                            </div>
-                        </td>
+                    <td>
+                        <div class="fw-semibold">
+                            <?= esc($d['nama_pemasok']); ?>
+                        </div>
+                    </td>
 
-                        <td>
-                            <span class="fw-bold text-success">
-                                Rp <?= number_format($d['total_biaya_pembelian'], 0, ',', '.'); ?>
-                            </span>
-                        </td>
+                    <td>
+                        <span class="fw-bold text-success">
+                            Rp <?= number_format($d['total_biaya_pembelian'], 0, ',', '.'); ?>
+                        </span>
+                    </td>
 
-                        <td>
-                            <span class="badge bg-info">
-                                <?= esc($d['nama_pengguna']); ?>
-                            </span>
-                        </td>
+                    <td>
+                        <span class="badge bg-info">
+                            <?= esc($d['nama_pengguna']); ?>
+                        </span>
+                    </td>
 
-                        <td class="text-center">
+                    <td class="text-center">
 
-                            <a href="<?= base_url('backend/transaksi/pembelian/detail/' . $d['id_pembelian']); ?>"
-                                class="btn btn-outline-info btn-sm">
+                        <a href="<?= base_url('transaksi/pembelian/detail/' . $d['id_pembelian']); ?>"
+                            class="btn btn-outline-info btn-sm">
 
-                                <i class="bi bi-eye"></i>
+                            <i class="bi bi-eye"></i>
 
-                            </a>
+                        </a>
 
-                        </td>
+                    </td>
 
-                    </tr>
+                </tr>
 
                 <?php endforeach; ?>
 
@@ -103,7 +103,7 @@
 
     <div class="modal-dialog modal-lg">
 
-        <form action="<?= base_url('backend/transaksi/pembelian/save'); ?>" method="post">
+        <form action="<?= base_url('transaksi/pembelian/save'); ?>" method="post">
 
             <?= csrf_field(); ?>
 
@@ -152,22 +152,21 @@
 </div>
 
 <script>
+let itemIdx = 1;
 
-    let itemIdx = 1;
+function tambahBeli() {
+    new bootstrap.Modal(
+        document.getElementById('modalBeli')
+    ).show();
+}
 
-    function tambahBeli() {
-        new bootstrap.Modal(
-            document.getElementById('modalBeli')
-        ).show();
-    }
+function addRow(tableId) {
 
-    function addRow(tableId) {
+    const table = document
+        .getElementById(tableId)
+        .getElementsByTagName('tbody')[0];
 
-        const table = document
-            .getElementById(tableId)
-            .getElementsByTagName('tbody')[0];
-
-        const row = `
+    const row = `
         <tr>
 
             <td>
@@ -221,11 +220,10 @@
         </tr>
         `;
 
-        table.insertAdjacentHTML('beforeend', row);
+    table.insertAdjacentHTML('beforeend', row);
 
-        itemIdx++;
-    }
-
+    itemIdx++;
+}
 </script>
 
 <?= $this->endSection(); ?>

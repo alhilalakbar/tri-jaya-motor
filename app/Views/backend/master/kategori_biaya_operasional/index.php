@@ -61,7 +61,7 @@
 
                         </button>
 
-                        <a href="<?= base_url('backend/master/kategori_biaya_operasional/delete/' . $d['id_kategori_biaya']); ?>"
+                        <a href="<?= ('master/kategori_biaya_operasional/delete/' . $d['id_kategori_biaya']); ?>"
                             class="btn btn-danger btn-sm" onclick="return confirm('Hapus data ini?')">
 
                             <i class="bi bi-trash"></i>
@@ -151,7 +151,7 @@ function tambahData() {
         'Tambah Kategori Biaya Operasional';
 
     form.action =
-        '<?= base_url('backend/master/kategori_biaya_operasional/save'); ?>';
+        '<?= base_url('master/kategori_biaya_operasional/save'); ?>';
 
     form.reset();
 
@@ -167,7 +167,7 @@ function editData(data) {
         'Edit Kategori Biaya Operasional';
 
     form.action =
-        '<?= base_url('backend/master/kategori_biaya_operasional/update'); ?>/' +
+        '<?= base_url('master/kategori_biaya_operasional/update'); ?>/' +
         data.id_kategori_biaya;
 
     if (document.getElementById('nama_kategori')) {

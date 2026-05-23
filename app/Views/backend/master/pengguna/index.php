@@ -39,7 +39,7 @@
                             onclick="editData(<?= htmlspecialchars(json_encode($d)); ?>)">
                             <i class="bi bi-pencil-square"></i>
                         </button>
-                        <a href="<?= base_url('backend/master/pengguna/delete/' . $d['id_pengguna']); ?>"
+                        <a href="<?= base_url('master/pengguna/delete/' . $d['id_pengguna']); ?>"
                             class="btn btn-danger btn-sm" onclick="return confirm('Hapus data?')">
                             <i class="bi bi-trash"></i>
                         </a>
@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function tambahData() {
     if (!form || !modal) return;
     document.getElementById('modalTitle').innerText = 'Tambah Pengguna';
-    form.action = '<?= base_url('backend/master/pengguna/save'); ?>';
+    form.action = '<?= base_url('master/pengguna/save'); ?>';
     form.reset();
     modal.show();
 }
@@ -91,11 +91,11 @@ function tambahData() {
 function editData(data) {
     if (!form || !modal) return;
     document.getElementById('modalTitle').innerText = 'Edit Pengguna';
-    form.action = '<?= base_url('backend/master/pengguna/update'); ?>/' + data.id_pengguna;
+    form.action = '<?= base_url('master/pengguna/update'); ?>/' + data.id_pengguna;
 
     document.getElementById('nama_pengguna').value = data.nama_pengguna;
     document.getElementById('peran').value = data.peran;
-    document.getElementById('kata_sandi').value = ''; // Kosongkan password saat edit
+    document.getElementById('kata_sandi').value = '';
 
     modal.show();
 }

@@ -27,7 +27,7 @@
         </thead>
         <tbody>
             <?php $no = 1;
-            foreach ($data as $d): ?>
+foreach ($data as $d): ?>
             <tr>
                 <td><?= $no++; ?></td>
                 <td><span class="badge text-bg-secondary"><?= $d['kode_jasa']; ?></span></td>
@@ -40,8 +40,8 @@
                             <i class="bi bi-pencil-square text-white"></i>
                         </button>
 
-                        <a href="<?= base_url('backend/master/jasa_servis/delete/' . $d['id_jasa']); ?>"
-                            class="btn btn-danger btn-sm" onclick="return confirm('Hapus data?')">
+                        <a href="<?= ('master/jasa_servis/delete/' . $d['id_jasa']); ?>" class="btn btn-danger btn-sm"
+                            onclick="return confirm('Hapus data?')">
                             <i class="bi bi-trash"></i>
                         </a>
                     </div>
@@ -97,8 +97,7 @@ function tambahData() {
     }
 
     document.getElementById('modalTitle').innerText = 'Tambah Data Jasa';
-    // Endpoint CI4 untuk simpan jasa
-    form.action = '<?= base_url('backend/master/jasa_servis/save'); ?>';
+    form.action = '<?= site_url('master/jasa-servis/save'); ?>';
     form.reset();
     modal.show();
 }
@@ -107,8 +106,7 @@ function editData(data) {
     if (!form || !modal) return;
 
     document.getElementById('modalTitle').innerText = 'Edit Data Jasa';
-    // Endpoint CI4 untuk update jasa berdasarkan ID
-    form.action = '<?= base_url('backend/master/jasa_servis/update'); ?>/' + data.id_jasa;
+    form.action = '<?= site_url('master/jasa-servis/update'); ?>/' + data.id_jasa;
 
     // Mengisi nilai input di dalam modal
     if (document.getElementById('nama_jasa')) {

@@ -38,7 +38,7 @@
                                 <i class="bi bi-exclamation-circle text-warning"></i> <b><?= $piutang ?></b> belum lunas
                             <?php endif; ?>
                             <hr class="my-2">
-                            <a href="<?= base_url('backend/master/sparepart'); ?>" class="btn btn-xs btn-primary text-white w-100" style="font-size: 0.75rem;">
+                            <a href="<?= base_url('master/sparepart'); ?>" class="btn btn-xs btn-primary text-white w-100" style="font-size: 0.75rem;">
                                 Lihat Detail Sparepart
                             </a>
                         </div>
@@ -89,14 +89,14 @@
                     <div class="dropdown-divider"></div>
 
                     <?php if (isset($stok_kritis_count) && $stok_kritis_count > 0): ?>
-                    <a href="<?= base_url('backend/master/sparepart'); ?>" class="dropdown-item">
+                    <a href="<?= base_url('master/sparepart'); ?>" class="dropdown-item">
                         <i class="bi bi-box-seam me-2 text-danger"></i>
                         <?= $stok_kritis_count; ?> Item Stok Kritis
                     </a>
                     <?php endif; ?>
 
                     <?php if (isset($belum_lunas) && $belum_lunas > 0): ?>
-                    <a href="<?= base_url('backend/master/transaksi'); ?>" class="dropdown-item">
+                    <a href="<?= base_url('master/transaksi'); ?>" class="dropdown-item">
                         <i class="bi bi-exclamation-circle me-2 text-warning"></i>
                         <?= $belum_lunas; ?> Transaksi Belum Lunas
                     </a>
