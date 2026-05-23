@@ -119,21 +119,18 @@
 
                     </td>
 
-                    <td>
+                    <td class="text-center">
+                        <div class="d-flex justify-content-center gap-1">
+                            <button class="btn btn-warning btn-sm"
+                                onclick="editData(<?= htmlspecialchars(json_encode($d)); ?>)">
+                                <i class="bi bi-pencil-square text-white"></i>
+                            </button>
 
-                        <button class="btn btn-warning btn-sm" onclick='editData(<?= json_encode($d); ?>)'>
-
-                            <i class="bi bi-pencil-square"></i>
-
-                        </button>
-
-                        <a href="<?= base_url('transaksi/biaya_operasional/delete/' . $d['id_biaya_operasional']); ?>"
-                            class="btn btn-danger btn-sm" onclick="return confirm('Hapus data ini?')">
-
-                            <i class="bi bi-trash"></i>
-
-                        </a>
-
+                            <a href="<?= base_url('transaksi/biaya-operasional/delete/' . $d['id_biaya_operasional']); ?>"
+                                class="btn btn-danger btn-sm" onclick="return confirm('Hapus data?')">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </div>
                     </td>
 
                 </tr>
@@ -221,7 +218,7 @@ function tambahData() {
         'Tambah Biaya Operasional';
 
     form.action =
-        '<?= base_url('transaksi/biaya_operasional/save'); ?>';
+        '<?= base_url('transaksi/biaya-operasional/save'); ?>';
 
     form.reset();
 
@@ -237,7 +234,7 @@ function editData(data) {
         'Edit Biaya Operasional';
 
     form.action =
-        '<?= base_url('transaksi/biaya_operasional/update'); ?>/' +
+        '<?= base_url('transaksi/biaya-operasional/update'); ?>/' +
         data.id_biaya_operasional;
 
     if (document.getElementById('id_kategori_biaya')) {

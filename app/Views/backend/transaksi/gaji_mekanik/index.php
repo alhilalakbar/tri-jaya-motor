@@ -127,7 +127,7 @@
 
                         </button>
 
-                        <a href="<?= base_url('transaksi/gaji_mekanik/delete/' . $d['id_gaji']); ?>"
+                        <a href="<?= base_url('transaksi/gaji-mekanik/delete/' . $d['id_gaji']); ?>"
                             class="btn btn-danger btn-sm" onclick="return confirm('Hapus data ini?')">
 
                             <i class="bi bi-trash"></i>
@@ -221,7 +221,7 @@ function tambahData() {
         'Tambah Gaji Mekanik';
 
     form.action =
-        '<?= base_url('transaksi/gaji_mekanik/save'); ?>';
+        '<?= base_url('transaksi/gaji-mekanik/save'); ?>';
 
     form.reset();
 
@@ -237,7 +237,7 @@ function editData(data) {
         'Edit Gaji Mekanik';
 
     form.action =
-        '<?= base_url('transaksi/gaji_mekanik/update'); ?>/' +
+        '<?= base_url('transaksi/gaji-mekanik/update'); ?>/' +
         data.id_gaji;
 
     if (document.getElementById('id_mekanik')) {

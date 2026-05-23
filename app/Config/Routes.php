@@ -106,8 +106,16 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
         $routes->post('pemasok/save', 'Master\Pemasok::save');
         $routes->post('pemasok/update/(:any)', 'Master\Pemasok::update/$1');
         $routes->get('pemasok/delete/(:any)', 'Master\Pemasok::delete/$1');
+    });
 
-        // Pengguna
+
+    /*
+    |--------------------------------------------------------------------------
+    | USER MANAGEMENT
+    | Pemilik Only
+    |--------------------------------------------------------------------------
+    */
+    $routes->group('master', ['filter' => 'role:Pemilik'], function ($routes) {
         $routes->get('pengguna', 'Master\Pengguna::index');
         $routes->post('pengguna/save', 'Master\Pengguna::save');
         $routes->post('pengguna/update/(:any)', 'Master\Pengguna::update/$1');
@@ -128,12 +136,10 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
         |--------------------------------------------------------------------------
         */
         $routes->group('', ['filter' => 'role:Admin,Pemilik,Mekanik'], function ($routes) {
-
             $routes->get('servis', 'Transaksi\Servis::index');
             $routes->get('servis/detail/(:any)', 'Transaksi\Servis::detail/$1');
             $routes->post('servis/update-status', 'Transaksi\Servis::update_status');
         });
-
 
         /*
         |--------------------------------------------------------------------------
@@ -142,27 +148,22 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
         */
         $routes->group('', ['filter' => 'role:Admin,Pemilik'], function ($routes) {
 
-            // Create Servis
             $routes->post('servis/create', 'Transaksi\Servis::create');
 
-            // Pembelian
             $routes->get('pembelian', 'Transaksi\Pembelian::index');
             $routes->post('pembelian/save', 'Transaksi\Pembelian::save');
             $routes->get('pembelian/detail/(:any)', 'Transaksi\Pembelian::detail/$1');
 
-            // Jasa Luar
             $routes->get('jasa-luar', 'Transaksi\JasaLuar::index');
             $routes->post('jasa-luar/save', 'Transaksi\JasaLuar::save');
             $routes->post('jasa-luar/update/(:any)', 'Transaksi\JasaLuar::update/$1');
             $routes->get('jasa-luar/delete/(:any)', 'Transaksi\JasaLuar::delete/$1');
 
-            // Gaji Mekanik
             $routes->get('gaji-mekanik', 'Transaksi\GajiMekanik::index');
             $routes->post('gaji-mekanik/save', 'Transaksi\GajiMekanik::save');
             $routes->post('gaji-mekanik/update/(:any)', 'Transaksi\GajiMekanik::update/$1');
             $routes->get('gaji-mekanik/delete/(:any)', 'Transaksi\GajiMekanik::delete/$1');
 
-            // Biaya Operasional
             $routes->get('biaya-operasional', 'Transaksi\BiayaOperasional::index');
             $routes->post('biaya-operasional/save', 'Transaksi\BiayaOperasional::save');
             $routes->post('biaya-operasional/update/(:any)', 'Transaksi\BiayaOperasional::update/$1');

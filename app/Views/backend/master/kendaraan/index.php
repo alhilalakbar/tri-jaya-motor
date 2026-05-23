@@ -34,15 +34,18 @@
                     <td><span class="badge text-bg-dark"><?= $d['nomor_plat']; ?></span></td>
                     <td><?= $d['nama_pelanggan']; ?></td>
                     <td><?= $d['nama_tipe']; ?></td>
-                    <td>
-                        <button class="btn btn-warning btn-sm"
-                            onclick="editData(<?= htmlspecialchars(json_encode($d)); ?>)">
-                            <i class="bi bi-pencil-square"></i>
-                        </button>
-                        <a href="<?= base_url('master/kendaraan/delete/' . $d['id_kendaraan']); ?>"
-                            class="btn btn-danger btn-sm" onclick="return confirm('Hapus data?')">
-                            <i class="bi bi-trash"></i>
-                        </a>
+                    <td class="text-center">
+                        <div class="d-flex justify-content-center gap-1">
+                            <button class="btn btn-warning btn-sm"
+                                onclick="editData(<?= htmlspecialchars(json_encode($d)); ?>)">
+                                <i class="bi bi-pencil-square text-white"></i>
+                            </button>
+
+                            <a href="<?= base_url('master/kendaraan/delete/' . $d['id_kendaraan']); ?>"
+                                class="btn btn-danger btn-sm" onclick="return confirm('Hapus data?')">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </div>
                     </td>
                 </tr>
                 <?php endforeach; ?>

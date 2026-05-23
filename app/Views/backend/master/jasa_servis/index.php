@@ -40,8 +40,8 @@ foreach ($data as $d): ?>
                             <i class="bi bi-pencil-square text-white"></i>
                         </button>
 
-                        <a href="<?= ('master/jasa_servis/delete/' . $d['id_jasa']); ?>" class="btn btn-danger btn-sm"
-                            onclick="return confirm('Hapus data?')">
+                        <a href="<?= base_url('master/jasa-servis/delete/' . $d['id_jasa']); ?>"
+                            class="btn btn-danger btn-sm" onclick="return confirm('Hapus data?')">
                             <i class="bi bi-trash"></i>
                         </a>
                     </div>

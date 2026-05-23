@@ -124,7 +124,6 @@ function editData(data) {
     document.getElementById('harga_jual').value = data.harga_jual;
     document.getElementById('stok_minimum').value = data.stok_minimum;
 
-    // Stok saat ini tidak boleh diubah di sini (harus via Pembelian/Transaksi)
     if (document.getElementById('stok_saat_ini')) {
         document.getElementById('stok_saat_ini').value = data.stok_saat_ini;
         document.getElementById('stok_saat_ini').readOnly = true;

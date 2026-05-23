@@ -53,21 +53,18 @@
 
                     </td>
 
-                    <td>
+                    <td class="text-center">
+                        <div class="d-flex justify-content-center gap-1">
+                            <button class="btn btn-warning btn-sm"
+                                onclick="editData(<?= htmlspecialchars(json_encode($d)); ?>)">
+                                <i class="bi bi-pencil-square text-white"></i>
+                            </button>
 
-                        <button class="btn btn-warning btn-sm" onclick='editData(<?= json_encode($d); ?>)'>
-
-                            <i class="bi bi-pencil-square"></i>
-
-                        </button>
-
-                        <a href="<?= ('master/kategori_biaya_operasional/delete/' . $d['id_kategori_biaya']); ?>"
-                            class="btn btn-danger btn-sm" onclick="return confirm('Hapus data ini?')">
-
-                            <i class="bi bi-trash"></i>
-
-                        </a>
-
+                            <a href="<?= base_url('master/kategori-biaya-operasional/delete/' . $d['id_kategori_biaya']); ?>"
+                                class="btn btn-danger btn-sm" onclick="return confirm('Hapus data?')">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </div>
                     </td>
 
                 </tr>
@@ -167,7 +164,7 @@ function editData(data) {
         'Edit Kategori Biaya Operasional';
 
     form.action =
-        '<?= base_url('master/kategori_biaya_operasional/update'); ?>/' +
+        '<?= base_url('master/kategori-biaya-operasional/update'); ?>/' +
         data.id_kategori_biaya;
 
     if (document.getElementById('nama_kategori')) {

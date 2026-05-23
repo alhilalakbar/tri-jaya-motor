@@ -34,15 +34,18 @@ foreach ($data as $d): ?>
                 <td><?= $no++; ?></td>
                 <td><span class="badge text-bg-secondary"><?= $d['kode_kategori']; ?></span></td>
                 <td><?= $d['nama_kategori']; ?></td>
-                <td>
-                    <button class="btn btn-warning btn-sm"
-                        onclick="editData(<?= htmlspecialchars(json_encode($d)); ?>)">
-                        <i class="bi bi-pencil-square"></i>
-                    </button>
-                    <a href="<?= base_url('master/kategori_part/delete/' . $d['id_kategori']); ?>"
-                        class="btn btn-danger btn-sm" onclick="return confirm('Hapus data?')">
-                        <i class="bi bi-trash"></i>
-                    </a>
+                <td class="text-center">
+                    <div class="d-flex justify-content-center gap-1">
+                        <button class="btn btn-warning btn-sm"
+                            onclick="editData(<?= htmlspecialchars(json_encode($d)); ?>)">
+                            <i class="bi bi-pencil-square text-white"></i>
+                        </button>
+
+                        <a href="<?= base_url('master/kategori-part/delete/' . $d['id_kategori']); ?>"
+                            class="btn btn-danger btn-sm" onclick="return confirm('Hapus data?')">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </div>
                 </td>
             </tr>
             <?php endforeach; ?>
@@ -94,7 +97,7 @@ function tambahData() {
 
     document.getElementById('modalTitle').innerText = 'Tambah Data';
 
-    form.action = '<?= base_url('master/kategori_part/save'); ?>';
+    form.action = '<?= base_url('master/kategori-part/save'); ?>';
 
     form.reset();
 
@@ -107,7 +110,7 @@ function editData(data) {
 
     document.getElementById('modalTitle').innerText = 'Edit Data';
 
-    form.action = '<?= base_url('master/kategori_part/update'); ?>/' + data.id_kategori;
+    form.action = '<?= base_url('master/kategori-part/update'); ?>/' + data.id_kategori;
 
     if (document.getElementById('nama_kategori')) {
         document.getElementById('nama_kategori').value = data.nama_kategori;

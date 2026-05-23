@@ -51,20 +51,18 @@
                         <?= $d['nama_merek_part']; ?>
                     </td>
 
-                    <td>
+                    <td class="text-center">
+                        <div class="d-flex justify-content-center gap-1">
+                            <button class="btn btn-warning btn-sm"
+                                onclick="editData(<?= htmlspecialchars(json_encode($d)); ?>)">
+                                <i class="bi bi-pencil-square text-white"></i>
+                            </button>
 
-                        <button type="button" class="btn btn-warning btn-sm"
-                            onclick='editData(<?= json_encode($d); ?>)'>
-
-                            <i class="bi bi-pencil-square"></i>
-                        </button>
-
-                        <a href="<?= base_url('master/merek_part/delete/' . $d['id_merek_part']); ?>"
-                            class="btn btn-danger btn-sm" onclick="return confirm('Hapus data?')">
-
-                            <i class="bi bi-trash"></i>
-                        </a>
-
+                            <a href="<?= base_url('master/merk-part/delete/' . $d['id_merek_part']); ?>"
+                                class="btn btn-danger btn-sm" onclick="return confirm('Hapus data?')">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </div>
                     </td>
 
                 </tr>
@@ -216,7 +214,7 @@ function tambahData() {
     ).innerText = 'Tambah Data';
 
     form.action =
-        '<?= base_url('master/merek_part/save'); ?>';
+        '<?= base_url('master/merek-part/save'); ?>';
 
     modal.show();
 }
@@ -241,7 +239,7 @@ function editData(data) {
     ).innerText = 'Edit Data';
 
     form.action =
-        '<?= base_url('master/merek_part/update'); ?>/' +
+        '<?= base_url('master/merek-part/update'); ?>/' +
         data.id_merek_part;
 
     if (

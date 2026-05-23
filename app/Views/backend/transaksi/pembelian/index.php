@@ -2,7 +2,7 @@
 
 <?= $this->section('content'); ?>
 
-<div class="card card-dark card-outline">
+<div class="card card-primary card-outline">
 
     <div class="card-header d-flex justify-content-between align-items-center">
 
@@ -10,7 +10,7 @@
             Riwayat Pembelian Stok
         </h5>
 
-        <button type="button" class="btn btn-dark btn-sm" onclick="tambahBeli()">
+        <button type="button" class="btn btn-primary btn-sm" onclick="tambahBeli()">
 
             <i class="bi bi-cart-plus"></i>
             Input Pembelian
@@ -43,7 +43,7 @@
                 <tr>
 
                     <td>
-                        <span class="badge text-bg-dark fs-6">
+                        <span class="fw-bold text-primary">
                             <?= $d['kode_pembelian']; ?>
                         </span>
                     </td>
@@ -109,7 +109,7 @@
 
             <div class="modal-content">
 
-                <div class="modal-header bg-dark text-white">
+                <div class="modal-header bg-primary text-white">
 
                     <h5 class="modal-title">
                         <i class="bi bi-cart-fill"></i>
@@ -135,7 +135,7 @@
 
                     </button>
 
-                    <button type="submit" class="btn btn-dark px-4">
+                    <button type="submit" class="btn btn-primary px-4">
 
                         Simpan ke Stok
 

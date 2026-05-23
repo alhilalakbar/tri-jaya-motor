@@ -28,15 +28,18 @@
                     <td><?= esc($d['deskripsi_pekerjaan']); ?></td>
                     <td>Rp <?= number_format($d['biaya_modal_vendor'], 0, ',', '.'); ?></td>
                     <td>Rp <?= number_format($d['tagihan_ke_pelanggan'], 0, ',', '.'); ?></td>
-                    <td>
-                        <button class="btn btn-warning btn-sm"
-                            onclick="editData(<?= htmlspecialchars(json_encode($d)); ?>)">
-                            <i class="bi bi-pencil-square"></i>
-                        </button>
-                        <a href="<?= base_url('transaksi/jasaluar/delete/' . $d['id_jasa_luar']); ?>"
-                            class="btn btn-danger btn-sm" onclick="return confirm('Hapus data ini?')">
-                            <i class="bi bi-trash"></i>
-                        </a>
+                    <td class="text-center">
+                        <div class="d-flex justify-content-center gap-1">
+                            <button class="btn btn-warning btn-sm"
+                                onclick="editData(<?= htmlspecialchars(json_encode($d)); ?>)">
+                                <i class="bi bi-pencil-square text-white"></i>
+                            </button>
+
+                            <a href="<?= base_url('transaksi/jasa-luar/delete/' . $d['id_jasa_luar']); ?>"
+                                class="btn btn-danger btn-sm" onclick="return confirm('Hapus data?')">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </div>
                     </td>
                 </tr>
                 <?php endforeach; ?>
@@ -78,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function tambahData() {
     if (!form || !modal) return;
     document.getElementById('modalTitle').innerText = 'Tambah Jasa Luar';
-    form.action = '<?= base_url('transaksi/jasa_luar/save'); ?>';
+    form.action = '<?= base_url('transaksi/jasa-luar/save'); ?>';
     form.reset();
     modal.show();
 }
@@ -86,7 +89,7 @@ function tambahData() {
 function editData(data) {
     if (!form || !modal) return;
     document.getElementById('modalTitle').innerText = 'Edit Jasa Luar';
-    form.action = '<?= base_url('transaksi/jasaluar/update'); ?>/' + data.id_jasa_luar;
+    form.action = '<?= base_url('transaksi/jasa-luar/update'); ?>/' + data.id_jasa_luar;
 
     // Isi form otomatis
     if (document.getElementById('id_transaksi')) document.getElementById('id_transaksi').value = data.id_transaksi;

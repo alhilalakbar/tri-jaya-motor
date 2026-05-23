@@ -36,15 +36,18 @@
                     <td><?= $t['nama_merek_motor']; ?></td>
                     <td><?= $t['nama_tipe']; ?></td>
                     <td><?= $t['jenis_kendaraan']; ?></td>
-                    <td>
-                        <button class="btn btn-warning btn-sm"
-                            onclick="editData(<?= htmlspecialchars(json_encode($t)); ?>)">
-                            <i class="bi bi-pencil-square"></i>
-                        </button>
-                        <a href="<?= base_url('master/tipe_motor/delete/' . $t['id_tipe_motor']); ?>"
-                            class="btn btn-danger btn-sm" onclick="return confirm('Hapus data?')">
-                            <i class="bi bi-trash"></i>
-                        </a>
+                    <td class="text-center">
+                        <div class="d-flex justify-content-center gap-1">
+                            <button class="btn btn-warning btn-sm"
+                                onclick="editData(<?= htmlspecialchars(json_encode($t)); ?>)">
+                                <i class="bi bi-pencil-square text-white"></i>
+                            </button>
+
+                            <a href="<?= base_url('master/tipe-motor/delete/' . $t['id_tipe_motor']); ?>"
+                                class="btn btn-danger btn-sm" onclick="return confirm('Hapus data?')">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </div>
                     </td>
                 </tr>
                 <?php endforeach; ?>
@@ -86,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function tambahData() {
     if (!form || !modal) return;
     document.getElementById('modalTitle').innerText = 'Tambah Tipe Motor';
-    form.action = '<?= base_url('master/tipe_motor/save'); ?>';
+    form.action = '<?= base_url('master/tipe-motor/save'); ?>';
     form.reset();
     modal.show();
 }
@@ -94,7 +97,7 @@ function tambahData() {
 function editData(data) {
     if (!form || !modal) return;
     document.getElementById('modalTitle').innerText = 'Edit Tipe Motor';
-    form.action = '<?= base_url('master/tipe_motor/update'); ?>/' + data.id_tipe_motor;
+    form.action = '<?= base_url('master/tipe-motor/update'); ?>/' + data.id_tipe_motor;
 
     if (document.getElementById('id_merek_motor')) document.getElementById('id_merek_motor').value = data
         .id_merek_motor;
