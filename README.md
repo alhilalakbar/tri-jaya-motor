@@ -1,69 +1,301 @@
-# CodeIgniter 4 Application Starter
+# Sistem Informasi Manajemen Bengkel - Tri Jaya Motor
 
-## What is CodeIgniter?
+Aplikasi web berbasis **CodeIgniter 4** untuk membantu pengelolaan operasional bengkel, mencakup manajemen data master, transaksi servis kendaraan, inventaris sparepart, sistem kasir, serta pelaporan operasional.
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+## Fitur Utama
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+- Autentikasi admin
+- Manajemen data pelanggan
+- Manajemen data mekanik
+- Manajemen data sparepart
+- Transaksi servis kendaraan
+- Sistem kasir
+- Laporan operasional
+- Database migration & seeder support
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+## Teknologi yang Digunakan
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+- PHP
+- CodeIgniter 4
+- MySQL / MariaDB
+- Composer
+- AdminLTE 3
+- Bootstrap
+- JavaScript
+- jQuery
 
-## Installation & updates
+---
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
+## Instalasi
 
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+Install dependency project menggunakan Composer:
 
-## Setup
+```bash
+composer install
+```
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
+Buat file environment:
 
-## Important Change with index.php
+```bash
+cp env .env
+```
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+Konfigurasikan file `.env` sesuai environment lokal Anda:
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+```env
+CI_ENVIRONMENT = development
 
-**Please** read the user guide for a better explanation of how CI4 works!
+app.indexPage = ''
+app.baseURL = 'http://localhost:8080/'
 
-## Repository Management
+database.default.hostname = localhost
+database.default.database = tri_jaya_motor_db
+database.default.username = root
+database.default.password =
+database.default.DBDriver = MySQLi
+database.default.port = 3306
+```
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+---
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+## Setup Database
 
-## Server Requirements
+Buat database terlebih dahulu:
 
-PHP version 8.2 or higher is required, with the following extensions installed:
+```sql
+CREATE DATABASE tri_jaya_motor_db;
+```
 
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
+Jalankan migration:
 
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - The end of life date for PHP 8.1 was December 31, 2025.
-> - If you are still using below PHP 8.2, you should upgrade immediately.
-> - The end of life date for PHP 8.2 will be December 31, 2026.
+```bash
+php spark migrate
+```
 
-Additionally, make sure that the following extensions are enabled in your PHP:
+Jalankan seeder:
 
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+```bash
+php spark db:seed CounterKodeSeeder
+```
+
+### Opsi Manual (Import SQL)
+
+Jika ingin menggunakan backup database manual:
+
+```bash
+mysql -u root -p tri_jaya_motor_db < tri_jaya_motor_refinement_new_view.sql
+```
+
+---
+
+## Menjalankan Aplikasi
+
+### Opsi 1 — Development Server (Rekomendasi)
+
+Jalankan development server bawaan CodeIgniter:
+
+```bash
+php spark serve
+```
+
+Akses aplikasi melalui browser:
+
+```text
+http://localhost:8080
+```
+
+---
+
+### Opsi 2 — Linux (Apache / Virtual Host)
+
+Pastikan Apache dan MySQL/MariaDB berjalan:
+
+**Ubuntu / Debian:**
+
+```bash
+sudo systemctl start apache2
+sudo systemctl start mysql
+```
+
+**CentOS / Fedora / RHEL:**
+
+```bash
+sudo systemctl start httpd
+sudo systemctl start mariadb
+```
+
+Contoh virtual host Apache:
+
+```apache
+<VirtualHost *:80>
+    ServerName tri-jaya-motor.local
+    DocumentRoot /var/www/tri-jaya-motor/public
+
+    <Directory /var/www/tri-jaya-motor/public>
+        AllowOverride All
+        Require all granted
+    </Directory>
+</VirtualHost>
+```
+
+Tambahkan host:
+
+```bash
+sudo nano /etc/hosts
+```
+
+Tambahkan:
+
+```text
+127.0.0.1 tri-jaya-motor.local
+```
+
+Reload Apache:
+
+```bash
+sudo systemctl reload apache2
+```
+
+atau:
+
+```bash
+sudo systemctl reload httpd
+```
+
+Ubah `.env`:
+
+```env
+app.baseURL = 'http://tri-jaya-motor.local/'
+```
+
+Akses:
+
+```text
+http://tri-jaya-motor.local
+```
+
+---
+
+### Opsi 3 — macOS (Apache + MySQL)
+
+Jalankan Apache:
+
+```bash
+sudo apachectl start
+```
+
+Jika menggunakan Homebrew MySQL:
+
+```bash
+brew services start mysql
+```
+
+Jika menggunakan Homebrew MariaDB:
+
+```bash
+brew services start mariadb
+```
+
+Jalankan aplikasi menggunakan development server:
+
+```bash
+php spark serve
+```
+
+Akses:
+
+```text
+http://localhost:8080
+```
+
+---
+
+### Opsi 4 — Windows (XAMPP / Laragon)
+
+Pastikan:
+
+- Apache berjalan
+- MySQL berjalan
+- PHP tersedia di PATH (jika memakai terminal)
+
+Jalankan:
+
+```bash
+php spark serve
+```
+
+Akses:
+
+```text
+http://localhost:8080
+```
+
+---
+
+## Struktur Project
+
+```text
+app/
+├── Controllers/
+├── Database/
+│   ├── Migrations/
+│   └── Seeds/
+├── Models/
+└── Views/
+
+public/
+└── assets/
+
+writable/
+```
+
+---
+
+## Troubleshooting
+
+### Composer dependency error
+
+Jika dependency belum terinstall:
+
+```bash
+composer install
+```
+
+---
+
+### Database connection error
+
+Pastikan konfigurasi database pada `.env` sudah benar:
+
+```env
+database.default.database = tri_jaya_motor_db
+database.default.username = root
+database.default.password =
+```
+
+---
+
+### Migration gagal
+
+Pastikan:
+
+- Database sudah dibuat
+- MySQL / MariaDB berjalan
+- Konfigurasi `.env` sesuai
+- PHP CLI tersedia
+
+---
+
+### Permission issue (Linux/macOS)
+
+Jika folder writable tidak bisa diakses:
+
+```bash
+chmod -R 775 writable
+```
+
+---
+
+## Catatan
+
+Project ini menggunakan fitur bawaan **CodeIgniter 4 Migration** dan **Seeder** untuk menjaga konsistensi struktur database antar environment development.
