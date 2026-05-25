@@ -26,7 +26,6 @@
         overflow: hidden;
     }
 
-    /* Background image layer */
     body.login-page::before {
         content: '';
         position: absolute;
@@ -37,7 +36,6 @@
         z-index: 0;
     }
 
-    /* Overlay */
     body.login-page::after {
         content: '';
         position: absolute;
@@ -107,6 +105,26 @@
         font-size: 0.95rem;
     }
 
+    .logo-pulse {
+        width: 150px;
+        margin-bottom: 16px;
+        animation: pulseLogo 2s infinite ease-in-out;
+    }
+
+    @keyframes pulseLogo {
+        0% {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(1.08);
+        }
+
+        100% {
+            transform: scale(1);
+        }
+    }
+
     .form-control {
         border-radius: 8px 0 0 8px;
         transition: all 0.3s ease;
@@ -128,6 +146,17 @@
         border-color: #0d6efd;
     }
 
+    .toggle-password {
+        cursor: pointer;
+        user-select: none;
+    }
+
+    .toggle-password:hover {
+        background: #0d6efd;
+        color: white;
+        border-color: #0d6efd;
+    }
+
     .btn-primary {
         border-radius: 8px;
         font-weight: 600;
@@ -144,7 +173,6 @@
         opacity: 0.9;
     }
 
-    /* Shake animation */
     .shake {
         animation: shake 0.45s;
     }
@@ -188,7 +216,7 @@
 
             <div class="card-header text-center">
 
-                <img src="<?= base_url('assets/logo.png') ?>" alt="Logo Tri Jaya Motor" width="150" class="mb-3">
+                <img src="<?= base_url('assets/logo.png') ?>" alt="Logo Tri Jaya Motor" class="logo-pulse">
 
                 <h1 class="mb-0">
                     <b>Tri Jaya</b> Motor
@@ -221,10 +249,11 @@
 
                     <!-- Password -->
                     <div class="input-group mb-3">
-                        <input type="password" name="kata_sandi" class="form-control" placeholder="Password" required>
+                        <input type="password" name="kata_sandi" id="passwordInput" class="form-control"
+                            placeholder="Password" required>
 
-                        <div class="input-group-text">
-                            <span class="bi bi-lock"></span>
+                        <div class="input-group-text toggle-password" id="togglePassword">
+                            <span class="bi bi-eye" id="eyeIcon"></span>
                         </div>
                     </div>
 
@@ -232,7 +261,6 @@
                     <div class="row">
                         <div class="col-12">
                             <button type="submit" class="btn btn-primary w-100" id="loginBtn">
-
                                 <span id="btnText">Sign In</span>
                                 <span class="spinner-border spinner-border-sm d-none" id="spinner" role="status"
                                     aria-hidden="true"></span>
@@ -254,6 +282,19 @@
     const btn = document.getElementById('loginBtn');
     const spinner = document.getElementById('spinner');
     const btnText = document.getElementById('btnText');
+
+    const passwordInput = document.getElementById('passwordInput');
+    const togglePassword = document.getElementById('togglePassword');
+    const eyeIcon = document.getElementById('eyeIcon');
+
+    togglePassword.addEventListener('click', function() {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+
+        passwordInput.setAttribute('type', type);
+
+        eyeIcon.classList.toggle('bi-eye');
+        eyeIcon.classList.toggle('bi-eye-slash');
+    });
 
     form.addEventListener('submit', function() {
         spinner.classList.remove('d-none');
