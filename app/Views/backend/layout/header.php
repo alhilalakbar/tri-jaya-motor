@@ -138,12 +138,29 @@ $piutang = $belum_lunas ?? 0;
             </li>
             <?php endif; ?>
 
-            <li class="nav-item dropdown user-menu">
-                <a href="#" class="nav-link">
-                    <span class="d-none d-md-inline">
-                        Halo, <b><?= session()->get('nama_pengguna'); ?></b>
-                    </span>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                    Halo, <b><?= session()->get('nama_pengguna'); ?></b>
+                    <span class="text-muted">(<?= session()->get('peran'); ?>)</span>
                 </a>
+
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                        <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#ubahPasswordModal">
+                            <i class="fas fa-key me-2"></i> Ubah Password
+                        </a>
+                    </li>
+
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+
+                    <li>
+                        <a class="dropdown-item text-danger" href="<?= base_url('auth/logout'); ?>">
+                            <i class="fas fa-sign-out-alt me-2"></i> Logout
+                        </a>
+                    </li>
+                </ul>
             </li>
 
         </ul>

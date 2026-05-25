@@ -87,6 +87,56 @@
     });
     </script>
     <?php endif; ?>
+    <!-- Modal Ubah Password -->
+    <div class="modal fade" id="ubahPasswordModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <form action="<?= base_url('akun/ubah-password'); ?>" method="post">
+                    <?= csrf_field(); ?>
+
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            <i class="bi bi-key me-2"></i>
+                            Ubah Password
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal">
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <div class="mb-3">
+                            <label class="form-label">Password Lama</label>
+                            <input type="password" name="password_lama" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Password Baru</label>
+                            <input type="password" name="password_baru" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Konfirmasi Password Baru</label>
+                            <input type="password" name="konfirmasi_password" class="form-control" required>
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Batal
+                        </button>
+
+                        <button type="submit" class="btn btn-primary">
+                            Simpan Perubahan
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
 
     <?= $this->renderSection('scripts'); ?>
 </body>

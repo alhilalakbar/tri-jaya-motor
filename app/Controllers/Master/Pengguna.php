@@ -32,6 +32,44 @@ class Pengguna extends BaseCrudController
         ]);
     }
 
+    public function ubahPassword()
+    {
+        return view('backend/akun/ubah_password');
+    }
+
+    public function prosesUbahPassword()
+    {
+        $idPengguna = session()->get('id_pengguna');
+
+        $passwordLama = $this->request->getPost('password_lama');
+        $passwordBaru = $this->request->getPost('password_baru');
+        $konfirmasiPassword = $this->request->getPost('konfirmasi_password');
+
+        $user = $this->model->find($idPengguna);
+
+        if (!$user) {
+            return redirect()->back()->with('error', 'Pengguna tidak ditemukan.');
+        }
+
+        if (!password_verify($passwordLama, $user['kata_sandi'])) {
+            return redirect()->back()->withInput()->with('error', 'Password lama salah.');
+        }
+
+        if ($passwordBaru !== $konfirmasiPassword) {
+            return redirect()->back()->withInput()->with('error', 'Konfirmasi password tidak cocok.');
+        }
+
+        if (password_verify($passwordBaru, $user['kata_sandi'])) {
+            return redirect()->back()->withInput()->with('error', 'Password baru harus berbeda dari password lama.');
+        }
+
+        $this->model->update($idPengguna, [
+            'kata_sandi' => password_hash($passwordBaru, PASSWORD_DEFAULT)
+        ]);
+
+        return redirect()->back()->with('success', 'Password berhasil diubah.');
+    }
+
     public function save()
     {
         $data = $this->request->getPost();
