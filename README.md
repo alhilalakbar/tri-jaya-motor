@@ -1,46 +1,369 @@
 # Sistem Informasi Manajemen Bengkel - Tri Jaya Motor
 
-Aplikasi web berbasis **CodeIgniter 4** untuk membantu pengelolaan operasional bengkel, mencakup manajemen data master, transaksi servis kendaraan, inventaris sparepart, sistem kasir, serta pelaporan operasional.
+Aplikasi web berbasis **CodeIgniter 4** untuk membantu pengelolaan operasional bengkel, mencakup manajemen data master, transaksi servis kendaraan, inventaris sparepart, sistem kasir, hingga pelaporan operasional.
+
+Project ini dikembangkan sebagai implementasi digitalisasi proses bisnis bengkel berdasarkan observasi, wawancara, dan analisis kebutuhan operasional nyata di lapangan.
+
+---
 
 ## Fitur Utama
 
-- Autentikasi admin
+- Autentikasi pengguna
+- Role-Based Access Control (RBAC)
+- Dashboard operasional
 - Manajemen data pelanggan
+- Manajemen data kendaraan
 - Manajemen data mekanik
 - Manajemen data sparepart
+- Manajemen supplier
+- Manajemen jasa servis
+- Manajemen jasa luar / bubut
 - Transaksi servis kendaraan
 - Sistem kasir
+- Pengelolaan pembelian sparepart
+- Pengelolaan biaya operasional
+- Pengelolaan kompensasi / pembayaran mekanik
 - Laporan operasional
-- Database migration & seeder support
+- Export PDF / Excel
+- Migration & Seeder support
+
+---
 
 ## Teknologi yang Digunakan
 
-- PHP
+- PHP >= 8.1
 - CodeIgniter 4
 - MySQL / MariaDB
 - Composer
-- AdminLTE 3
 - Bootstrap
+- AdminLTE 3
 - JavaScript
 - jQuery
 
 ---
 
-## Instalasi
+# Prasyarat
 
-Install dependency project menggunakan Composer:
+Pastikan environment development Anda sudah memiliki:
+
+- Git
+- Composer
+- PHP >= 8.1
+- MySQL / MariaDB
+- Apache (opsional)
+- Laragon / XAMPP (Windows)
+
+---
+
+## Required PHP Extensions
+
+Pastikan extension berikut aktif:
+
+- intl
+- mbstring
+- mysqli
+- json
+- openssl
+- xml
+- curl
+- fileinfo
+
+Cek PHP:
+
+```bash
+php -v
+```
+
+Cek Composer:
+
+```bash
+composer --version
+```
+
+Cek Git:
+
+```bash
+git --version
+```
+
+---
+
+# Clone Repository
+
+> **Catatan:** Repository saat ini masih bersifat **private** karena project masih dalam tahap pengembangan dan belum dipresentasikan.
+
+Clone repository:
+
+```bash
+git clone https://github.com/alhilalakbar/tri-jaya-motor-operational.git
+cd tri-jaya-motor-operational
+```
+
+Jika repository private, pastikan akun GitHub Anda memiliki akses.
+
+---
+
+# Penempatan Project Directory
+
+Lokasi project tergantung environment development.
+
+---
+
+## Windows — XAMPP
+
+Jika menggunakan XAMPP:
+
+simpan project di:
+
+```text
+C:\xampp\htdocs\
+```
+
+Contoh:
+
+```text
+C:\xampp\htdocs\tri-jaya-motor-operational
+```
+
+Clone:
+
+```bash
+cd C:\xampp\htdocs
+git clone https://github.com/alhilalakbar/tri-jaya-motor-operational.git
+```
+
+Jika menggunakan Apache bawaan XAMPP:
+
+akses:
+
+```text
+http://localhost/tri-jaya-motor-operational/public
+```
+
+Jika menggunakan `php spark serve`, lokasi project bebas.
+
+Jika command `php` tidak dikenali:
+
+```cmd
+C:\xampp\php\php.exe spark serve
+```
+
+---
+
+## Windows — Laragon
+
+Jika menggunakan Laragon:
+
+simpan project di:
+
+```text
+C:\laragon\www\
+```
+
+Contoh:
+
+```text
+C:\laragon\www\tri-jaya-motor-operational
+```
+
+Clone:
+
+```bash
+cd C:\laragon\www
+git clone https://github.com/alhilalakbar/tri-jaya-motor-operational.git
+```
+
+Pastikan **Auto Virtual Hosts** aktif.
+
+Biasanya URL otomatis:
+
+```text
+http://tri-jaya-motor-operational.test
+```
+
+Update `.env`:
+
+```env
+app.baseURL = 'http://tri-jaya-motor-operational.test/'
+```
+
+Jika menggunakan `php spark serve`, lokasi project bebas.
+
+---
+
+## Linux
+
+Linux fleksibel.
+
+---
+
+### Opsi 1 — Development Directory (Recommended)
+
+Gunakan:
+
+```text
+/home/USERNAME/projects/
+```
+
+Contoh:
+
+```text
+/home/hillal/projects/tri-jaya-motor-operational
+```
+
+Clone:
+
+```bash
+mkdir -p ~/projects
+cd ~/projects
+git clone https://github.com/alhilalakbar/tri-jaya-motor-operational.git
+```
+
+Recommended jika menggunakan:
+
+```bash
+php spark serve
+```
+
+---
+
+### Opsi 2 — Apache Document Root
+
+Gunakan:
+
+```text
+/var/www/
+```
+
+Contoh:
+
+```text
+/var/www/tri-jaya-motor-operational
+```
+
+Clone:
+
+```bash
+cd /var/www
+sudo git clone https://github.com/alhilalakbar/tri-jaya-motor-operational.git
+```
+
+Set permission:
+
+```bash
+sudo chown -R $USER:www-data /var/www/tri-jaya-motor-operational
+sudo chmod -R 775 /var/www/tri-jaya-motor-operational
+```
+
+---
+
+## macOS
+
+Gunakan:
+
+```text
+~/Projects/
+```
+
+Contoh:
+
+```text
+/Users/USERNAME/Projects/tri-jaya-motor-operational
+```
+
+Clone:
+
+```bash
+mkdir -p ~/Projects
+cd ~/Projects
+git clone https://github.com/alhilalakbar/tri-jaya-motor-operational.git
+```
+
+Jika menggunakan Apache bawaan macOS:
+
+```text
+/Library/WebServer/Documents/
+```
+
+Namun development dengan:
+
+```bash
+php spark serve
+```
+
+lebih direkomendasikan.
+
+---
+
+# Install Dependency
+
+Install dependency:
 
 ```bash
 composer install
 ```
 
-Buat file environment:
+---
+
+# Setup Environment (.env)
+
+File `.env` tidak disertakan dalam repository demi keamanan.
+
+CodeIgniter 4 membutuhkan file `.env`.
+
+---
+
+## Jika file env tersedia
+
+Linux/macOS:
 
 ```bash
 cp env .env
 ```
 
-Konfigurasikan file `.env` sesuai environment lokal Anda:
+Windows CMD:
+
+```cmd
+copy env .env
+```
+
+PowerShell:
+
+```powershell
+Copy-Item env .env
+```
+
+---
+
+## Jika file env tidak tersedia
+
+Beberapa setup CodeIgniter 4 tidak menyediakan file `env` di root project.
+
+Gunakan template bawaan framework.
+
+Linux/macOS:
+
+```bash
+cp vendor/codeigniter4/framework/env .env
+```
+
+Windows CMD:
+
+```cmd
+copy vendor\codeigniter4\framework\env .env
+```
+
+PowerShell:
+
+```powershell
+Copy-Item vendor\codeigniter4\framework\env .env
+```
+
+---
+
+# Konfigurasi .env
+
+Edit `.env`:
 
 ```env
 CI_ENVIRONMENT = development
@@ -56,15 +379,43 @@ database.default.DBDriver = MySQLi
 database.default.port = 3306
 ```
 
+Jika menggunakan Laragon:
+
+```env
+app.baseURL = 'http://tri-jaya-motor-operational.test/'
+```
+
+Jika menggunakan Apache Linux:
+
+```env
+app.baseURL = 'http://trijaya.test/'
+```
+
 ---
 
-## Setup Database
+# Setup Database
 
-Buat database terlebih dahulu:
+Buat database:
 
 ```sql
 CREATE DATABASE tri_jaya_motor_db;
 ```
+
+atau via CLI:
+
+```bash
+mysql -u root -p
+```
+
+lalu:
+
+```sql
+CREATE DATABASE tri_jaya_motor_db;
+```
+
+---
+
+# Migration & Seeder
 
 Jalankan migration:
 
@@ -78,9 +429,11 @@ Jalankan seeder:
 php spark db:seed CounterKodeSeeder
 ```
 
-### Opsi Manual (Import SQL)
+---
 
-Jika ingin menggunakan backup database manual:
+# Opsi Manual (Import SQL)
+
+Jika menggunakan backup SQL:
 
 ```bash
 mysql -u root -p tri_jaya_motor_db < tri_jaya_motor_refinement_new_view.sql
@@ -88,135 +441,9 @@ mysql -u root -p tri_jaya_motor_db < tri_jaya_motor_refinement_new_view.sql
 
 ---
 
-## Menjalankan Aplikasi
+# Menjalankan Aplikasi
 
-### Opsi 1 — Development Server (Rekomendasi)
-
-Jalankan development server bawaan CodeIgniter:
-
-```bash
-php spark serve
-```
-
-Akses aplikasi melalui browser:
-
-```text
-http://localhost:8080
-```
-
----
-
-### Opsi 2 — Linux (Apache / Virtual Host)
-
-Pastikan Apache dan MySQL/MariaDB berjalan:
-
-**Ubuntu / Debian:**
-
-```bash
-sudo systemctl start apache2
-sudo systemctl start mysql
-```
-
-**CentOS / Fedora / RHEL:**
-
-```bash
-sudo systemctl start httpd
-sudo systemctl start mariadb
-```
-
-Contoh virtual host Apache:
-
-```apache
-<VirtualHost *:80>
-    ServerName tri-jaya-motor.local
-    DocumentRoot /var/www/tri-jaya-motor/public
-
-    <Directory /var/www/tri-jaya-motor/public>
-        AllowOverride All
-        Require all granted
-    </Directory>
-</VirtualHost>
-```
-
-Tambahkan host:
-
-```bash
-sudo nano /etc/hosts
-```
-
-Tambahkan:
-
-```text
-127.0.0.1 tri-jaya-motor.local
-```
-
-Reload Apache:
-
-```bash
-sudo systemctl reload apache2
-```
-
-atau:
-
-```bash
-sudo systemctl reload httpd
-```
-
-Ubah `.env`:
-
-```env
-app.baseURL = 'http://tri-jaya-motor.local/'
-```
-
-Akses:
-
-```text
-http://tri-jaya-motor.local
-```
-
----
-
-### Opsi 3 — macOS (Apache + MySQL)
-
-Jalankan Apache:
-
-```bash
-sudo apachectl start
-```
-
-Jika menggunakan Homebrew MySQL:
-
-```bash
-brew services start mysql
-```
-
-Jika menggunakan Homebrew MariaDB:
-
-```bash
-brew services start mariadb
-```
-
-Jalankan aplikasi menggunakan development server:
-
-```bash
-php spark serve
-```
-
-Akses:
-
-```text
-http://localhost:8080
-```
-
----
-
-### Opsi 4 — Windows (XAMPP / Laragon)
-
-Pastikan:
-
-- Apache berjalan
-- MySQL berjalan
-- PHP tersedia di PATH (jika memakai terminal)
+## Opsi 1 — CodeIgniter Development Server (Recommended)
 
 Jalankan:
 
@@ -232,10 +459,162 @@ http://localhost:8080
 
 ---
 
-## Struktur Project
+## Opsi 2 — Apache Virtual Host (Linux)
+
+Start service.
+
+Ubuntu / Debian:
+
+```bash
+sudo systemctl start apache2 && sudo systemctl start mysql
+```
+
+Jika MariaDB:
+
+```bash
+sudo systemctl start apache2 && sudo systemctl start mariadb
+```
+
+Fedora / CentOS / RHEL:
+
+```bash
+sudo systemctl start httpd && sudo systemctl start mariadb
+```
+
+Enable rewrite:
+
+Ubuntu / Debian:
+
+```bash
+sudo a2enmod rewrite
+sudo systemctl restart apache2
+```
+
+Buat virtual host:
+
+```apache
+<VirtualHost *:80>
+    ServerName trijaya.test
+    DocumentRoot /home/USERNAME/projects/tri-jaya-motor-operational/public
+
+    <Directory /home/USERNAME/projects/tri-jaya-motor-operational/public>
+        AllowOverride All
+        Require all granted
+        DirectoryIndex index.php
+    </Directory>
+</VirtualHost>
+```
+
+Tambahkan host:
+
+```bash
+sudo nano /etc/hosts
+```
+
+Isi:
+
+```text
+127.0.0.1 trijaya.test
+```
+
+Reload:
+
+Ubuntu / Debian:
+
+```bash
+sudo systemctl reload apache2
+```
+
+Fedora / CentOS:
+
+```bash
+sudo systemctl reload httpd
+```
+
+Akses:
+
+```text
+http://trijaya.test
+```
+
+---
+
+## Opsi 3 — XAMPP
+
+Pastikan:
+
+- Apache aktif
+- MySQL aktif
+
+Akses:
+
+```text
+http://localhost/tri-jaya-motor-operational/public
+```
+
+atau:
+
+```bash
+php spark serve
+```
+
+---
+
+## Opsi 4 — Laragon
+
+Pastikan:
+
+- Apache aktif
+- MySQL aktif
+- Auto Virtual Hosts aktif
+
+Akses:
+
+```text
+http://tri-jaya-motor-operational.test
+```
+
+atau:
+
+```bash
+php spark serve
+```
+
+---
+
+## Opsi 5 — macOS
+
+Jalankan Apache:
+
+```bash
+sudo apachectl start
+```
+
+Jalankan MySQL:
+
+```bash
+brew services start mysql
+```
+
+atau MariaDB:
+
+```bash
+brew services start mariadb
+```
+
+Jalankan:
+
+```bash
+php spark serve
+```
+
+---
+
+# Struktur Project
 
 ```text
 app/
+├── Config/
 ├── Controllers/
 ├── Database/
 │   ├── Migrations/
@@ -246,14 +625,18 @@ app/
 public/
 └── assets/
 
+vendor/
 writable/
+.env
+composer.json
+spark
 ```
 
 ---
 
-## Troubleshooting
+# Troubleshooting
 
-### Composer dependency error
+## Composer Error
 
 Jika dependency belum terinstall:
 
@@ -263,9 +646,9 @@ composer install
 
 ---
 
-### Database connection error
+## Database Connection Error
 
-Pastikan konfigurasi database pada `.env` sudah benar:
+Periksa `.env`:
 
 ```env
 database.default.database = tri_jaya_motor_db
@@ -273,29 +656,95 @@ database.default.username = root
 database.default.password =
 ```
 
+Pastikan database service berjalan.
+
 ---
 
-### Migration gagal
+## Migration Gagal
 
 Pastikan:
 
-- Database sudah dibuat
-- MySQL / MariaDB berjalan
-- Konfigurasi `.env` sesuai
+- database sudah dibuat
 - PHP CLI tersedia
+- konfigurasi `.env` benar
+- MySQL / MariaDB aktif
 
 ---
 
-### Permission issue (Linux/macOS)
+## Cache Permission Error
 
-Jika folder writable tidak bisa diakses:
+Jika muncul:
+
+```text
+Cache unable to write to writable/cache
+```
+
+Linux/macOS:
 
 ```bash
 chmod -R 775 writable
 ```
 
+atau:
+
+```bash
+sudo chown -R $USER:www-data writable
+chmod -R 775 writable
+```
+
 ---
 
-## Catatan
+## Base URL Invalid Error
 
-Project ini menggunakan fitur bawaan **CodeIgniter 4 Migration** dan **Seeder** untuk menjaga konsistensi struktur database antar environment development.
+Jika muncul:
+
+```text
+Config\App::$baseURL is not a valid URL
+```
+
+Benar:
+
+```env
+app.baseURL = 'http://localhost:8080/'
+```
+
+Salah:
+
+```env
+app.baseURL = 'http//localhost:8080/'
+```
+
+Tanda `:` setelah `http` wajib ada.
+
+---
+
+## Cache Bermasalah
+
+Clear cache:
+
+```bash
+php spark cache:clear
+```
+
+atau:
+
+```bash
+rm -rf writable/cache/*
+```
+
+---
+
+## Virtual Host Tidak Bisa Diakses
+
+Periksa:
+
+- `/etc/hosts`
+- Apache virtual host
+- `app.baseURL`
+- service Apache aktif
+
+---
+
+# Catatan
+
+Project ini dikembangkan menggunakan pendekatan **SDLC Waterfall** dengan fokus pada digitalisasi proses bisnis operasional bengkel berdasarkan analisis kebutuhan nyata di lapangan.
