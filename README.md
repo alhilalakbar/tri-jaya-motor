@@ -1,6 +1,6 @@
 # Sistem Informasi Manajemen Bengkel - Tri Jaya Motor
 
-Aplikasi web berbasis CodeIgniter 4 untuk membantu pengelolaan operasional bengkel, mencakup manajemen data master, transaksi servis kendaraan, inventaris sparepart, sistem kasir, hingga pelaporan operasional.
+Aplikasi web berbasis **CodeIgniter 4** untuk membantu pengelolaan operasional bengkel, mencakup manajemen data master, transaksi servis kendaraan, inventaris sparepart, sistem kasir, hingga pelaporan operasional.
 
 Project ini dikembangkan sebagai implementasi digitalisasi proses bisnis bengkel berdasarkan observasi, wawancara, dan analisis kebutuhan operasional nyata di lapangan.
 
@@ -53,11 +53,20 @@ Pastikan environment development Anda sudah memiliki:
 - Apache (opsional)
 - Laragon / XAMPP (Windows)
 
-### Required PHP Extensions
+---
+
+## Required PHP Extensions
 
 Pastikan extension berikut aktif:
 
-`intl`, `mbstring`, `mysqli`, `json`, `openssl`, `xml`, `curl`, `fileinfo`
+- `intl`
+- `mbstring`
+- `mysqli`
+- `json`
+- `openssl`
+- `xml`
+- `curl`
+- `fileinfo`
 
 ### Cek versi PHP
 
@@ -73,26 +82,44 @@ composer --version
 
 ---
 
-## 🚀 Instalasi Git
+## 🚀 Install Git
 
-Jika Git belum terinstall, lakukan instalasi sesuai sistem operasi Anda.
+Jika Git belum terinstall, install terlebih dahulu sesuai sistem operasi.
 
-Cek instalasi:
+### Cek Git
 
 ```bash
 git --version
 ```
 
+Jika command tidak dikenali, lakukan install berikut.
+
+---
+
 ### Windows
 
-1. Download installer:
-   https://git-scm.com/download/win
+Download installer:
 
-2. Jalankan installer dengan pengaturan yang direkomendasikan:
-   - Use Git from the Windows Command Prompt
-   - Checkout Windows-style, commit Unix-style line endings
-   - Use OpenSSL library
-   - Use bundled OpenSSH
+```text
+https://git-scm.com/download/win
+```
+
+Jalankan installer.
+
+Recommended setup:
+
+- Use Git from the Windows Command Prompt
+- Checkout Windows-style, commit Unix-style line endings
+- Use OpenSSL library
+- Use bundled OpenSSH
+
+Setelah selesai:
+
+```cmd
+git --version
+```
+
+---
 
 ### Linux
 
@@ -103,14 +130,22 @@ sudo apt update
 sudo apt install git -y
 ```
 
-#### Fedora / CentOS / RHEL
+#### Fedora
 
 ```bash
 sudo dnf install git -y
+```
 
-# atau
+#### CentOS / RHEL
 
+```bash
 sudo yum install git -y
+```
+
+atau:
+
+```bash
+sudo dnf install git -y
 ```
 
 #### Arch Linux
@@ -119,13 +154,34 @@ sudo yum install git -y
 sudo pacman -S git
 ```
 
+Verifikasi:
+
+```bash
+git --version
+```
+
+---
+
 ### macOS
 
 #### Opsi 1 — Homebrew
 
+Jika Homebrew belum tersedia:
+
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+Install Git:
+
+```bash
 brew install git
+```
+
+Verifikasi:
+
+```bash
+git --version
 ```
 
 #### Opsi 2 — Xcode Command Line Tools
@@ -134,7 +190,15 @@ brew install git
 xcode-select --install
 ```
 
-### Konfigurasi Git (Recommended)
+Verifikasi:
+
+```bash
+git --version
+```
+
+---
+
+## Konfigurasi Git (Recommended)
 
 ```bash
 git config --global user.name "Nama Anda"
@@ -146,7 +210,10 @@ git config --list
 
 ## 📥 Clone Repository
 
-> **Catatan:** Repository saat ini masih private. Pastikan akun GitHub Anda memiliki akses.
+> **Catatan:** Repository saat ini masih bersifat **private** karena project masih dalam tahap pengembangan / belum dipresentasikan.
+>
+> Pastikan akun GitHub Anda memiliki akses.
+>
 > Jika menggunakan HTTPS dan diminta autentikasi, gunakan GitHub Personal Access Token.
 
 ### HTTPS
@@ -167,30 +234,50 @@ cd tri-jaya-motor
 
 ## 📂 Penempatan Project Directory
 
+Lokasi project tergantung environment development.
+
 ### Windows — XAMPP
+
+Jika menggunakan XAMPP:
 
 Simpan project di:
 
 ```text
-C:\xampp\htdocs
+C:\xampp\htdocs\
 ```
 
-Clone repository:
+Contoh:
+
+```text
+C:\xampp\htdocs\tri-jaya-motor
+```
+
+Clone:
 
 ```bash
 cd C:\xampp\htdocs
 git clone https://github.com/alhilalakbar/tri-jaya-motor.git
 ```
 
-Jika command PHP tidak dikenali:
+Jika menggunakan Apache bawaan XAMPP:
 
-```bash
+Akses:
+
+```text
+http://localhost/tri-jaya-motor/public
+```
+
+Jika menggunakan `php spark serve`, lokasi project bebas.
+
+Jika command `php` tidak dikenali:
+
+```cmd
 C:\xampp\php\php.exe spark serve
 ```
 
-MySQL CLI:
+Akses MySQL CLI:
 
-```bash
+```cmd
 C:\xampp\mysql\bin\mysql -u root -p
 ```
 
@@ -198,26 +285,44 @@ C:\xampp\mysql\bin\mysql -u root -p
 
 ### Windows — Laragon
 
+Jika menggunakan Laragon:
+
 Simpan project di:
 
 ```text
-C:\laragon\www
+C:\laragon\www\
 ```
 
-Clone repository:
+Contoh:
+
+```text
+C:\laragon\www\tri-jaya-motor
+```
+
+Clone:
 
 ```bash
 cd C:\laragon\www
 git clone https://github.com/alhilalakbar/tri-jaya-motor.git
 ```
 
-URL default:
+Pastikan **Auto Virtual Hosts** aktif.
+
+Biasanya URL otomatis:
 
 ```text
 http://tri-jaya-motor.test
 ```
 
-MySQL CLI:
+Update `.env`:
+
+```env
+app.baseURL = 'http://tri-jaya-motor.test/'
+```
+
+Jika menggunakan `php spark serve`, lokasi project bebas.
+
+Akses MySQL CLI:
 
 ```bash
 mysql -u root -p
@@ -227,21 +332,103 @@ mysql -u root -p
 
 ### Linux
 
+Linux fleksibel.
+
+#### Opsi 1 — Development Directory (Recommended)
+
+Gunakan:
+
+```text
+/home/USERNAME/projects/
+```
+
+Contoh:
+
+```text
+/home/USERNAME/projects/tri-jaya-motor
+```
+
+Clone:
+
 ```bash
 mkdir -p ~/projects
 cd ~/projects
 git clone https://github.com/alhilalakbar/tri-jaya-motor.git
 ```
 
+Recommended jika menggunakan:
+
+```bash
+php spark serve
+```
+
+---
+
+#### Opsi 2 — Apache Document Root
+
+Gunakan:
+
+```text
+/var/www/
+```
+
+Contoh:
+
+```text
+/var/www/tri-jaya-motor
+```
+
+Clone:
+
+```bash
+cd /var/www
+sudo git clone https://github.com/alhilalakbar/tri-jaya-motor.git
+```
+
+Set permission:
+
+```bash
+sudo chown -R $USER:www-data /var/www/tri-jaya-motor
+sudo chmod -R 775 /var/www/tri-jaya-motor
+```
+
 ---
 
 ### macOS
+
+Gunakan:
+
+```text
+~/Projects/
+```
+
+Contoh:
+
+```text
+/Users/USERNAME/Projects/tri-jaya-motor
+```
+
+Clone:
 
 ```bash
 mkdir -p ~/Projects
 cd ~/Projects
 git clone https://github.com/alhilalakbar/tri-jaya-motor.git
 ```
+
+Jika menggunakan Apache bawaan macOS:
+
+```text
+/Library/WebServer/Documents/
+```
+
+Namun development dengan:
+
+```bash
+php spark serve
+```
+
+lebih direkomendasikan.
 
 ---
 
@@ -255,42 +442,65 @@ composer install
 
 ## ⚙️ Setup Environment (.env)
 
+File `.env` tidak disertakan dalam repository demi keamanan.
+
 CodeIgniter 4 membutuhkan file `.env`.
 
-### Linux/macOS
+### Jika file env tersedia
+
+#### Linux/macOS
 
 ```bash
 cp env .env
 ```
 
-Jika file `env` tidak tersedia:
-
-```bash
-cp vendor/codeigniter4/framework/env .env
-```
-
-### Windows (CMD/PowerShell)
+#### Windows CMD
 
 ```cmd
 copy env .env
 ```
 
-Jika file `env` tidak tersedia:
+#### Windows PowerShell
+
+```powershell
+Copy-Item env .env
+```
+
+---
+
+### Jika file env tidak tersedia
+
+Beberapa setup CodeIgniter 4 tidak menyediakan file `env` di root project.
+
+Gunakan template bawaan framework.
+
+#### Linux/macOS
+
+```bash
+cp vendor/codeigniter4/framework/env .env
+```
+
+#### Windows CMD
 
 ```cmd
 copy vendor\codeigniter4\framework\env .env
 ```
 
-### Konfigurasi `.env`
+#### Windows PowerShell
 
-```ini
+```powershell
+Copy-Item vendor\codeigniter4\framework\env .env
+```
+
+---
+
+## Konfigurasi `.env`
+
+```env
 CI_ENVIRONMENT = development
 
 app.indexPage = ''
 app.baseURL = 'http://localhost:8080/'
-
-# Laragon:
-# app.baseURL = 'http://tri-jaya-motor.test/'
 
 database.default.hostname = localhost
 database.default.database = tri_jaya_motor_db
@@ -298,6 +508,18 @@ database.default.username = root
 database.default.password =
 database.default.DBDriver = MySQLi
 database.default.port = 3306
+```
+
+Jika menggunakan Laragon:
+
+```env
+app.baseURL = 'http://tri-jaya-motor.test/'
+```
+
+Jika menggunakan Apache Linux:
+
+```env
+app.baseURL = 'http://trijaya.test/'
 ```
 
 ---
@@ -313,17 +535,38 @@ Pilih salah satu metode berikut:
 
 ### Membuat Database
 
+Via MySQL:
+
 ```sql
 CREATE DATABASE tri_jaya_motor_db;
 EXIT;
 ```
 
+Atau via CLI:
+
+```bash
+mysql -u root -p
+```
+
+lalu:
+
+```sql
+CREATE DATABASE tri_jaya_motor_db;
+```
+
+---
+
 ### Opsi A — Migration & Seeder
 
 ```bash
 php spark migrate
+```
+
+```bash
 php spark db:seed CounterKodeSeeder
 ```
+
+---
 
 ### Membuat Akun Administrator
 
@@ -375,38 +618,66 @@ Akses:
 http://localhost:8080
 ```
 
-### Opsi 2 — XAMPP / Laragon
+---
 
-XAMPP:
+### Opsi 2 — Apache Virtual Host (Linux)
 
-```text
-http://localhost/tri-jaya-motor/public
+Ubuntu / Debian:
+
+```bash
+sudo systemctl start apache2 && sudo systemctl start mysql
 ```
 
-Laragon:
+Jika MariaDB:
 
-```text
-http://tri-jaya-motor.test
+```bash
+sudo systemctl start apache2 && sudo systemctl start mariadb
 ```
 
-### Opsi 3 — Apache Virtual Host (Linux)
+Fedora / CentOS / RHEL:
 
-Buat virtual host:
-
-```text
-trijaya.test
+```bash
+sudo systemctl start httpd && sudo systemctl start mariadb
 ```
 
-Arahkan `DocumentRoot` ke folder:
+Enable rewrite:
 
-```text
-public/
+```bash
+sudo a2enmod rewrite
+sudo systemctl restart apache2
 ```
 
-Tambahkan ke `/etc/hosts`:
+Virtual host:
+
+```apache
+<VirtualHost *:80>
+    ServerName trijaya.test
+    DocumentRoot /home/USERNAME/projects/tri-jaya-motor/public
+
+    <Directory /home/USERNAME/projects/tri-jaya-motor/public>
+        AllowOverride All
+        Require all granted
+        DirectoryIndex index.php
+    </Directory>
+</VirtualHost>
+```
+
+Hosts:
 
 ```text
 127.0.0.1 trijaya.test
+```
+
+Reload:
+
+```bash
+sudo systemctl reload apache2
+```
+
+Akses:
+
+```text
+http://trijaya.test
 ```
 
 ---
@@ -445,19 +716,20 @@ composer install
 
 ### Database Connection Error
 
-Periksa file `.env` dan pastikan:
-
-- Nama database benar
-- Username/password sesuai
-- MySQL sedang berjalan
-
-### Command PHP Tidak Dikenali (Windows)
-
-```cmd
-C:\xampp\php\php.exe spark serve
+```env
+database.default.database = tri_jaya_motor_db
+database.default.username = root
+database.default.password =
 ```
 
-Atau tambahkan PHP ke environment variable `PATH`.
+### Migration Gagal
+
+Pastikan:
+
+- database sudah dibuat
+- PHP CLI tersedia
+- konfigurasi `.env` benar
+- MySQL / MariaDB aktif
 
 ### Cache Permission Error
 
@@ -472,28 +744,54 @@ sudo chown -R $USER:www-data writable
 chmod -R 775 writable
 ```
 
+### Command PHP Tidak Dikenali (Windows)
+
+```cmd
+C:\xampp\php\php.exe spark serve
+```
+
 ### Base URL Invalid Error
 
 Benar:
 
-```text
-http://localhost:8080/
+```env
+app.baseURL = 'http://localhost:8080/'
 ```
 
 Salah:
 
-```text
-http//localhost:8080/
+```env
+app.baseURL = 'http//localhost:8080/'
+```
+
+### Cache Bermasalah
+
+```bash
+php spark cache:clear
+```
+
+atau:
+
+```bash
+rm -rf writable/cache/*
 ```
 
 ---
 
-## 📝 Catatan Tambahan
+## 📝 Catatan
 
-- **Metodologi:** SDLC Waterfall
-- **Autentikasi:** tabel `pengguna` (`nama_pengguna`, `kata_sandi`, `peran`)
-- **Keamanan:** file `.env` tidak disertakan di repository
+- Project ini dikembangkan menggunakan pendekatan **SDLC Waterfall**
+- Fokus pada digitalisasi proses bisnis operasional bengkel berdasarkan analisis kebutuhan nyata di lapangan
+- Autentikasi menggunakan tabel `pengguna`
+
+Field autentikasi:
+
+- `nama_pengguna`
+- `kata_sandi`
+- `peran`
+
 - Password wajib menggunakan `password_hash()`
+- File `.env` tidak disertakan dalam repository demi keamanan
 
 ---
 
