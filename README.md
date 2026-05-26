@@ -80,10 +80,137 @@ Cek Composer:
 composer --version
 ```
 
+---
+
+# Install Git
+
+Jika Git belum terinstall, install terlebih dahulu sesuai sistem operasi.
+
 Cek Git:
 
 ```bash
 git --version
+```
+
+Jika command tidak dikenali, lakukan install berikut.
+
+---
+
+## Windows
+
+Download installer:
+
+```text
+https://git-scm.com/download/win
+```
+
+Jalankan installer.
+
+Recommended setup:
+
+- Use Git from the Windows Command Prompt
+- Checkout Windows-style, commit Unix-style line endings
+- Use OpenSSL library
+- Use bundled OpenSSH
+
+Setelah selesai:
+
+```cmd
+git --version
+```
+
+---
+
+## Linux
+
+### Ubuntu / Debian
+
+```bash
+sudo apt update
+sudo apt install git -y
+```
+
+### Fedora
+
+```bash
+sudo dnf install git -y
+```
+
+### CentOS / RHEL
+
+```bash
+sudo yum install git -y
+```
+
+atau:
+
+```bash
+sudo dnf install git -y
+```
+
+### Arch Linux
+
+```bash
+sudo pacman -S git
+```
+
+Verifikasi:
+
+```bash
+git --version
+```
+
+---
+
+## macOS
+
+### Opsi 1 — Homebrew
+
+Jika Homebrew belum tersedia:
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+Install Git:
+
+```bash
+brew install git
+```
+
+Verifikasi:
+
+```bash
+git --version
+```
+
+### Opsi 2 — Xcode Command Line Tools
+
+```bash
+xcode-select --install
+```
+
+Verifikasi:
+
+```bash
+git --version
+```
+
+---
+
+## Konfigurasi Git (Recommended)
+
+Setelah install:
+
+```bash
+git config --global user.name "Nama Anda"
+git config --global user.email "email@example.com"
+```
+
+Cek:
+
+```bash
+git config --list
 ```
 
 ---
@@ -100,6 +227,14 @@ cd tri-jaya-motor-operational
 ```
 
 Jika repository private, pastikan akun GitHub Anda memiliki akses.
+
+Jika menggunakan HTTPS dan diminta autentikasi, gunakan GitHub Personal Access Token.
+
+Alternatif SSH:
+
+```bash
+git clone git@github.com:alhilalakbar/tri-jaya-motor-operational.git
+```
 
 ---
 
