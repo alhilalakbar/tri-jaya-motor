@@ -1,12 +1,35 @@
-# Sistem Informasi Manajemen Bengkel - Tri Jaya Motor
+# Sistem Informasi Manajemen Bengkel — Tri Jaya Motor
 
 Aplikasi web berbasis **CodeIgniter 4** untuk membantu pengelolaan operasional bengkel, mencakup manajemen data master, transaksi servis kendaraan, inventaris sparepart, sistem kasir, hingga pelaporan operasional.
 
-Project ini dikembangkan sebagai implementasi digitalisasi proses bisnis bengkel berdasarkan observasi, wawancara, dan analisis kebutuhan operasional nyata di lapangan.
+Proyek ini dikembangkan sebagai implementasi digitalisasi proses bisnis bengkel berdasarkan observasi, wawancara, dan analisis kebutuhan operasional nyata di lapangan.
+
+---
+
+## 📚 Daftar Isi
+
+- [Fitur Utama](#-fitur-utama)
+- [Teknologi yang Digunakan](#-teknologi-yang-digunakan)
+- [Prasyarat](#-prasyarat)
+- [Required PHP Extensions](#required-php-extensions)
+- [Install Git](#-install-git)
+- [Konfigurasi Git](#-konfigurasi-git-recommended)
+- [Clone Repository](#-clone-repository)
+- [Penempatan Project Directory](#-penempatan-project-directory)
+- [Install Dependency](#-install-dependency)
+- [Setup Environment (.env)](#-setup-environment-env)
+- [Setup Database](#-setup-database)
+- [Menjalankan Aplikasi](#-menjalankan-aplikasi)
+- [Struktur Project](#-struktur-project)
+- [Troubleshooting](#-troubleshooting)
+- [Catatan](#-catatan)
+- [Lisensi](#-lisensi)
 
 ---
 
 ## 🌟 Fitur Utama
+
+Aplikasi ini menyediakan fitur-fitur berikut:
 
 - Autentikasi pengguna
 - Role-Based Access Control (RBAC)
@@ -31,6 +54,8 @@ Project ini dikembangkan sebagai implementasi digitalisasi proses bisnis bengkel
 
 ## 🛠️ Teknologi yang Digunakan
 
+Stack teknologi yang digunakan dalam proyek ini:
+
 - PHP >= 8.1
 - CodeIgniter 4
 - MySQL / MariaDB
@@ -44,7 +69,7 @@ Project ini dikembangkan sebagai implementasi digitalisasi proses bisnis bengkel
 
 ## 📋 Prasyarat
 
-Pastikan environment development Anda sudah memiliki:
+Sebelum menjalankan proyek ini, pastikan environment development Anda sudah memiliki:
 
 - Git
 - Composer
@@ -57,7 +82,7 @@ Pastikan environment development Anda sudah memiliki:
 
 ## Required PHP Extensions
 
-Pastikan extension berikut aktif:
+Pastikan extension PHP berikut sudah aktif:
 
 - `intl`
 - `mbstring`
@@ -68,13 +93,13 @@ Pastikan extension berikut aktif:
 - `curl`
 - `fileinfo`
 
-### Cek versi PHP
+### Cek Versi PHP
 
 ```bash
 php -v
 ```
 
-### Cek versi Composer
+### Cek Versi Composer
 
 ```bash
 composer --version
@@ -84,21 +109,21 @@ composer --version
 
 ## 🚀 Install Git
 
-Jika Git belum terinstall, install terlebih dahulu sesuai sistem operasi.
+Jika Git belum terinstall, install terlebih dahulu sesuai sistem operasi Anda.
 
-### Cek Git
+### Cek Apakah Git Sudah Terinstall
 
 ```bash
 git --version
 ```
 
-Jika command tidak dikenali, lakukan install berikut.
+Jika command di atas tidak dikenali, lanjutkan instalasi sesuai OS Anda.
 
 ---
 
 ### Windows
 
-Download installer:
+Download installer Git:
 
 ```text
 https://git-scm.com/download/win
@@ -113,7 +138,7 @@ Recommended setup:
 - Use OpenSSL library
 - Use bundled OpenSSH
 
-Setelah selesai:
+Verifikasi:
 
 ```cmd
 git --version
@@ -184,6 +209,8 @@ Verifikasi:
 git --version
 ```
 
+---
+
 #### Opsi 2 — Xcode Command Line Tools
 
 ```bash
@@ -198,11 +225,15 @@ git --version
 
 ---
 
-## Konfigurasi Git (Recommended)
+## 🔧 Konfigurasi Git (Recommended)
+
+Gunakan identitas GitHub Anda untuk konfigurasi global Git.
+
+Contoh:
 
 ```bash
-git config --global user.name "Nama Anda"
-git config --global user.email "email@example.com"
+git config --global user.name "alhilalakbar"
+git config --global user.email "alhilalakbar@gmail.com"
 git config --list
 ```
 
@@ -210,17 +241,20 @@ git config --list
 
 ## 📥 Clone Repository
 
-> **Catatan:** Repository saat ini masih bersifat **private** karena project masih dalam tahap pengembangan / belum dipresentasikan.
+> [!WARNING]
+> Repository saat ini masih bersifat **private** karena proyek masih dalam tahap pengembangan / belum dipresentasikan.
 >
-> Pastikan akun GitHub Anda memiliki akses.
->
-> Jika menggunakan HTTPS dan diminta autentikasi, gunakan GitHub Personal Access Token.
+> Pastikan akun GitHub Anda memiliki akses ke repository ini.
+
+Jika menggunakan HTTPS dan diminta autentikasi, gunakan **GitHub Personal Access Token**.
 
 ### HTTPS
 
 ```bash
 git clone https://github.com/alhilalakbar/tri-jaya-motor.git
 cd tri-jaya-motor
+
+
 ```
 
 ### SSH
@@ -228,19 +262,20 @@ cd tri-jaya-motor
 ```bash
 git clone git@github.com:alhilalakbar/tri-jaya-motor.git
 cd tri-jaya-motor
-```
 
+
+```
 ---
 
 ## 📂 Penempatan Project Directory
 
-Lokasi project tergantung environment development.
+Lokasi penyimpanan project tergantung environment development yang Anda gunakan.
+
+---
 
 ### Windows — XAMPP
 
-Jika menggunakan XAMPP:
-
-Simpan project di:
+Jika menggunakan XAMPP, simpan project di:
 
 ```text
 C:\xampp\htdocs\
@@ -252,22 +287,26 @@ Contoh:
 C:\xampp\htdocs\tri-jaya-motor
 ```
 
-Clone:
+Clone repository:
 
 ```bash
 cd C:\xampp\htdocs
 git clone https://github.com/alhilalakbar/tri-jaya-motor.git
 ```
 
-Jika menggunakan Apache bawaan XAMPP:
-
-Akses:
+Jika menggunakan Apache bawaan XAMPP, akses aplikasi melalui:
 
 ```text
 http://localhost/tri-jaya-motor/public
 ```
 
-Jika menggunakan `php spark serve`, lokasi project bebas.
+Jika menggunakan:
+
+```bash
+php spark serve
+```
+
+lokasi project bebas.
 
 Jika command `php` tidak dikenali:
 
@@ -285,9 +324,7 @@ C:\xampp\mysql\bin\mysql -u root -p
 
 ### Windows — Laragon
 
-Jika menggunakan Laragon:
-
-Simpan project di:
+Jika menggunakan Laragon, simpan project di:
 
 ```text
 C:\laragon\www\
@@ -299,14 +336,14 @@ Contoh:
 C:\laragon\www\tri-jaya-motor
 ```
 
-Clone:
+Clone repository:
 
 ```bash
 cd C:\laragon\www
 git clone https://github.com/alhilalakbar/tri-jaya-motor.git
 ```
 
-Pastikan **Auto Virtual Hosts** aktif.
+Pastikan fitur **Auto Virtual Hosts** aktif.
 
 Biasanya URL otomatis:
 
@@ -320,7 +357,13 @@ Update `.env`:
 app.baseURL = 'http://tri-jaya-motor.test/'
 ```
 
-Jika menggunakan `php spark serve`, lokasi project bebas.
+Jika menggunakan:
+
+```bash
+php spark serve
+```
+
+lokasi project bebas.
 
 Akses MySQL CLI:
 
@@ -332,23 +375,28 @@ mysql -u root -p
 
 ### Linux
 
-Linux fleksibel.
+Linux lebih fleksibel untuk penempatan project.
+
+---
 
 #### Opsi 1 — Development Directory (Recommended)
 
-Gunakan:
+Direktori yang direkomendasikan:
 
 ```text
-/home/USERNAME/projects/
+/home/hillal/projects/
 ```
 
 Contoh:
 
 ```text
-/home/USERNAME/projects/tri-jaya-motor
+/home/hillal/projects/tri-jaya-motor
 ```
 
-Clone:
+> [!NOTE]
+> Jika username Linux Anda bukan `hillal`, ganti `hillal` sesuai username Anda.
+
+Clone repository:
 
 ```bash
 mkdir -p ~/projects
@@ -356,17 +404,21 @@ cd ~/projects
 git clone https://github.com/alhilalakbar/tri-jaya-motor.git
 ```
 
-Recommended jika menggunakan:
+Jika menggunakan development server:
 
 ```bash
 php spark serve
 ```
 
+opsi ini sangat direkomendasikan.
+
 ---
 
 #### Opsi 2 — Apache Document Root
 
-Gunakan:
+Gunakan jika ingin menjalankan aplikasi langsung melalui Apache.
+
+Direktori:
 
 ```text
 /var/www/
@@ -378,7 +430,7 @@ Contoh:
 /var/www/tri-jaya-motor
 ```
 
-Clone:
+Clone repository:
 
 ```bash
 cd /var/www
@@ -388,15 +440,18 @@ sudo git clone https://github.com/alhilalakbar/tri-jaya-motor.git
 Set permission:
 
 ```bash
-sudo chown -R $USER:www-data /var/www/tri-jaya-motor
+sudo chown -R hillal:www-data /var/www/tri-jaya-motor
 sudo chmod -R 775 /var/www/tri-jaya-motor
 ```
+
+> [!NOTE]
+> Ganti `hillal` sesuai username Linux Anda.
 
 ---
 
 ### macOS
 
-Gunakan:
+Direktori development yang umum digunakan:
 
 ```text
 ~/Projects/
@@ -405,10 +460,13 @@ Gunakan:
 Contoh:
 
 ```text
-/Users/USERNAME/Projects/tri-jaya-motor
+/Users/hillal/Projects/tri-jaya-motor
 ```
 
-Clone:
+> [!NOTE]
+> Jika username macOS Anda bukan `hillal`, sesuaikan path di atas.
+
+Clone repository:
 
 ```bash
 mkdir -p ~/Projects
@@ -422,7 +480,7 @@ Jika menggunakan Apache bawaan macOS:
 /Library/WebServer/Documents/
 ```
 
-Namun development dengan:
+Namun development menggunakan:
 
 ```bash
 php spark serve
@@ -434,6 +492,8 @@ lebih direkomendasikan.
 
 ## 📦 Install Dependency
 
+Install seluruh dependency project menggunakan Composer:
+
 ```bash
 composer install
 ```
@@ -442,11 +502,13 @@ composer install
 
 ## ⚙️ Setup Environment (.env)
 
-File `.env` tidak disertakan dalam repository demi keamanan.
+File `.env` tidak disertakan dalam repository demi alasan keamanan.
 
 CodeIgniter 4 membutuhkan file `.env`.
 
-### Jika file env tersedia
+---
+
+### Jika File `env` Tersedia
 
 #### Linux/macOS
 
@@ -468,9 +530,9 @@ Copy-Item env .env
 
 ---
 
-### Jika file env tidak tersedia
+### Jika File `env` Tidak Tersedia
 
-Beberapa setup CodeIgniter 4 tidak menyediakan file `env` di root project.
+Beberapa setup CodeIgniter 4 tidak menyertakan file `env` di root project.
 
 Gunakan template bawaan framework.
 
@@ -496,6 +558,8 @@ Copy-Item vendor\codeigniter4\framework\env .env
 
 ## Konfigurasi `.env`
 
+Edit file `.env`, lalu isi:
+
 ```env
 CI_ENVIRONMENT = development
 
@@ -509,6 +573,11 @@ database.default.password =
 database.default.DBDriver = MySQLi
 database.default.port = 3306
 ```
+
+Penjelasan:
+
+- `tri_jaya_motor_db` adalah nama database MySQL yang akan Anda gunakan
+- Jika ingin menggunakan nama lain, pastikan nama tersebut sama dengan database yang dibuat
 
 Jika menggunakan Laragon:
 
@@ -531,36 +600,39 @@ Pilih salah satu metode berikut:
 - **Opsi A:** Migration + Seeder (clean setup)
 - **Opsi B:** Import SQL backup (quick setup)
 
-> Jangan jalankan keduanya pada database yang sama.
+> [!WARNING]
+> Jangan jalankan kedua metode pada database yang sama.
+
+---
 
 ### Membuat Database
 
-Via MySQL:
+Masuk ke MySQL:
+
+```bash
+mysql -u root -p
+```
+
+Buat database:
 
 ```sql
 CREATE DATABASE tri_jaya_motor_db;
 EXIT;
 ```
 
-Atau via CLI:
-
-```bash
-mysql -u root -p
-```
-
-lalu:
-
-```sql
-CREATE DATABASE tri_jaya_motor_db;
-```
+Jika nama database di `.env` berbeda, sesuaikan command di atas.
 
 ---
 
 ### Opsi A — Migration & Seeder
 
+Jalankan migration:
+
 ```bash
 php spark migrate
 ```
+
+Jalankan seeder:
 
 ```bash
 php spark db:seed CounterKodeSeeder
@@ -570,17 +642,37 @@ php spark db:seed CounterKodeSeeder
 
 ### Membuat Akun Administrator
 
+Password tidak boleh disimpan dalam bentuk plain text.
+
 Generate password hash:
 
 ```bash
 php -r "echo password_hash('PasswordAdmin123', PASSWORD_DEFAULT) . PHP_EOL;"
 ```
 
+Contoh output:
+
+```text
+$2y$10$xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
+Copy hasil hash tersebut.
+
 Masuk ke MySQL:
+
+```bash
+mysql -u root -p
+```
+
+Pilih database:
 
 ```sql
 USE tri_jaya_motor_db;
+```
 
+Insert akun administrator:
+
+```sql
 INSERT INTO pengguna (nama_pengguna, kata_sandi, peran)
 VALUES (
     'Administrator',
@@ -589,30 +681,60 @@ VALUES (
 );
 ```
 
-Login:
+Ganti:
+
+```text
+PASTE_HASH_DI_SINI
+```
+
+dengan hash yang sudah Anda generate.
+
+Login default:
 
 - Username: `Administrator`
 - Password: `PasswordAdmin123`
+
+> [!WARNING]
+> Password ini hanya untuk setup awal/testing. Segera ubah setelah login pertama.
 
 ---
 
 ### Opsi B — Import SQL Backup
 
+Jika menggunakan backup SQL:
+
 ```bash
 mysql -u root -p tri_jaya_motor_db < tri_jaya_motor_refinement_new_view.sql
 ```
+
+Pastikan file SQL tersedia di root project, atau gunakan full path file.
+
 
 ---
 
 ## 🖥️ Menjalankan Aplikasi
 
+Berikut beberapa opsi untuk menjalankan aplikasi sesuai environment development Anda.
+
+---
+
 ### Opsi 1 — CodeIgniter Development Server (Recommended)
+
+Metode ini adalah opsi termudah untuk development lokal.
+
+Jalankan:
 
 ```bash
 php spark serve
 ```
 
-Akses:
+Jika berhasil, output biasanya:
+
+```text
+CodeIgniter development server started on http://localhost:8080
+```
+
+Akses aplikasi:
 
 ```text
 http://localhost:8080
@@ -622,39 +744,66 @@ http://localhost:8080
 
 ### Opsi 2 — Apache Virtual Host (Linux)
 
+Gunakan metode ini jika ingin menjalankan project melalui Apache.
+
+---
+
+#### Start Service
+
+##### Ubuntu / Debian
+
+Jika menggunakan MySQL:
+
+```bash
+sudo systemctl start apache2
+sudo systemctl start mysql
+```
+
+Jika menggunakan MariaDB:
+
+```bash
+sudo systemctl start apache2
+sudo systemctl start mariadb
+```
+
+##### Fedora / CentOS / RHEL
+
+```bash
+sudo systemctl start httpd
+sudo systemctl start mariadb
+```
+
+---
+
+#### Enable mod_rewrite
+
+CodeIgniter membutuhkan Apache rewrite module.
+
 Ubuntu / Debian:
-
-```bash
-sudo systemctl start apache2 && sudo systemctl start mysql
-```
-
-Jika MariaDB:
-
-```bash
-sudo systemctl start apache2 && sudo systemctl start mariadb
-```
-
-Fedora / CentOS / RHEL:
-
-```bash
-sudo systemctl start httpd && sudo systemctl start mariadb
-```
-
-Enable rewrite:
 
 ```bash
 sudo a2enmod rewrite
 sudo systemctl restart apache2
 ```
 
-Virtual host:
+---
+
+#### Buat Virtual Host
+
+Buat file konfigurasi:
+
+```bash
+sudo nano /etc/apache2/sites-available/trijaya.conf
+```
+
+Isi:
 
 ```apache
 <VirtualHost *:80>
     ServerName trijaya.test
-    DocumentRoot /home/USERNAME/projects/tri-jaya-motor/public
+    DocumentRoot /home/hillal/projects/tri-jaya-motor/public
 
-    <Directory /home/USERNAME/projects/tri-jaya-motor/public>
+    <Directory /home/hillal/projects/tri-jaya-motor/public>
         AllowOverride All
         Require all granted
         DirectoryIndex index.php
@@ -662,16 +811,49 @@ Virtual host:
 </VirtualHost>
 ```
 
-Hosts:
+> [!NOTE]
+> Jika username Linux Anda bukan `hillal`, sesuaikan path di atas.
+
+Enable site:
+
+```bash
+sudo a2ensite trijaya.conf
+```
+
+Reload Apache:
+
+```bash
+sudo systemctl reload apache2
+```
+
+---
+
+#### Tambahkan Hosts Entry
+
+Edit file:
+
+```bash
+sudo nano /etc/hosts
+```
+
+Tambahkan:
 
 ```text
 127.0.0.1 trijaya.test
 ```
 
-Reload:
+Reload service:
+
+Ubuntu / Debian:
 
 ```bash
 sudo systemctl reload apache2
+```
+
+Fedora / CentOS:
+
+```bash
+sudo systemctl reload httpd
 ```
 
 Akses:
@@ -682,7 +864,92 @@ http://trijaya.test
 
 ---
 
+### Opsi 3 — XAMPP
+
+Pastikan service berikut aktif:
+
+- Apache
+- MySQL
+
+Jika project berada di:
+
+```text
+C:\xampp\htdocs\tri-jaya-motor
+```
+
+Akses:
+
+```text
+http://localhost/tri-jaya-motor/public
+```
+
+Atau gunakan:
+
+```bash
+php spark serve
+```
+
+---
+
+### Opsi 4 — Laragon
+
+Pastikan:
+
+- Apache aktif
+- MySQL aktif
+- Auto Virtual Hosts aktif
+
+Jika project berada di:
+
+```text
+C:\laragon\www\tri-jaya-motor
+```
+
+Akses:
+
+```text
+http://tri-jaya-motor.test
+```
+
+Atau gunakan:
+
+```bash
+php spark serve
+```
+
+---
+
+### Opsi 5 — macOS
+
+Jalankan Apache:
+
+```bash
+sudo apachectl start
+```
+
+Jika menggunakan MySQL:
+
+```bash
+brew services start mysql
+```
+
+Jika menggunakan MariaDB:
+
+```bash
+brew services start mariadb
+```
+
+Atau gunakan:
+
+```bash
+php spark serve
+```
+
+---
+
 ## 📁 Struktur Project
+
+Struktur direktori utama:
 
 ```text
 app/
@@ -708,19 +975,38 @@ spark
 
 ## 🔧 Troubleshooting
 
+Jika mengalami kendala saat setup atau menjalankan aplikasi, cek bagian berikut.
+
+---
+
 ### Composer Error
+
+Jika dependency belum terinstall:
 
 ```bash
 composer install
 ```
 
+---
+
 ### Database Connection Error
+
+Periksa konfigurasi `.env`:
 
 ```env
 database.default.database = tri_jaya_motor_db
 database.default.username = root
 database.default.password =
 ```
+
+Pastikan:
+
+- database sudah dibuat
+- username MySQL benar
+- password MySQL benar
+- service MySQL / MariaDB sedang berjalan
+
+---
 
 ### Migration Gagal
 
@@ -731,7 +1017,23 @@ Pastikan:
 - konfigurasi `.env` benar
 - MySQL / MariaDB aktif
 
+Tes PHP CLI:
+
+```bash
+php -v
+```
+
+---
+
 ### Cache Permission Error
+
+Jika muncul:
+
+```text
+Cache unable to write to writable/cache
+```
+
+Linux/macOS:
 
 ```bash
 chmod -R 775 writable
@@ -740,47 +1042,122 @@ chmod -R 775 writable
 atau:
 
 ```bash
-sudo chown -R $USER:www-data writable
+sudo chown -R hillal:www-data writable
 chmod -R 775 writable
 ```
 
+> [!NOTE]
+> Ganti `hillal` sesuai username Linux Anda.
+
+---
+
 ### Command PHP Tidak Dikenali (Windows)
+
+Jika muncul:
+
+```text
+'php' is not recognized as an internal or external command
+```
+
+Gunakan full path:
 
 ```cmd
 C:\xampp\php\php.exe spark serve
 ```
 
+Atau tambahkan folder PHP ke Environment Variable `PATH`.
+
+---
+
 ### Base URL Invalid Error
 
-Benar:
+Jika muncul:
+
+```text
+Config\App::$baseURL is not a valid URL
+```
+
+Contoh benar:
 
 ```env
 app.baseURL = 'http://localhost:8080/'
 ```
 
-Salah:
+Contoh salah:
 
 ```env
 app.baseURL = 'http//localhost:8080/'
 ```
 
+Kesalahan umum:
+
+- lupa tanda `:`
+- lupa slash `/`
+
+---
+
 ### Cache Bermasalah
+
+Clear cache:
 
 ```bash
 php spark cache:clear
 ```
 
-atau:
+atau manual:
+
+Linux/macOS:
 
 ```bash
 rm -rf writable/cache/*
 ```
 
+Windows CMD:
+
+```cmd
+del /q writable\cache\*
+```
+
+---
+
+### Virtual Host Tidak Bisa Diakses
+
+Periksa:
+
+- `/etc/hosts`
+- konfigurasi Apache virtual host
+- `app.baseURL`
+- Apache aktif
+- mod_rewrite aktif
+- firewall lokal
+
+---
+
+### Git Authentication Error
+
+Jika repository private dan clone gagal:
+
+```text
+Repository not found
+```
+
+atau:
+
+```text
+Authentication failed
+```
+
+Pastikan:
+
+- akun GitHub Anda memiliki akses
+- GitHub token valid
+- URL repository benar
+
 ---
 
 ## 📝 Catatan
 
-- Project ini dikembangkan menggunakan pendekatan **SDLC Waterfall**
+- Proyek ini dikembangkan menggunakan pendekatan **SDLC Waterfall**
 - Fokus pada digitalisasi proses bisnis operasional bengkel berdasarkan analisis kebutuhan nyata di lapangan
 - Autentikasi menggunakan tabel `pengguna`
 
@@ -790,11 +1167,19 @@ Field autentikasi:
 - `kata_sandi`
 - `peran`
 
-- Password wajib menggunakan `password_hash()`
-- File `.env` tidak disertakan dalam repository demi keamanan
+Password:
+
+- wajib menggunakan `password_hash()`
+- jangan menyimpan password dalam bentuk plain text
+
+Catatan keamanan:
+
+- file `.env` tidak disertakan dalam repository
+- jangan commit `.env` ke GitHub public repository
+- jangan membagikan credential database
 
 ---
 
 ## 📄 Lisensi
 
-Project ini dikembangkan untuk kebutuhan akademik dan implementasi sistem informasi manajemen bengkel.
+Proyek ini dikembangkan untuk kebutuhan akademik dan implementasi sistem informasi manajemen bengkel.
