@@ -222,8 +222,8 @@ git config --list
 Clone repository:
 
 ```bash
-git clone https://github.com/alhilalakbar/tri-jaya-motor-operational.git
-cd tri-jaya-motor-operational
+git clone https://github.com/alhilalakbar/tri-jaya-motor.git
+cd tri-jaya-motor
 ```
 
 Jika repository private, pastikan akun GitHub Anda memiliki akses.
@@ -233,7 +233,7 @@ Jika menggunakan HTTPS dan diminta autentikasi, gunakan GitHub Personal Access T
 Alternatif SSH:
 
 ```bash
-git clone git@github.com:alhilalakbar/tri-jaya-motor-operational.git
+git clone git@github.com:alhilalakbar/tri-jaya-motor.git
 ```
 
 ---
@@ -257,14 +257,14 @@ C:\xampp\htdocs\
 Contoh:
 
 ```text
-C:\xampp\htdocs\tri-jaya-motor-operational
+C:\xampp\htdocs\tri-jaya-motor
 ```
 
 Clone:
 
 ```bash
 cd C:\xampp\htdocs
-git clone https://github.com/alhilalakbar/tri-jaya-motor-operational.git
+git clone https://github.com/alhilalakbar/tri-jaya-motor.git
 ```
 
 Jika menggunakan Apache bawaan XAMPP:
@@ -272,7 +272,7 @@ Jika menggunakan Apache bawaan XAMPP:
 akses:
 
 ```text
-http://localhost/tri-jaya-motor-operational/public
+http://localhost/tri-jaya-motor/public
 ```
 
 Jika menggunakan `php spark serve`, lokasi project bebas.
@@ -298,14 +298,14 @@ C:\laragon\www\
 Contoh:
 
 ```text
-C:\laragon\www\tri-jaya-motor-operational
+C:\laragon\www\tri-jaya-motor
 ```
 
 Clone:
 
 ```bash
 cd C:\laragon\www
-git clone https://github.com/alhilalakbar/tri-jaya-motor-operational.git
+git clone https://github.com/alhilalakbar/tri-jaya-motor.git
 ```
 
 Pastikan **Auto Virtual Hosts** aktif.
@@ -313,13 +313,13 @@ Pastikan **Auto Virtual Hosts** aktif.
 Biasanya URL otomatis:
 
 ```text
-http://tri-jaya-motor-operational.test
+http://tri-jaya-motor.test
 ```
 
 Update `.env`:
 
 ```env
-app.baseURL = 'http://tri-jaya-motor-operational.test/'
+app.baseURL = 'http://tri-jaya-motor.test/'
 ```
 
 Jika menggunakan `php spark serve`, lokasi project bebas.
@@ -343,7 +343,7 @@ Gunakan:
 Contoh:
 
 ```text
-/home/hillal/projects/tri-jaya-motor-operational
+/home/hillal/projects/tri-jaya-motor
 ```
 
 Clone:
@@ -351,7 +351,7 @@ Clone:
 ```bash
 mkdir -p ~/projects
 cd ~/projects
-git clone https://github.com/alhilalakbar/tri-jaya-motor-operational.git
+git clone https://github.com/alhilalakbar/tri-jaya-motor.git
 ```
 
 Recommended jika menggunakan:
@@ -373,21 +373,21 @@ Gunakan:
 Contoh:
 
 ```text
-/var/www/tri-jaya-motor-operational
+/var/www/tri-jaya-motor
 ```
 
 Clone:
 
 ```bash
 cd /var/www
-sudo git clone https://github.com/alhilalakbar/tri-jaya-motor-operational.git
+sudo git clone https://github.com/alhilalakbar/tri-jaya-motor.git
 ```
 
 Set permission:
 
 ```bash
-sudo chown -R $USER:www-data /var/www/tri-jaya-motor-operational
-sudo chmod -R 775 /var/www/tri-jaya-motor-operational
+sudo chown -R $USER:www-data /var/www/tri-jaya-motor
+sudo chmod -R 775 /var/www/tri-jaya-motor
 ```
 
 ---
@@ -403,7 +403,7 @@ Gunakan:
 Contoh:
 
 ```text
-/Users/USERNAME/Projects/tri-jaya-motor-operational
+/Users/USERNAME/Projects/tri-jaya-motor
 ```
 
 Clone:
@@ -411,7 +411,7 @@ Clone:
 ```bash
 mkdir -p ~/Projects
 cd ~/Projects
-git clone https://github.com/alhilalakbar/tri-jaya-motor-operational.git
+git clone https://github.com/alhilalakbar/tri-jaya-motor.git
 ```
 
 Jika menggunakan Apache bawaan macOS:
@@ -517,7 +517,7 @@ database.default.port = 3306
 Jika menggunakan Laragon:
 
 ```env
-app.baseURL = 'http://tri-jaya-motor-operational.test/'
+app.baseURL = 'http://tri-jaya-motor.test/'
 ```
 
 Jika menggunakan Apache Linux:
@@ -630,9 +630,9 @@ Buat virtual host:
 ```apache
 <VirtualHost *:80>
     ServerName trijaya.test
-    DocumentRoot /home/USERNAME/projects/tri-jaya-motor-operational/public
+    DocumentRoot /home/USERNAME/projects/tri-jaya-motor/public
 
-    <Directory /home/USERNAME/projects/tri-jaya-motor-operational/public>
+    <Directory /home/USERNAME/projects/tri-jaya-motor/public>
         AllowOverride All
         Require all granted
         DirectoryIndex index.php
@@ -684,7 +684,7 @@ Pastikan:
 Akses:
 
 ```text
-http://localhost/tri-jaya-motor-operational/public
+http://localhost/tri-jaya-motor/public
 ```
 
 atau:
@@ -706,7 +706,7 @@ Pastikan:
 Akses:
 
 ```text
-http://tri-jaya-motor-operational.test
+http://tri-jaya-motor.test
 ```
 
 atau:
