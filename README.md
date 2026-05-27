@@ -45,7 +45,7 @@ Aplikasi ini menyediakan fitur-fitur berikut:
 - Sistem kasir
 - Pengelolaan pembelian sparepart
 - Pengelolaan biaya operasional
-- Pengelolaan kompensasi / pembayaran mekanik
+- Pengelolaan upah harian mekanik / pembayaran harian mekanik
 - Laporan operasional
 - Export PDF / Excel
 - Migration & Seeder support
