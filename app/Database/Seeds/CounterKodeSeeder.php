@@ -8,22 +8,24 @@ class CounterKodeSeeder extends Seeder
 {
     public function run()
     {
-        $this->db->query(<<<'SQL'
-INSERT INTO `counter_kode` (`nama_counter`, `counter_value`) VALUES
-('jasa', 0),
-('jasa_luar', 0),
-('kategori_part', 0),
-('kendaraan', 0),
-('mekanik', 0),
-('merek_motor', 0),
-('merek_part', 0),
-('pelanggan', 0),
-('pemasok', 0),
-('pembelian', 0),
-('pengguna', 0),
-('sparepart', 0),
-('tipe_motor', 0),
-('transaksi', 0);
-SQL);
+        $data = [
+            ['nama_counter' => 'jasa_luar', 'counter_value' => 0],
+            ['nama_counter' => 'jasa', 'counter_value' => 0],
+            ['nama_counter' => 'kategori_part', 'counter_value' => 0],
+            ['nama_counter' => 'kendaraan', 'counter_value' => 0],
+            ['nama_counter' => 'mekanik', 'counter_value' => 0],
+            ['nama_counter' => 'merek_motor', 'counter_value' => 0],
+            ['nama_counter' => 'merek_part', 'counter_value' => 0],
+            ['nama_counter' => 'pelanggan', 'counter_value' => 0],
+            ['nama_counter' => 'pemasok', 'counter_value' => 0],
+            ['nama_counter' => 'pembelian', 'counter_value' => 0],
+            ['nama_counter' => 'pengguna', 'counter_value' => 0],
+            ['nama_counter' => 'sparepart', 'counter_value' => 0],
+            ['nama_counter' => 'tipe_motor', 'counter_value' => 0],
+            ['nama_counter' => 'transaksi', 'counter_value' => 0],
+        ];
+
+        // Memasukkan data awal ke tabel counter_kode
+        $this->db->table('counter_kode')->insertBatch($data);
     }
 }

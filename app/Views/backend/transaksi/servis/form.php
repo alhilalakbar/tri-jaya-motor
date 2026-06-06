@@ -54,6 +54,9 @@
         <select name="header[metode_pembayaran]" class="form-select">
             <option value="Tunai">Tunai</option>
             <option value="QRIS">QRIS</option>
+            <option value="Dana">Dana</option>
+            <option value="BRI">BRI</option>
+
         </select>
     </div>
     <div class="col-md-4">
