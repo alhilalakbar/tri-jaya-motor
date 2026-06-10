@@ -110,7 +110,7 @@ class Pembelian extends BaseController
             $db->transCommit();
 
             return redirect()
-                ->to('backend/transaksi/pembelian')
+                ->to('transaksi/pembelian')
                 ->with('success', 'Pembelian stok berhasil disimpan.');
 
         } catch (\Throwable $e) {

@@ -93,7 +93,6 @@ class Servis extends BaseController
             if (is_array($listJasa)) {
                 foreach ($listJasa as $j) {
 
-                    // skip dummy row kosong
                     if (
                         empty($j['id_jasa']) &&
                         empty($j['harga_saat_transaksi']) &&
@@ -179,7 +178,6 @@ class Servis extends BaseController
             if (is_array($listJasa)) {
                 foreach ($listJasa as $j) {
 
-                    // skip dummy row kosong
                     if (empty($j['id_jasa'])) {
                         continue;
                     }
@@ -217,7 +215,7 @@ class Servis extends BaseController
             $db->transCommit();
 
             return redirect()
-                ->to('backend/transaksi/servis')
+                ->to('transaksi/servis')
                 ->with('success', 'Data servis berhasil disimpan.');
 
         } catch (\Throwable $e) {
@@ -255,7 +253,7 @@ class Servis extends BaseController
             $model->update($id, $data);
 
             return redirect()
-                ->to('backend/transaksi/servis')
+                ->to('transaksi/servis')
                 ->with('success', 'Status transaksi berhasil diperbarui.');
 
         } catch (\Throwable $e) {
