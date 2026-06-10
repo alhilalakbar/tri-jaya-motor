@@ -95,7 +95,7 @@
 
                 <td>
                     <input type="number" name="jasa[0][harga_saat_transaksi]"
-                        class="form-control form-control-sm biaya-input" value="0" min="0">
+                        class="form-control form-control-sm biaya-input" value="0" min="0" readonly>
                 </td>
 
                 <td>
@@ -142,8 +142,10 @@
                 </td>
                 <td><input type="number" name="part[0][jumlah_pakai]" class="form-control form-control-sm" value="1"
                         min="1"></td>
-                <td><input type="number" name="part[0][harga_satuan_jual]"
-                        class="form-control form-control-sm harga-input" value="0" min="0"></td>
+                <td>
+                    <input type="number" name="part[0][harga_satuan_jual]"
+                        class="form-control form-control-sm harga-input" value="0" min="0" readonly>
+                </td>
                 <td class="text-center"><button type="button" class="btn btn-outline-danger btn-sm disabled"><i
                             class="bi bi-trash"></i></button></td>
             </tr>
@@ -151,4 +153,59 @@
     </table>
     <button type="button" class="btn btn-outline-success btn-sm" onclick="addRow('tablePart')"><i
             class="bi bi-plus"></i> Tambah Part</button>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+        document.body.addEventListener('change', function(event) {
+            if (event.target.classList.contains('select-jasa')) {
+                const selectedOption = event.target.options[event.target.selectedIndex];
+                const price = selectedOption.getAttribute('data-price') || 0;
+                const row = event.target.closest('tr');
+                row.querySelector('.biaya-input').value = price;
+            }
+
+            if (event.target.classList.contains('select-part')) {
+                const selectedOption = event.target.options[event.target.selectedIndex];
+                const price = selectedOption.getAttribute('data-price') || 0;
+                const row = event.target.closest('tr');
+                row.querySelector('.harga-input').value = price;
+            }
+        });
+    });
+
+    let counterJasa = 1;
+    let counterPart = 1;
+
+    function addRow(tableId) {
+        const tableBody = document.querySelector(`#${tableId} tbody`);
+        const firstRow = tableBody.rows[0];
+        const newRow = firstRow.cloneNode(true);
+
+        const isJasa = tableId === 'tableJasa';
+        const currentIndex = isJasa ? counterJasa++ : counterPart++;
+
+        const inputs = newRow.querySelectorAll('input, select');
+        inputs.forEach(input => {
+            if (input.name) {
+                input.name = input.name.replace(/\[0\]/, `[${currentIndex}]`);
+            }
+            if (input.tagName === 'SELECT') {
+                input.value = '';
+            } else if (input.type === 'number') {
+                input.value = input.name.includes('jumlah_pakai') ? 1 : 0;
+            }
+        });
+
+        const deleteBtn = newRow.querySelector('button.btn-outline-danger');
+        deleteBtn.classList.remove('disabled');
+        deleteBtn.setAttribute('onclick', 'removeRow(this)');
+
+        tableBody.appendChild(newRow);
+    }
+
+    function removeRow(button) {
+        const row = button.closest('tr');
+        row.remove();
+    }
+    </script>
 </div>
