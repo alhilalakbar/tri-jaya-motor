@@ -164,7 +164,7 @@
 <!-- MODAL EDIT STATUS -->
 <div class="modal fade" id="modalEditStatus" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
-        <form action="<?= base_url('transaksi/servis/update_status'); ?>" method="post">
+        <form action="<?= base_url('transaksi/servis/update-status'); ?>" method="post">
             <?= csrf_field(); ?>
 
             <input type="hidden" name="id_transaksi" id="edit_id_transaksi">
@@ -201,6 +201,8 @@
                         <select name="metode_pembayaran" id="edit_metode_pembayaran" class="form-select">
                             <option value="Tunai">Tunai</option>
                             <option value="QRIS">QRIS</option>
+                            <option value="Dana">Dana</option>
+                            <option value="BRI">BRI</option>
                         </select>
                     </div>
 
