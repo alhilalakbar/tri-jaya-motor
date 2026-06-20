@@ -273,7 +273,7 @@ body {
             <div class="card border-cyan p-3 shadow-sm text-center">
                 <small class="text-muted-custom fw-bold">ASET GUDANG</small>
                 <h6 class="fw-bold text-info">
-                    Rp <?= number_format($total_aset_gudang, 0, ',', '.'); ?>
+                    Rp <?= number_format($aset_gudang, 0, ',', '.'); ?>
                 </h6>
             </div>
         </div>
