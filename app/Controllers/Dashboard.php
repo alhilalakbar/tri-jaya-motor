@@ -56,7 +56,6 @@ class Dashboard extends BaseController
             'gaji_mekanik'      => $keuangan['gaji_mekanik'],
             'pembelian'         => $keuangan['pembelian'],            
             
-            // Diambil dari $umum
             'belum_lunas'       => $umum['belum_lunas'],
             'stok_kritis'       => $umum['stok_kritis'],
             'aset_gudang'       => $umum['aset_gudang'], 
