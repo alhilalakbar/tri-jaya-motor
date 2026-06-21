@@ -32,7 +32,7 @@ class Dashboard extends BaseController
         $umum = $model->getMetrikUmum();
 
         $labaBersih = $keuangan['laba_kotor'] - $keuangan['total_pengeluaran'];
-        
+
         if ($labaBersih > 0) {
             $labaColor = 'success';
         } elseif ($labaBersih < 0) {
@@ -45,24 +45,22 @@ class Dashboard extends BaseController
             'title'             => 'Dashboard Bengkel',
             'periode'           => $periode,
             'tanggal_mulai'     => $tanggalMulai,
-            'tanggal_selesai'   => $tanggalSelesai,            
+            'tanggal_selesai'   => $tanggalSelesai,
             'omzet'             => $keuangan['omzet'],
             'total_transaksi'   => $keuangan['total_transaksi'],
             'laba_kotor'        => $keuangan['laba_kotor'],
             'laba_bersih'       => $labaBersih,
-            'laba_color'        => $labaColor, 
+            'laba_color'        => $labaColor,
             'total_pengeluaran' => $keuangan['total_pengeluaran'],
             'biaya_operasional' => $keuangan['biaya_operasional'],
             'gaji_mekanik'      => $keuangan['gaji_mekanik'],
-            'pembelian'         => $keuangan['pembelian'],            
-            
+            'pembelian'         => $keuangan['pembelian'],
+
             'belum_lunas'       => $umum['belum_lunas'],
             'stok_kritis'       => $umum['stok_kritis'],
-            'aset_gudang'       => $umum['aset_gudang'], 
-            
-            'unit_antre'        => $model->getAntrean('Menunggu'),
-            'unit_proses'       => $model->getAntrean('Proses')
-        ];
+            'aset_gudang'       => $umum['aset_gudang'],
+            'unit_proses'       => $model->getMonitoringServis()        
+            ];
 
         return view('dashboard', $data);
     }

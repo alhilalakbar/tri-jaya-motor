@@ -231,7 +231,6 @@ class Servis extends BaseController
     public function update_status()
     {
         try {
-            $model = new TransaksiServisModel();
 
             $id = $this->request->getPost('id_transaksi');
 
@@ -239,27 +238,64 @@ class Servis extends BaseController
                 throw new \Exception('Transaksi tidak ditemukan.');
             }
 
-            $data = [
+            $model = new TransaksiServisModel();
+
+            $model->update($id, [
                 'status_pengerjaan' =>
-                    $this->request->getPost('status_pengerjaan'),
+                    $this->request->getPost('status_pengerjaan')
+            ]);
+
+            return redirect()
+                ->to('transaksi/servis')
+                ->with(
+                    'success',
+                    'Status pengerjaan berhasil diperbarui.'
+                );
+
+        } catch (\Throwable $e) {
+
+            return redirect()
+                ->back()
+                ->with('error', $e->getMessage());
+
+        }
+    }
+
+    public function update_pembayaran()
+    {
+        try {
+
+            $id = $this->request->getPost('id_transaksi');
+
+            if (empty($id)) {
+                throw new \Exception('Transaksi tidak ditemukan.');
+            }
+
+            $model = new TransaksiServisModel();
+
+            $model->update($id, [
 
                 'metode_pembayaran' =>
                     $this->request->getPost('metode_pembayaran'),
 
                 'status_pembayaran' =>
-                    $this->request->getPost('status_pembayaran'),
-            ];
+                    $this->request->getPost('status_pembayaran')
 
-            $model->update($id, $data);
+            ]);
 
             return redirect()
                 ->to('transaksi/servis')
-                ->with('success', 'Status transaksi berhasil diperbarui.');
+                ->with(
+                    'success',
+                    'Pembayaran berhasil diperbarui.'
+                );
 
         } catch (\Throwable $e) {
+
             return redirect()
                 ->back()
                 ->with('error', $e->getMessage());
+
         }
     }
 

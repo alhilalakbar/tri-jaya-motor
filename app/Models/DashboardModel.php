@@ -109,4 +109,20 @@ class DashboardModel extends Model
             ->orderBy('transaksi_servis.tanggal_masuk', 'ASC')
             ->get()->getResultArray();
     }
+    public function getMonitoringServis()
+    {
+        return $this->db->table('transaksi_servis')
+            ->select('transaksi_servis.*, kendaraan.nomor_plat, pelanggan.nama_pelanggan, mekanik.nama_mekanik')
+            ->join('kendaraan', 'kendaraan.id_kendaraan = transaksi_servis.id_kendaraan')
+            ->join('pelanggan', 'pelanggan.id_pelanggan = kendaraan.id_pelanggan')
+            ->join('mekanik', 'mekanik.id_mekanik = transaksi_servis.id_mekanik', 'left')
+            ->whereIn('transaksi_servis.status_pengerjaan', [
+                'Antre',
+                'Diproses',
+                'Menunggu Part'
+            ])
+            ->orderBy('transaksi_servis.tanggal_masuk', 'DESC')
+            ->get()
+            ->getResultArray();
+    }
 }
