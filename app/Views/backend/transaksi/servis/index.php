@@ -164,7 +164,11 @@
 <!-- MODAL EDIT STATUS -->
 <div class="modal fade" id="modalEditStatus" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
-        <form action="<?= base_url('transaksi/servis/update-status'); ?>" method="post">
+        <form action="<?= base_url(
+            $peran === 'Mekanik'
+                ? 'transaksi/servis/update-status'
+                : 'transaksi/servis/update-pembayaran'
+        ); ?>" method="post">
             <?= csrf_field(); ?>
 
             <input type="hidden" name="id_transaksi" id="edit_id_transaksi">
@@ -181,39 +185,61 @@
 
                 <div class="modal-body">
 
+                    <?php if ($peran === 'Mekanik'): ?>
+
                     <div class="mb-3">
-                        <label class="form-label">Status Pengerjaan</label>
+
+                        <label class="form-label">
+                            Status Pengerjaan
+                        </label>
 
                         <select name="status_pengerjaan" id="edit_status_pengerjaan" class="form-select">
+
                             <option value="Antre">Antre</option>
                             <option value="Diproses">Diproses</option>
                             <option value="Menunggu Part">Menunggu Part</option>
                             <option value="Selesai">Selesai</option>
                             <option value="Diambil">Diambil</option>
                             <option value="Dibatalkan">Dibatalkan</option>
+
                         </select>
+
                     </div>
 
-                    <?php if (in_array($peran, ['Admin', 'Pemilik'])): ?>
+                    <?php else: ?>
+
                     <div class="mb-3">
-                        <label class="form-label">Metode Pembayaran</label>
+
+                        <label class="form-label">
+                            Metode Pembayaran
+                        </label>
 
                         <select name="metode_pembayaran" id="edit_metode_pembayaran" class="form-select">
+
                             <option value="Tunai">Tunai</option>
                             <option value="QRIS">QRIS</option>
                             <option value="Dana">Dana</option>
                             <option value="BRI">BRI</option>
+
                         </select>
+
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Status Pembayaran</label>
+
+                        <label class="form-label">
+                            Status Pembayaran
+                        </label>
 
                         <select name="status_pembayaran" id="edit_status_pembayaran" class="form-select">
+
                             <option value="Belum Lunas">Belum Lunas</option>
                             <option value="Lunas">Lunas</option>
+
                         </select>
+
                     </div>
+
                     <?php endif; ?>
 
                 </div>
@@ -259,6 +285,29 @@ function editStatus(data) {
     <?php if (in_array($peran, ['Admin', 'Pemilik'])): ?>
     document.getElementById('edit_metode_pembayaran').value = data.metode_pembayaran;
     document.getElementById('edit_status_pembayaran').value = data.status_pembayaran;
+    <?php endif; ?>
+
+    modalEditStatus.show();
+}
+
+function editStatus(data) {
+
+    document.getElementById('edit_id_transaksi').value =
+        data.id_transaksi;
+
+    <?php if ($peran === 'Mekanik'): ?>
+
+    document.getElementById('edit_status_pengerjaan').value =
+        data.status_pengerjaan;
+
+    <?php else: ?>
+
+    document.getElementById('edit_metode_pembayaran').value =
+        data.metode_pembayaran;
+
+    document.getElementById('edit_status_pembayaran').value =
+        data.status_pembayaran;
+
     <?php endif; ?>
 
     modalEditStatus.show();

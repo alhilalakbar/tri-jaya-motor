@@ -193,14 +193,14 @@ function addRow(tableId) {
 
             <td>
                 <input type="number"
-                    name="items[${itemIdx}][jumlah]"
+                    name="items[${itemIdx}][jumlah_beli]"
                     class="form-control form-control-sm"
                     value="1">
             </td>
 
             <td>
                 <input type="number"
-                    name="items[${itemIdx}][harga_beli]"
+                    name="items[${itemIdx}][harga_beli_satuan]"
                     class="form-control form-control-sm"
                     value="0">
             </td>

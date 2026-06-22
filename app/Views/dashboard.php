@@ -273,7 +273,7 @@ body {
             <div class="card border-cyan p-3 shadow-sm text-center">
                 <small class="text-muted-custom fw-bold">ASET GUDANG</small>
                 <h6 class="fw-bold text-info">
-                    Rp <?= number_format($total_aset_gudang, 0, ',', '.'); ?>
+                    Rp <?= number_format($aset_gudang, 0, ',', '.'); ?>
                 </h6>
             </div>
         </div>
@@ -331,7 +331,7 @@ body {
 
                 <div class="card-header py-3 text-center" style="background-color: #111827;">
                     <h5 class="mb-0 fw-bold text-white text-uppercase">
-                        <i class="bi bi-activity me-2 text-warning"></i>
+                        <i class="bi bi-activity me-2 text-warning tilt-icon"></i>
                         STATUS PEKERJAAN MEKANIK
                     </h5>
                 </div>
@@ -362,8 +362,52 @@ body {
                                     <td><?= $up['keluhan_awal']; ?></td>
 
                                     <td class="text-center">
-                                        <span class="badge rounded-pill px-3 py-2">
-                                            <?= $up['status_pengerjaan']; ?>
+                                        <?php
+                                        $badge_color = 'bg-dark';
+                                        $anim_class  = '';
+                                        $icon        = '';
+
+                                        switch ($up['status_pengerjaan']) {
+                                            case 'Antre':
+                                                $badge_color = 'bg-warning text-dark';
+                                                $anim_class  = 'blink-icon';
+                                                $icon        = 'bi-hourglass-split';
+                                                break;
+                                            case 'Diproses':
+                                                $badge_color = 'bg-primary';
+                                                $anim_class  = 'status-active-pulse';
+                                                $icon        = 'bi-gear-fill spin-icon';
+                                                break;
+                                            case 'Menunggu Part':
+                                                $badge_color = 'bg-info text-dark';
+                                                $anim_class  = 'blink-icon';
+                                                $icon        = 'bi-box-seam';
+                                                break;
+                                            case 'Selesai':
+                                                $badge_color = 'bg-success';
+                                                $icon        = 'bi-check-circle-fill';
+                                                break;
+                                            case 'Diambil':
+                                                $badge_color = 'bg-secondary';
+                                                $icon        = 'bi-person-check-fill';
+                                                break;
+                                            case 'Dibatalkan':
+                                                $badge_color = 'bg-danger';
+                                                $icon        = 'bi-x-circle-fill';
+                                                break;
+                                            default:
+                                                $badge_color = 'bg-dark';
+                                                $icon        = 'bi-question-circle-fill';
+                                                break;
+                                        }
+                                        ?>
+
+                                        <span
+                                            class="badge <?= $badge_color; ?> <?= $anim_class; ?> rounded-pill px-3 py-2">
+                                            <?php if($icon): ?>
+                                            <i class="bi <?= $icon; ?> me-1"></i>
+                                            <?php endif; ?>
+                                            <?= esc($up['status_pengerjaan']); ?>
                                         </span>
                                     </td>
                                 </tr>

@@ -51,3 +51,50 @@
 </table>
 <button type="button" class="btn btn-outline-primary btn-sm" onclick="addRow('tableItem')"><i class="bi bi-plus-lg"></i>
     Tambah Baris Barang</button>
+<script>
+let counterItem = 1;
+
+function addRow(tableId) {
+
+    console.log('addRow dipanggil');
+
+    const tableBody = document.querySelector(`#${tableId} tbody`);
+    const firstRow = tableBody.rows[0];
+    const newRow = firstRow.cloneNode(true);
+
+    const currentIndex = counterItem++;
+
+    const inputs = newRow.querySelectorAll('input, select');
+
+    inputs.forEach(input => {
+
+        if (input.name) {
+            const oldName = input.name;
+            input.name = input.name.replace(/\[\d+\]/, `[${currentIndex}]`);
+
+            console.log(oldName + ' -> ' + input.name);
+        }
+
+        if (input.tagName === 'SELECT') {
+            input.value = '';
+        } else if (input.type === 'number') {
+            if (input.name.includes('jumlah_beli')) {
+                input.value = 1;
+            } else {
+                input.value = 0;
+            }
+        }
+    });
+
+    const deleteBtn = newRow.querySelector('button');
+
+    deleteBtn.classList.remove('disabled');
+    deleteBtn.onclick = function() {
+        this.closest('tr').remove();
+    };
+
+    tableBody.appendChild(newRow);
+
+    console.log('Row berhasil ditambahkan');
+}
+</script>
