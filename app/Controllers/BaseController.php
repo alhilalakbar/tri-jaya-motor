@@ -44,14 +44,18 @@ abstract class BaseController extends Controller
             ->where('stok_saat_ini <= stok_minimum')
             ->countAllResults();
 
-        $belumLunas = $db->table('transaksi_servis')
-            ->where('status_pembayaran', 'Belum Lunas')
+        $transaksi_aktif = $db->table('transaksi_servis')
+            ->groupStart()
+            ->where('status_transaksi', 'Draft')
+            ->orWhere('status_transaksi', 'Progress')
+            ->groupEnd()
             ->countAllResults();
 
         $notifGlobal = [
             'stok_kritis_count' => $stokKritis,
-            'belum_lunas' => $belumLunas,
-            'total_notif' => $stokKritis + $belumLunas
+            'transaksi_aktif' => $transaksi_aktif,
+            'progress' => $transaksi_aktif,
+            'total_notif' => $stokKritis + $transaksi_aktif
         ];
 
         \Config\Services::renderer()->setData($notifGlobal);

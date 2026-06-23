@@ -12,21 +12,33 @@ class CreateTriggers extends Migration
             <<<SQL
             CREATE TRIGGER update_total_after_delete_jasa AFTER DELETE ON detail_jasa_servis FOR EACH ROW 
             BEGIN 
-                UPDATE transaksi_servis SET total_biaya = (COALESCE((SELECT SUM(subtotal) FROM detail_penggunaan_part WHERE id_transaksi = OLD.id_transaksi), 0) + COALESCE((SELECT SUM(harga_saat_transaksi + biaya_tambahan) FROM detail_jasa_servis WHERE id_transaksi = OLD.id_transaksi), 0)) WHERE id_transaksi = OLD.id_transaksi; 
+                UPDATE transaksi_servis SET total_biaya = (
+                    COALESCE((SELECT SUM(subtotal) FROM detail_penggunaan_part WHERE id_transaksi = OLD.id_transaksi), 0) + 
+                    COALESCE((SELECT SUM(harga_saat_transaksi + biaya_tambahan) FROM detail_jasa_servis WHERE id_transaksi = OLD.id_transaksi), 0) +
+                    COALESCE((SELECT SUM(tagihan_ke_pelanggan) FROM jasa_luar_bubut WHERE id_transaksi = OLD.id_transaksi), 0)
+                ) WHERE id_transaksi = OLD.id_transaksi;
             END;
             SQL,
-            
+
             <<<SQL
             CREATE TRIGGER update_total_after_jasa AFTER INSERT ON detail_jasa_servis FOR EACH ROW 
             BEGIN 
-                UPDATE transaksi_servis SET total_biaya = (COALESCE((SELECT SUM(subtotal) FROM detail_penggunaan_part WHERE id_transaksi = NEW.id_transaksi), 0) + COALESCE((SELECT SUM(harga_saat_transaksi + biaya_tambahan) FROM detail_jasa_servis WHERE id_transaksi = NEW.id_transaksi), 0)) WHERE id_transaksi = NEW.id_transaksi; 
+                UPDATE transaksi_servis SET total_biaya = (
+                    COALESCE((SELECT SUM(subtotal) FROM detail_penggunaan_part WHERE id_transaksi = NEW.id_transaksi), 0) + 
+                    COALESCE((SELECT SUM(harga_saat_transaksi + biaya_tambahan) FROM detail_jasa_servis WHERE id_transaksi = NEW.id_transaksi), 0) +
+                    COALESCE((SELECT SUM(tagihan_ke_pelanggan) FROM jasa_luar_bubut WHERE id_transaksi = NEW.id_transaksi), 0)
+                ) WHERE id_transaksi = NEW.id_transaksi; 
             END;
             SQL,
-            
+
             <<<SQL
             CREATE TRIGGER update_total_after_update_jasa AFTER UPDATE ON detail_jasa_servis FOR EACH ROW 
             BEGIN 
-                UPDATE transaksi_servis SET total_biaya = (COALESCE((SELECT SUM(subtotal) FROM detail_penggunaan_part WHERE id_transaksi = NEW.id_transaksi), 0) + COALESCE((SELECT SUM(harga_saat_transaksi + biaya_tambahan) FROM detail_jasa_servis WHERE id_transaksi = NEW.id_transaksi), 0)) WHERE id_transaksi = NEW.id_transaksi; 
+                UPDATE transaksi_servis SET total_biaya = (
+                    COALESCE((SELECT SUM(subtotal) FROM detail_penggunaan_part WHERE id_transaksi = NEW.id_transaksi), 0) + 
+                    COALESCE((SELECT SUM(harga_saat_transaksi + biaya_tambahan) FROM detail_jasa_servis WHERE id_transaksi = NEW.id_transaksi), 0) +
+                    COALESCE((SELECT SUM(tagihan_ke_pelanggan) FROM jasa_luar_bubut WHERE id_transaksi = NEW.id_transaksi), 0)
+                ) WHERE id_transaksi = NEW.id_transaksi; 
             END;
             SQL,
 
@@ -112,21 +124,33 @@ class CreateTriggers extends Migration
             <<<SQL
             CREATE TRIGGER update_total_after_delete_part AFTER DELETE ON detail_penggunaan_part FOR EACH ROW 
             BEGIN 
-                UPDATE transaksi_servis SET total_biaya = (COALESCE((SELECT SUM(subtotal) FROM detail_penggunaan_part WHERE id_transaksi = OLD.id_transaksi), 0) + COALESCE((SELECT SUM(harga_saat_transaksi + biaya_tambahan) FROM detail_jasa_servis WHERE id_transaksi = OLD.id_transaksi), 0)) WHERE id_transaksi = OLD.id_transaksi; 
+                UPDATE transaksi_servis SET total_biaya = (
+                    COALESCE((SELECT SUM(subtotal) FROM detail_penggunaan_part WHERE id_transaksi = OLD.id_transaksi), 0) + 
+                    COALESCE((SELECT SUM(harga_saat_transaksi + biaya_tambahan) FROM detail_jasa_servis WHERE id_transaksi = OLD.id_transaksi), 0) +
+                    COALESCE((SELECT SUM(tagihan_ke_pelanggan) FROM jasa_luar_bubut WHERE id_transaksi = OLD.id_transaksi), 0)
+                ) WHERE id_transaksi = OLD.id_transaksi; 
             END;
             SQL,
 
             <<<SQL
             CREATE TRIGGER update_total_after_part AFTER INSERT ON detail_penggunaan_part FOR EACH ROW 
             BEGIN 
-                UPDATE transaksi_servis SET total_biaya = (COALESCE((SELECT SUM(subtotal) FROM detail_penggunaan_part WHERE id_transaksi = NEW.id_transaksi), 0) + COALESCE((SELECT SUM(harga_saat_transaksi + biaya_tambahan) FROM detail_jasa_servis WHERE id_transaksi = NEW.id_transaksi), 0)) WHERE id_transaksi = NEW.id_transaksi; 
+                UPDATE transaksi_servis SET total_biaya = (
+                    COALESCE((SELECT SUM(subtotal) FROM detail_penggunaan_part WHERE id_transaksi = NEW.id_transaksi), 0) + 
+                    COALESCE((SELECT SUM(harga_saat_transaksi + biaya_tambahan) FROM detail_jasa_servis WHERE id_transaksi = NEW.id_transaksi), 0) +
+                    COALESCE((SELECT SUM(tagihan_ke_pelanggan) FROM jasa_luar_bubut WHERE id_transaksi = NEW.id_transaksi), 0)
+                ) WHERE id_transaksi = NEW.id_transaksi; 
             END;
             SQL,
 
             <<<SQL
             CREATE TRIGGER update_total_after_update_part AFTER UPDATE ON detail_penggunaan_part FOR EACH ROW 
             BEGIN 
-                UPDATE transaksi_servis SET total_biaya = (COALESCE((SELECT SUM(subtotal) FROM detail_penggunaan_part WHERE id_transaksi = NEW.id_transaksi), 0) + COALESCE((SELECT SUM(harga_saat_transaksi + biaya_tambahan) FROM detail_jasa_servis WHERE id_transaksi = NEW.id_transaksi), 0)) WHERE id_transaksi = NEW.id_transaksi; 
+                UPDATE transaksi_servis SET total_biaya = (
+                    COALESCE((SELECT SUM(subtotal) FROM detail_penggunaan_part WHERE id_transaksi = NEW.id_transaksi), 0) + 
+                    COALESCE((SELECT SUM(harga_saat_transaksi + biaya_tambahan) FROM detail_jasa_servis WHERE id_transaksi = NEW.id_transaksi), 0) +
+                    COALESCE((SELECT SUM(tagihan_ke_pelanggan) FROM jasa_luar_bubut WHERE id_transaksi = NEW.id_transaksi), 0)
+                ) WHERE id_transaksi = NEW.id_transaksi; 
             END;
             SQL,
 
@@ -228,10 +252,47 @@ class CreateTriggers extends Migration
             END;
             SQL,
 
+            // TRIGGER JASA LUAR (BUBUT)
+            <<<SQL
+            CREATE TRIGGER update_total_after_insert_jasa_luar AFTER INSERT ON jasa_luar_bubut FOR EACH ROW 
+            BEGIN 
+                UPDATE transaksi_servis SET total_biaya = (
+                    COALESCE((SELECT SUM(subtotal) FROM detail_penggunaan_part WHERE id_transaksi = NEW.id_transaksi), 0) + 
+                    COALESCE((SELECT SUM(harga_saat_transaksi + biaya_tambahan) FROM detail_jasa_servis WHERE id_transaksi = NEW.id_transaksi), 0) +
+                    COALESCE((SELECT SUM(tagihan_ke_pelanggan) FROM jasa_luar_bubut WHERE id_transaksi = NEW.id_transaksi), 0)
+                ) WHERE id_transaksi = NEW.id_transaksi; 
+            END;
+            SQL,
+
+            <<<SQL
+            CREATE TRIGGER update_total_after_update_jasa_luar AFTER UPDATE ON jasa_luar_bubut FOR EACH ROW 
+            BEGIN 
+                UPDATE transaksi_servis SET total_biaya = (
+                    COALESCE((SELECT SUM(subtotal) FROM detail_penggunaan_part WHERE id_transaksi = NEW.id_transaksi), 0) + 
+                    COALESCE((SELECT SUM(harga_saat_transaksi + biaya_tambahan) FROM detail_jasa_servis WHERE id_transaksi = NEW.id_transaksi), 0) +
+                    COALESCE((SELECT SUM(tagihan_ke_pelanggan) FROM jasa_luar_bubut WHERE id_transaksi = NEW.id_transaksi), 0)
+                ) WHERE id_transaksi = NEW.id_transaksi; 
+            END;
+            SQL,
+
+            <<<SQL
+            CREATE TRIGGER update_total_after_delete_jasa_luar AFTER DELETE ON jasa_luar_bubut FOR EACH ROW 
+            BEGIN 
+                UPDATE transaksi_servis SET total_biaya = (
+                    COALESCE((SELECT SUM(subtotal) FROM detail_penggunaan_part WHERE id_transaksi = OLD.id_transaksi), 0) + 
+                    COALESCE((SELECT SUM(harga_saat_transaksi + biaya_tambahan) FROM detail_jasa_servis WHERE id_transaksi = OLD.id_transaksi), 0) +
+                    COALESCE((SELECT SUM(tagihan_ke_pelanggan) FROM jasa_luar_bubut WHERE id_transaksi = OLD.id_transaksi), 0)
+                ) WHERE id_transaksi = OLD.id_transaksi; 
+            END;
+            SQL, // <-- Koma yang terlewat ditambahkan di sini
+
+            // TRIGGER PEMBATALAN TRANSAKSI
             <<<SQL
             CREATE TRIGGER batal_kembalikan_stok AFTER UPDATE ON transaksi_servis FOR EACH ROW 
             BEGIN 
-                IF NEW.status_pengerjaan = 'Dibatalkan' AND OLD.status_pengerjaan <> 'Dibatalkan' THEN UPDATE sparepart sc JOIN detail_penggunaan_part dpp ON sc.id_part = dpp.id_part SET sc.stok_saat_ini = sc.stok_saat_ini + dpp.jumlah_pakai WHERE dpp.id_transaksi = NEW.id_transaksi; END IF; 
+                IF NEW.status_transaksi = 'Dibatalkan' AND OLD.status_transaksi <> 'Dibatalkan' THEN 
+                    UPDATE sparepart sc JOIN detail_penggunaan_part dpp ON sc.id_part = dpp.id_part SET sc.stok_saat_ini = sc.stok_saat_ini + dpp.jumlah_pakai WHERE dpp.id_transaksi = NEW.id_transaksi; 
+                END IF; 
             END;
             SQL,
 
@@ -251,11 +312,40 @@ class CreateTriggers extends Migration
     public function down()
     {
         $triggerNames = [
-            'update_total_after_delete_jasa', 'update_total_after_jasa', 'update_total_after_update_jasa',
-            'tambah_stok_dan_update_harga', 'update_total_pembelian_delete', 'update_total_pembelian_insert', 'update_total_pembelian_update',
-            'cek_dan_kurangi_stok', 'validasi_stok_dan_subtotal_update', 'kembalikan_stok_batal', 'update_stok_part', 'update_total_after_delete_part', 'update_total_after_part', 'update_total_after_update_part',
-            'tg_kode_jasa_luar', 'tg_kode_jasa', 'tg_kode_kategori_part', 'tg_kode_kendaraan', 'tg_kode_mekanik', 'tg_kode_merek_motor', 'tg_kode_merek_part', 'tg_kode_pelanggan', 'tg_kode_pemasok', 'tg_kode_pembelian', 'tg_kode_pengguna', 'tg_kode_part', 'tg_kode_tipe_motor', 'tg_kode_transaksi',
-            'batal_kembalikan_stok', 'rollback_stok_transaksi'
+            'update_total_after_delete_jasa',
+            'update_total_after_jasa',
+            'update_total_after_update_jasa',
+            'tambah_stok_dan_update_harga',
+            'update_total_pembelian_delete',
+            'update_total_pembelian_insert',
+            'update_total_pembelian_update',
+            'cek_dan_kurangi_stok',
+            'validasi_stok_dan_subtotal_update',
+            'kembalikan_stok_batal',
+            'update_stok_part',
+            'update_total_after_delete_part',
+            'update_total_after_part',
+            'update_total_after_update_part',
+            'tg_kode_jasa_luar',
+            'tg_kode_jasa',
+            'tg_kode_kategori_part',
+            'tg_kode_kendaraan',
+            'tg_kode_mekanik',
+            'tg_kode_merek_motor',
+            'tg_kode_merek_part',
+            'tg_kode_pelanggan',
+            'tg_kode_pemasok',
+            'tg_kode_pembelian',
+            'tg_kode_pengguna',
+            'tg_kode_part',
+            'tg_kode_tipe_motor',
+            'tg_kode_transaksi',
+            // 3 baris di bawah ini ditambahkan agar rollback tidak error
+            'update_total_after_insert_jasa_luar',
+            'update_total_after_update_jasa_luar',
+            'update_total_after_delete_jasa_luar',
+            'batal_kembalikan_stok',
+            'rollback_stok_transaksi'
         ];
 
         foreach ($triggerNames as $name) {

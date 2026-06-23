@@ -154,7 +154,7 @@ class Laporan extends BaseController
                 'nama_tipe' => 'Tipe',
                 'nama_mekanik' => 'Mekanik',
                 'status_pengerjaan' => 'Status Pengerjaan',
-                'status_pembayaran' => 'Status Pembayaran',
+                'status_transaksi' => 'Status Transaksi',
                 'metode_pembayaran' => 'Metode Pembayaran',
                 'total_hpp' => 'HPP Sparepart',
             ],

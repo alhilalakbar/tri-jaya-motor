@@ -6,7 +6,6 @@ use CodeIgniter\Model;
 
 class LabaRugiLaporanModel extends Model
 {
-
     protected $table = 'transaksi_servis';
     protected $returnType = 'object';
 
@@ -14,20 +13,27 @@ class LabaRugiLaporanModel extends Model
     {
         $db = \Config\Database::connect();
 
-
         $pendapatan = $db->table('transaksi_servis')
             ->select('COALESCE(SUM(total_biaya), 0) AS total_pendapatan')
-            ->where('status_pembayaran', 'Lunas')
+            ->where('status_transaksi', 'Lunas')
             ->where('tanggal_masuk >=', $tglMulai . ' 00:00:00')
             ->where('tanggal_masuk <=', $tglAkhir . ' 23:59:59')
             ->get()
             ->getRow();
 
-
         $hpp = $db->table('detail_penggunaan_part')
             ->select('COALESCE(SUM(detail_penggunaan_part.jumlah_pakai * detail_penggunaan_part.harga_satuan_modal), 0) AS total_hpp')
             ->join('transaksi_servis', 'transaksi_servis.id_transaksi = detail_penggunaan_part.id_transaksi')
-            ->where('transaksi_servis.status_pembayaran', 'Lunas')
+            ->where('transaksi_servis.status_transaksi', 'Lunas')
+            ->where('transaksi_servis.tanggal_masuk >=', $tglMulai . ' 00:00:00')
+            ->where('transaksi_servis.tanggal_masuk <=', $tglAkhir . ' 23:59:59')
+            ->get()
+            ->getRow();
+
+        $hppJasaLuar = $db->table('jasa_luar_bubut')
+            ->select('COALESCE(SUM(biaya_modal_vendor), 0) AS total_hpp_jasa_luar')
+            ->join('transaksi_servis', 'transaksi_servis.id_transaksi = jasa_luar_bubut.id_transaksi')
+            ->where('transaksi_servis.status_transaksi', 'Lunas')
             ->where('transaksi_servis.tanggal_masuk >=', $tglMulai . ' 00:00:00')
             ->where('transaksi_servis.tanggal_masuk <=', $tglAkhir . ' 23:59:59')
             ->get()
@@ -50,12 +56,14 @@ class LabaRugiLaporanModel extends Model
         $result = new \stdClass();
         $result->total_pendapatan  = $pendapatan->total_pendapatan;
         $result->total_hpp         = $hpp->total_hpp;
+        $result->total_hpp_jasa_luar = $hppJasaLuar->total_hpp_jasa_luar;
         $result->total_operasional = $operasional->total_operasional;
         $result->total_gaji        = $gaji->total_gaji;
         
         $result->estimasi_laba_bersih = 
             $result->total_pendapatan 
             - $result->total_hpp 
+            - $result->total_hpp_jasa_luar
             - $result->total_operasional 
             - $result->total_gaji;
 

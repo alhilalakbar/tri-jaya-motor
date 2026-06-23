@@ -42,25 +42,25 @@ class Dashboard extends BaseController
         }
 
         $data = [
-            'title'             => 'Dashboard Bengkel',
-            'periode'           => $periode,
-            'tanggal_mulai'     => $tanggalMulai,
-            'tanggal_selesai'   => $tanggalSelesai,
-            'omzet'             => $keuangan['omzet'],
-            'total_transaksi'   => $keuangan['total_transaksi'],
-            'laba_kotor'        => $keuangan['laba_kotor'],
-            'laba_bersih'       => $labaBersih,
-            'laba_color'        => $labaColor,
+            'title' => 'Dashboard Bengkel',
+            'periode' => $periode,
+            'tanggal_mulai' => $tanggalMulai,
+            'tanggal_selesai' => $tanggalSelesai,
+            'omzet' => $keuangan['omzet'],
+            'total_transaksi' => $keuangan['total_transaksi'],
+            'laba_kotor' => $keuangan['laba_kotor'],
+            'laba_bersih' => $labaBersih,
+            'laba_color' => $labaColor,
             'total_pengeluaran' => $keuangan['total_pengeluaran'],
             'biaya_operasional' => $keuangan['biaya_operasional'],
-            'gaji_mekanik'      => $keuangan['gaji_mekanik'],
-            'pembelian'         => $keuangan['pembelian'],
+            'gaji_mekanik' => $keuangan['gaji_mekanik'],
+            'pembelian' => $keuangan['pembelian'],
 
-            'belum_lunas'       => $umum['belum_lunas'],
-            'stok_kritis'       => $umum['stok_kritis'],
-            'aset_gudang'       => $umum['aset_gudang'],
-            'unit_proses'       => $model->getMonitoringServis()        
-            ];
+            'transaksi_aktif' => $umum['transaksi_aktif'],
+            'stok_kritis' => $umum['stok_kritis'],
+            'aset_gudang' => $umum['aset_gudang'],
+            'unit_proses' => $model->getMonitoringServis()
+        ];
 
         return view('dashboard', $data);
     }

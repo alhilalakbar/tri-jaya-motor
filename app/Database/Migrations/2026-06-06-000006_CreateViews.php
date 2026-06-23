@@ -10,7 +10,7 @@ class CreateViews extends Migration
     {
         $this->db->query("
             CREATE OR REPLACE VIEW view_laporan_laba_rugi AS 
-            SELECT ts.kode_transaksi, ts.tanggal_masuk, ts.status_pembayaran, ts.total_biaya, 
+            SELECT ts.kode_transaksi, ts.tanggal_masuk, ts.status_transaksi, ts.total_biaya, 
                    COALESCE(dpp.jumlah_pakai, 0) AS jumlah_pakai, COALESCE(s.harga_modal, 0) AS harga_modal, 
                    COALESCE((dpp.jumlah_pakai * s.harga_modal), 0) AS hpp_sparepart 
             FROM transaksi_servis ts 
@@ -21,7 +21,7 @@ class CreateViews extends Migration
         $this->db->query("
             CREATE OR REPLACE VIEW view_laporan_loyalitas_pelanggan AS 
             SELECT ts.kode_transaksi, ts.tanggal_masuk, p.kode_pelanggan, p.nama_pelanggan, 
-                   ts.total_biaya, ts.status_pembayaran 
+                   ts.total_biaya, ts.status_transaksi 
             FROM transaksi_servis ts 
             JOIN kendaraan k ON ts.id_kendaraan = k.id_kendaraan 
             JOIN pelanggan p ON k.id_pelanggan = p.id_pelanggan
@@ -71,7 +71,7 @@ class CreateViews extends Migration
         $this->db->query("
             CREATE OR REPLACE VIEW view_laporan_transaksi_servis AS 
             SELECT ts.kode_transaksi, ts.tanggal_masuk, p.nama_pelanggan, k.nomor_plat, mm.nama_merek_motor, 
-                   tm.nama_tipe, m.nama_mekanik, ts.status_pengerjaan, ts.status_pembayaran, ts.metode_pembayaran, ts.total_biaya 
+                   tm.nama_tipe, m.nama_mekanik, ts.status_pengerjaan, ts.status_transaksi, ts.metode_pembayaran, ts.total_biaya 
             FROM transaksi_servis ts 
             JOIN kendaraan k ON ts.id_kendaraan = k.id_kendaraan 
             JOIN pelanggan p ON k.id_pelanggan = p.id_pelanggan 

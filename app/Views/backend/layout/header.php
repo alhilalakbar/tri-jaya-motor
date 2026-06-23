@@ -10,7 +10,7 @@ $bolehNotifBisnis = in_array($peran, ['Admin', 'Pemilik']);
     document.addEventListener('DOMContentLoaded', function() {
         <?php
             $stok_kritis = $stok_kritis_count ?? 0;
-$piutang = $belum_lunas ?? 0;
+$piutang = $transaksi_aktif ?? 0;
 ?>
 
         const Toast = Swal.mixin({
@@ -116,10 +116,10 @@ $piutang = $belum_lunas ?? 0;
                     </a>
                     <?php endif; ?>
 
-                    <?php if (isset($belum_lunas) && $belum_lunas > 0): ?>
+                    <?php if (isset($transaksi_aktif) && $transaksi_aktif > 0): ?>
                     <a href="<?= base_url('transaksi/servis'); ?>" class="dropdown-item">
                         <i class="bi bi-exclamation-circle me-2 text-warning"></i>
-                        <?= $belum_lunas; ?> Transaksi Belum Lunas
+                        <?= $transaksi_aktif; ?> Transaksi Belum Lunas
                     </a>
                     <?php endif; ?>
 

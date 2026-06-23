@@ -73,7 +73,7 @@
                         <td><span class="badge text-bg-secondary"><?= $l->nomor_plat; ?></span></td>
                         <td><?= $l->nama_merek_motor; ?> <?= $l->nama_tipe; ?></td>
                         <td><?= $l->nama_mekanik; ?></td>
-                        <td><span class="badge bg-success"><?= $l->status_pembayaran; ?></span></td>
+                        <td><span class="badge bg-success"><?= $l->status_transaksi; ?></span></td>
                         <td class="text-end">Rp <?= number_format($l->total_biaya, 0, ',', '.'); ?></td>
                     </tr>
                     <?php endforeach; ?>

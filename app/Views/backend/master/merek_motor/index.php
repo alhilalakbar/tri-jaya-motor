@@ -21,7 +21,7 @@
                 <tr>
                     <th style="width: 10px">#</th>
                     <th>Kode</th>
-                    <th>Nama</th>
+                    <th>Nama Merek Motor</th>
                     <th style="width: 120px">Aksi</th>
                 </tr>
             </thead>

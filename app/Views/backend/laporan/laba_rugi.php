@@ -58,17 +58,21 @@
                     </tr>
                     <tr>
                         <th class="bg-light">HPP Sparepart (Modal Barang Terjual)</th>
-                        <td class="text-end text-danger">Rp <?= number_format($laba->total_hpp, 0, ',', '.'); ?>
-                        </td>
+                        <td class="text-danger text-end">Rp <?= number_format($laba->total_hpp, 0, ',', '.'); ?></td>
+                    </tr>
+                    <tr>
+                        <th class="bg-light">HPP Jasa Luar (Modal Vendor Bubut)</th>
+                        <td class="text-danger text-end">Rp
+                            <?= number_format($laba->total_hpp_jasa_luar, 0, ',', '.'); ?></td>
                     </tr>
                     <tr>
                         <th class="bg-light">Total Biaya Operasional</th>
-                        <td class="text-end text-danger">Rp <?= number_format($laba->total_operasional, 0, ',', '.'); ?>
+                        <td class="text-danger text-end">Rp <?= number_format($laba->total_operasional, 0, ',', '.'); ?>
                         </td>
                     </tr>
                     <tr>
                         <th class="bg-light">Total Gaji Mekanik</th>
-                        <td class="text-end text-danger">Rp <?= number_format($laba->total_gaji, 0, ',', '.'); ?></td>
+                        <td class="text-danger text-end">Rp <?= number_format($laba->total_gaji, 0, ',', '.'); ?></td>
                     </tr>
                     <tr class="table-primary border-primary">
                         <th class="py-3">ESTIMASI LABA BERSIH</th>
@@ -95,20 +99,20 @@
         </div>
 
         <script>
-        function setRange(type) {
-            const startInput = document.getElementById('tgl_mulai');
-            const endInput = document.getElementById('tgl_akhir');
-            const now = new Date();
-            const dateStr = now.toISOString().split('T')[0];
-            if (type === 'today') {
-                startInput.value = dateStr;
-                endInput.value = dateStr;
-            } else if (type === 'month') {
-                const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 2).toISOString().split('T')[0];
-                startInput.value = startOfMonth;
-                endInput.value = dateStr;
+            function setRange(type) {
+                const startInput = document.getElementById('tgl_mulai');
+                const endInput = document.getElementById('tgl_akhir');
+                const now = new Date();
+                const dateStr = now.toISOString().split('T')[0];
+                if (type === 'today') {
+                    startInput.value = dateStr;
+                    endInput.value = dateStr;
+                } else if (type === 'month') {
+                    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 2).toISOString().split('T')[0];
+                    startInput.value = startOfMonth;
+                    endInput.value = dateStr;
+                }
             }
-        }
         </script>
     </div>
 </div>

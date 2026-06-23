@@ -4,8 +4,8 @@
         <select name="header[id_kendaraan]" class="form-select select2" required>
             <option value="">-- Pilih Kendaraan --</option>
             <?php foreach ($kendaraan as $k): ?>
-            <option value="<?= $k['id_kendaraan']; ?>"><?= esc($k['nomor_plat']); ?> - <?= esc($k['nama_pelanggan']); ?>
-            </option>
+                <option value="<?= $k['id_kendaraan']; ?>"><?= esc($k['nomor_plat']); ?> - <?= esc($k['nama_pelanggan']); ?>
+                </option>
             <?php endforeach; ?>
         </select>
     </div>
@@ -14,7 +14,7 @@
         <select name="header[id_mekanik]" class="form-select" required>
             <option value="">-- Pilih Mekanik --</option>
             <?php foreach ($mekanik as $m): ?>
-            <option value="<?= $m['id_mekanik']; ?>"><?= esc($m['nama_mekanik']); ?></option>
+                <option value="<?= $m['id_mekanik']; ?>"><?= esc($m['nama_mekanik']); ?></option>
             <?php endforeach; ?>
         </select>
     </div>
@@ -50,6 +50,15 @@
         </select>
     </div>
     <div class="col-md-4">
+        <label class="form-label">Status Transaksi</label>
+        <select name="header[status_transaksi]" class="form-select">
+            <option value="Draft" selected>Draft</option>
+            <option value="Progress">Progress</option>
+            <option value="Lunas">Lunas</option>
+            <option value="Dibatalkan">Dibatalkan</option>
+        </select>
+    </div>
+    <div class="col-md-4">
         <label class="form-label">Metode Pembayaran</label>
         <select name="header[metode_pembayaran]" class="form-select">
             <option value="Tunai">Tunai</option>
@@ -57,13 +66,6 @@
             <option value="Dana">Dana</option>
             <option value="BRI">BRI</option>
 
-        </select>
-    </div>
-    <div class="col-md-4">
-        <label class="form-label">Status Pembayaran</label>
-        <select name="header[status_pembayaran]" class="form-select">
-            <option value="Belum Lunas">Belum Lunas</option>
-            <option value="Lunas">Lunas</option>
         </select>
     </div>
 </div>
@@ -86,9 +88,9 @@
                     <select name="jasa[0][id_jasa]" class="form-select form-select-sm select-jasa" required>
                         <option value="">-- Pilih Jasa --</option>
                         <?php foreach ($jasa_list as $j): ?>
-                        <option value="<?= $j['id_jasa']; ?>" data-price="<?= $j['biaya_standar']; ?>">
-                            <?= esc($j['nama_jasa']); ?>
-                        </option>
+                            <option value="<?= $j['id_jasa']; ?>" data-price="<?= $j['biaya_standar']; ?>">
+                                <?= esc($j['nama_jasa']); ?>
+                            </option>
                         <?php endforeach; ?>
                     </select>
                 </td>
@@ -134,9 +136,9 @@
                     <select name="part[0][id_part]" class="form-select form-select-sm select-part">
                         <option value="">-- Pilih Part (Opsional) --</option>
                         <?php foreach ($part_list as $p): ?>
-                        <option value="<?= $p['id_part']; ?>" data-price="<?= $p['harga_jual']; ?>">
-                            <?= esc($p['nama_part']); ?>
-                        </option>
+                            <option value="<?= $p['id_part']; ?>" data-price="<?= $p['harga_jual']; ?>">
+                                <?= esc($p['nama_part']); ?>
+                            </option>
                         <?php endforeach; ?>
                     </select>
                 </td>
@@ -154,58 +156,58 @@
     <button type="button" class="btn btn-outline-success btn-sm" onclick="addRow('tablePart')"><i
             class="bi bi-plus"></i> Tambah Part</button>
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
 
-        document.body.addEventListener('change', function(event) {
-            if (event.target.classList.contains('select-jasa')) {
-                const selectedOption = event.target.options[event.target.selectedIndex];
-                const price = selectedOption.getAttribute('data-price') || 0;
-                const row = event.target.closest('tr');
-                row.querySelector('.biaya-input').value = price;
-            }
+            document.body.addEventListener('change', function (event) {
+                if (event.target.classList.contains('select-jasa')) {
+                    const selectedOption = event.target.options[event.target.selectedIndex];
+                    const price = selectedOption.getAttribute('data-price') || 0;
+                    const row = event.target.closest('tr');
+                    row.querySelector('.biaya-input').value = price;
+                }
 
-            if (event.target.classList.contains('select-part')) {
-                const selectedOption = event.target.options[event.target.selectedIndex];
-                const price = selectedOption.getAttribute('data-price') || 0;
-                const row = event.target.closest('tr');
-                row.querySelector('.harga-input').value = price;
-            }
-        });
-    });
-
-    let counterJasa = 1;
-    let counterPart = 1;
-
-    function addRow(tableId) {
-        const tableBody = document.querySelector(`#${tableId} tbody`);
-        const firstRow = tableBody.rows[0];
-        const newRow = firstRow.cloneNode(true);
-
-        const isJasa = tableId === 'tableJasa';
-        const currentIndex = isJasa ? counterJasa++ : counterPart++;
-
-        const inputs = newRow.querySelectorAll('input, select');
-        inputs.forEach(input => {
-            if (input.name) {
-                input.name = input.name.replace(/\[0\]/, `[${currentIndex}]`);
-            }
-            if (input.tagName === 'SELECT') {
-                input.value = '';
-            } else if (input.type === 'number') {
-                input.value = input.name.includes('jumlah_pakai') ? 1 : 0;
-            }
+                if (event.target.classList.contains('select-part')) {
+                    const selectedOption = event.target.options[event.target.selectedIndex];
+                    const price = selectedOption.getAttribute('data-price') || 0;
+                    const row = event.target.closest('tr');
+                    row.querySelector('.harga-input').value = price;
+                }
+            });
         });
 
-        const deleteBtn = newRow.querySelector('button.btn-outline-danger');
-        deleteBtn.classList.remove('disabled');
-        deleteBtn.setAttribute('onclick', 'removeRow(this)');
+        let counterJasa = 1;
+        let counterPart = 1;
 
-        tableBody.appendChild(newRow);
-    }
+        function addRow(tableId) {
+            const tableBody = document.querySelector(`#${tableId} tbody`);
+            const firstRow = tableBody.rows[0];
+            const newRow = firstRow.cloneNode(true);
 
-    function removeRow(button) {
-        const row = button.closest('tr');
-        row.remove();
-    }
+            const isJasa = tableId === 'tableJasa';
+            const currentIndex = isJasa ? counterJasa++ : counterPart++;
+
+            const inputs = newRow.querySelectorAll('input, select');
+            inputs.forEach(input => {
+                if (input.name) {
+                    input.name = input.name.replace(/\[0\]/, `[${currentIndex}]`);
+                }
+                if (input.tagName === 'SELECT') {
+                    input.value = '';
+                } else if (input.type === 'number') {
+                    input.value = input.name.includes('jumlah_pakai') ? 1 : 0;
+                }
+            });
+
+            const deleteBtn = newRow.querySelector('button.btn-outline-danger');
+            deleteBtn.classList.remove('disabled');
+            deleteBtn.setAttribute('onclick', 'removeRow(this)');
+
+            tableBody.appendChild(newRow);
+        }
+
+        function removeRow(button) {
+            const row = button.closest('tr');
+            row.remove();
+        }
     </script>
 </div>

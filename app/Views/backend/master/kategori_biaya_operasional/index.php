@@ -25,7 +25,7 @@
 
                 <tr>
                     <th style="width: 10px">#</th>
-                    <th>Nama Kategori</th>
+                    <th>Nama Kategori Biaya Operasional</th>
                     <th style="width: 100px">Aksi</th>
                 </tr>
 
@@ -148,7 +148,7 @@ function tambahData() {
         'Tambah Kategori Biaya Operasional';
 
     form.action =
-        '<?= base_url('master/kategori_biaya_operasional/save'); ?>';
+        '<?= base_url('master/kategori-biaya-operasional/save'); ?>';
 
     form.reset();
 

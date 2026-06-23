@@ -22,7 +22,7 @@
             <tr>
                 <th style="width: 10px">#</th>
                 <th>Kode</th>
-                <th>Nama</th>
+                <th>Nama Kategori Part</th>
                 <!-- Tambah kolom Biaya jika ini Jasa Servis -->
                 <th style="width: 120px">Aksi</th>
             </tr>

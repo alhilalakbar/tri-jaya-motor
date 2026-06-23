@@ -18,6 +18,5 @@ class TransaksiServisModel extends Model
         'status_pengerjaan', 
         'status_transaksi', 
         'metode_pembayaran', 
-        'status_pembayaran'
     ]; 
 }

@@ -155,7 +155,7 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
         $routes->group('', ['filter' => 'role:Admin,Pemilik'], function ($routes) {
 
             $routes->post('servis/create', 'Transaksi\Servis::create');
-            $routes->post('servis/update-pembayaran', 'Transaksi\Servis::update_pembayaran');
+            $routes->post('servis/update-transaksi', 'Transaksi\Servis::update_transaksi');
             $routes->get('servis/edit/(:num)', 'Transaksi\Servis::edit/$1');
             $routes->post('servis/update', 'Transaksi\Servis::update');
             $routes->get('pembelian', 'Transaksi\Pembelian::index');

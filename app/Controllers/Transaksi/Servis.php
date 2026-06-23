@@ -4,6 +4,10 @@ namespace App\Controllers\Transaksi;
 
 use App\Controllers\BaseController;
 use App\Models\Transaksi\Servis\TransaksiServisModel;
+use App\Models\Transaksi\Servis\DetailJasaModel;
+use App\Models\Transaksi\Servis\DetailPartModel;
+use App\Models\Transaksi\Servis\JasaLuarModel;
+use App\Models\Master\Part\SparepartModel;
 
 class Servis extends BaseController
 {
@@ -28,9 +32,9 @@ class Servis extends BaseController
             ->findAll();
 
         $data = [
-            'data'      => $riwayat,
+            'data' => $riwayat,
             'pelanggan' => $db->table('pelanggan')->get()->getResultArray(),
-            'mekanik'   => $db->table('mekanik')->get()->getResultArray(),
+            'mekanik' => $db->table('mekanik')->get()->getResultArray(),
             'jasa_list' => $db->table('jasa_servis')->get()->getResultArray(),
             'part_list' => $db->table('sparepart')->get()->getResultArray(),
             'kendaraan' => $db->table('kendaraan')
@@ -43,7 +47,6 @@ class Servis extends BaseController
         return view('backend/transaksi/servis/index', $data);
     }
 
-
     public function create()
     {
         $db = \Config\Database::connect();
@@ -51,28 +54,33 @@ class Servis extends BaseController
 
         try {
             $headerData = $this->request->getPost('header');
-            $listJasa   = $this->request->getPost('jasa');
-            $listPart   = $this->request->getPost('part');
+            $listJasa = $this->request->getPost('jasa');
+            $listPart = $this->request->getPost('part');
 
-            if (empty($headerData['id_kendaraan'])) throw new \Exception('Kendaraan wajib dipilih.');
-            if (empty($headerData['id_mekanik'])) throw new \Exception('Mekanik wajib dipilih.');
-            if (empty($listJasa) && empty($listPart)) throw new \Exception('Minimal harus ada jasa servis atau sparepart.');
+            if (empty($headerData['id_kendaraan']))
+                throw new \Exception('Kendaraan wajib dipilih.');
+            if (empty($headerData['id_mekanik']))
+                throw new \Exception('Mekanik wajib dipilih.');
+            if (empty($listJasa) && empty($listPart))
+                throw new \Exception('Minimal harus ada jasa servis atau sparepart.');
 
-            $transModel     = new TransaksiServisModel();
-            $jasaModel      = new \App\Models\Transaksi\Servis\DetailJasaModel();
-            $partModel      = new \App\Models\Transaksi\Servis\DetailPartModel();
-            $sparepartModel = new \App\Models\Master\Part\SparepartModel();
+            $transModel = new TransaksiServisModel();
+            $jasaModel = new DetailJasaModel();
+            $partModel = new DetailPartModel();
+            $sparepartModel = new SparepartModel();
 
-            $headerData['id_pengguna']      = session()->get('id_pengguna');
-            $headerData['tanggal_masuk']    = date('Y-m-d H:i:s');
-            $headerData['status_transaksi'] = 'Draft'; 
+            $headerData['id_pengguna'] = session()->get('id_pengguna');
+            $headerData['tanggal_masuk'] = date('Y-m-d H:i:s');
+            $headerData['status_transaksi'] = 'Draft';
 
             $idTrans = $transModel->insert($headerData, true);
-            if (!$idTrans) throw new \Exception('Gagal menyimpan data utama transaksi.');
+            if (!$idTrans)
+                throw new \Exception('Gagal menyimpan data utama transaksi.');
 
             if (is_array($listJasa)) {
                 foreach ($listJasa as $j) {
-                    if (empty($j['id_jasa'])) continue;
+                    if (empty($j['id_jasa']))
+                        continue;
                     $j['id_transaksi'] = $idTrans;
                     $jasaModel->insert($j);
                 }
@@ -80,20 +88,23 @@ class Servis extends BaseController
 
             if (is_array($listPart)) {
                 foreach ($listPart as $p) {
-                    if (empty($p['id_part'])) continue;
+                    if (empty($p['id_part']))
+                        continue;
 
                     $masterPart = $sparepartModel->find($p['id_part']);
-                    if (!$masterPart) throw new \Exception('Data sparepart tidak ditemukan.');
+                    if (!$masterPart)
+                        throw new \Exception('Data sparepart tidak ditemukan.');
 
-                    $p['id_transaksi']       = $idTrans;
-                    $p['harga_satuan_modal'] = $masterPart['harga_modal']; 
-                    $p['harga_satuan_jual']  = $p['harga_satuan_jual'] ?? $masterPart['harga_jual'];
+                    $p['id_transaksi'] = $idTrans;
+                    $p['harga_satuan_modal'] = $masterPart['harga_modal'];
+                    $p['harga_satuan_jual'] = $p['harga_satuan_jual'] ?? $masterPart['harga_jual'];
 
-                    $partModel->insert($p); 
+                    $partModel->insert($p);
                 }
             }
 
-            if ($db->transStatus() === false) throw new \Exception('Transaksi gagal. Pastikan stok mencukupi.');
+            if ($db->transStatus() === false)
+                throw new \Exception('Transaksi gagal. Pastikan stok mencukupi.');
             $db->transCommit();
 
             return redirect()->to('transaksi/servis')->with('success', 'Data servis berhasil disimpan.');
@@ -104,35 +115,36 @@ class Servis extends BaseController
         }
     }
 
-
     public function edit($id)
     {
         $db = \Config\Database::connect();
         $transModel = new TransaksiServisModel();
 
         $header = $transModel->find($id);
-        if (!$header) return redirect()->to('transaksi/servis')->with('error', 'Transaksi tidak ditemukan.');
+        if (!$header)
+            return redirect()->to('transaksi/servis')->with('error', 'Transaksi tidak ditemukan.');
 
-        if ($header['status_pembayaran'] === 'Lunas' || (isset($header['status_transaksi']) && $header['status_transaksi'] === 'Lunas')) {
-            return redirect()->to('transaksi/servis')->with('error', 'Transaksi yang sudah lunas tidak dapat diedit.');
+        if ($header['status_transaksi'] === 'Lunas') {
+            return redirect()
+                ->to('transaksi/servis')
+                ->with('error', 'Transaksi yang sudah lunas tidak dapat diedit.');
         }
 
         $data = [
-            'header'    => $header,
+            'header' => $header,
             'jasa_lama' => $db->table('detail_jasa_servis')->where('id_transaksi', $id)->get()->getResultArray(),
             'part_lama' => $db->table('detail_penggunaan_part')->where('id_transaksi', $id)->get()->getResultArray(),
             'kendaraan' => $db->table('kendaraan')
-                              ->select('kendaraan.id_kendaraan, kendaraan.nomor_plat, pelanggan.nama_pelanggan')
-                              ->join('pelanggan', 'pelanggan.id_pelanggan = kendaraan.id_pelanggan')
-                              ->get()->getResultArray(),
-            'mekanik'   => $db->table('mekanik')->get()->getResultArray(),
+                ->select('kendaraan.id_kendaraan, kendaraan.nomor_plat, pelanggan.nama_pelanggan')
+                ->join('pelanggan', 'pelanggan.id_pelanggan = kendaraan.id_pelanggan')
+                ->get()->getResultArray(),
+            'mekanik' => $db->table('mekanik')->get()->getResultArray(),
             'jasa_list' => $db->table('jasa_servis')->get()->getResultArray(),
             'part_list' => $db->table('sparepart')->get()->getResultArray(),
         ];
 
         return view('backend/transaksi/servis/edit', $data);
     }
-
 
     public function update()
     {
@@ -141,30 +153,33 @@ class Servis extends BaseController
 
         try {
             $idTrans = $this->request->getPost('id_transaksi');
-            if (empty($idTrans)) throw new \Exception('ID Transaksi tidak valid.');
+            if (empty($idTrans))
+                throw new \Exception('ID Transaksi tidak valid.');
 
             $transModel = new TransaksiServisModel();
             $transaksiLama = $transModel->find($idTrans);
 
-            if (!$transaksiLama) throw new \Exception('Transaksi tidak ditemukan.');
-            if ($transaksiLama['status_pembayaran'] === 'Lunas' || (isset($transaksiLama['status_transaksi']) && $transaksiLama['status_transaksi'] === 'Lunas')) {
+            if (!$transaksiLama)
+                throw new \Exception('Transaksi tidak ditemukan.');
+            if ($transaksiLama['status_transaksi'] === 'Lunas') {
                 throw new \Exception('Transaksi lunas sudah dikunci.');
             }
 
             $headerData = $this->request->getPost('header');
-            $listJasa   = $this->request->getPost('jasa');
-            $listPart   = $this->request->getPost('part');
+            $listJasa = $this->request->getPost('jasa');
+            $listPart = $this->request->getPost('part');
 
-            $partModel      = new \App\Models\Transaksi\Servis\DetailPartModel();
-            $jasaModel      = new \App\Models\Transaksi\Servis\DetailJasaModel();
-            $sparepartModel = new \App\Models\Master\Part\SparepartModel(); 
+            $partModel = new DetailPartModel();
+            $jasaModel = new DetailJasaModel();
+            $sparepartModel = new SparepartModel();
 
             $partModel->where('id_transaksi', $idTrans)->delete();
             $jasaModel->where('id_transaksi', $idTrans)->delete();
 
             if (is_array($listJasa)) {
                 foreach ($listJasa as $j) {
-                    if (empty($j['id_jasa'])) continue;
+                    if (empty($j['id_jasa']))
+                        continue;
                     $j['id_transaksi'] = $idTrans;
                     $jasaModel->insert($j);
                 }
@@ -172,14 +187,16 @@ class Servis extends BaseController
 
             if (is_array($listPart)) {
                 foreach ($listPart as $p) {
-                    if (empty($p['id_part'])) continue;
+                    if (empty($p['id_part']))
+                        continue;
 
                     $masterPart = $sparepartModel->find($p['id_part']);
-                    if (!$masterPart) throw new \Exception('Data sparepart tidak ditemukan.');
+                    if (!$masterPart)
+                        throw new \Exception('Data sparepart tidak ditemukan.');
 
-                    $p['id_transaksi']       = $idTrans;
-                    $p['harga_satuan_modal'] = $masterPart['harga_modal']; 
-                    $p['harga_satuan_jual']  = $p['harga_satuan_jual'] ?? $masterPart['harga_jual'];
+                    $p['id_transaksi'] = $idTrans;
+                    $p['harga_satuan_modal'] = $masterPart['harga_modal'];
+                    $p['harga_satuan_jual'] = $p['harga_satuan_jual'] ?? $masterPart['harga_jual'];
 
                     $partModel->insert($p);
                 }
@@ -187,7 +204,8 @@ class Servis extends BaseController
 
             $transModel->update($idTrans, $headerData);
 
-            if ($db->transStatus() === false) throw new \Exception('Terjadi kesalahan saat memproses data, mungkin karena stok tidak cukup.');
+            if ($db->transStatus() === false)
+                throw new \Exception('Terjadi kesalahan saat memproses data, mungkin karena stok tidak cukup.');
             $db->transCommit();
 
             return redirect()->to('transaksi/servis')->with('success', 'Data transaksi servis berhasil diperbarui!');
@@ -202,32 +220,95 @@ class Servis extends BaseController
     {
         try {
             $id = $this->request->getPost('id_transaksi');
-            if (empty($id)) throw new \Exception('Transaksi tidak ditemukan.');
+
+            if (empty($id)) {
+                throw new \Exception('Transaksi tidak ditemukan.');
+            }
+
+            $statusPengerjaan = $this->request->getPost('status_pengerjaan');
+
+            $data = [
+                'status_pengerjaan' => $statusPengerjaan,
+            ];
+
+            switch ($statusPengerjaan) {
+                case 'Antre':
+                    $data['status_transaksi'] = 'Draft';
+                    break;
+                case 'Diproses':
+                case 'Menunggu Part':
+                case 'Selesai':
+                    $data['status_transaksi'] = 'Progress';
+                    break;
+                case 'Diambil':
+                    $data['status_transaksi'] = 'Lunas';
+                    break;
+            }
 
             $model = new TransaksiServisModel();
-            $model->update($id, ['status_pengerjaan' => $this->request->getPost('status_pengerjaan')]);
+            $model->update($id, $data);
 
-            return redirect()->to('transaksi/servis')->with('success', 'Status pengerjaan berhasil diperbarui.');
+            return redirect()
+                ->to('transaksi/servis')
+                ->with('success', 'Status berhasil diperbarui.');
+
         } catch (\Throwable $e) {
-            return redirect()->back()->with('error', $e->getMessage());
+            return redirect()
+                ->back()
+                ->with('error', $e->getMessage());
         }
     }
 
-    public function update_pembayaran()
+    public function update_transaksi()
     {
         try {
             $id = $this->request->getPost('id_transaksi');
-            if (empty($id)) throw new \Exception('Transaksi tidak ditemukan.');
+
+            if (empty($id)) {
+                throw new \Exception('Transaksi tidak ditemukan.');
+            }
 
             $model = new TransaksiServisModel();
-            $model->update($id, [
-                'metode_pembayaran' => $this->request->getPost('metode_pembayaran'),
-                'status_pembayaran' => $this->request->getPost('status_pembayaran')
-            ]);
+            
+            $transaksi = $model->find($id);
+            if (!$transaksi) {
+                throw new \Exception('Data transaksi tidak ada di database.');
+            }
 
-            return redirect()->to('transaksi/servis')->with('success', 'Pembayaran berhasil diperbarui.');
+            if (in_array($transaksi['status_transaksi'], ['Lunas', 'Dibatalkan'])) {
+                return redirect()
+                    ->back()
+                    ->with('error', 'Transaksi sudah final dan tidak dapat diubah.');
+            }
+
+            $statusTransaksi = $this->request->getPost('status_transaksi');
+            $metodePembayaran = $this->request->getPost('metode_pembayaran');
+
+            $data = [
+                'status_transaksi' => $statusTransaksi,
+            ];
+
+
+            if ($statusTransaksi === 'Dibatalkan') {
+                $data['metode_pembayaran'] = null;
+            } else {
+                $data['metode_pembayaran'] = $metodePembayaran;
+            }
+
+            if (in_array($statusTransaksi, ['Lunas', 'Dibatalkan'])) {
+                $data['status_pengerjaan'] = 'Diambil';
+            }
+
+            $model->update($id, $data);
+
+            return redirect()
+                ->to('transaksi/servis')
+                ->with('success', 'Status transaksi berhasil diperbarui.');
+
         } catch (\Throwable $e) {
-            return redirect()->back()->with('error', $e->getMessage());
+            return redirect()
+                ->back()
+                ->with('error', $e->getMessage());
         }
     }
 
@@ -256,10 +337,14 @@ class Servis extends BaseController
             ->where('id_transaksi', $id)
             ->get()->getResultArray();
 
+        $jasaLuarModel = new JasaLuarModel();
+        $jasa_luar = $jasaLuarModel->where('id_transaksi', $id)->findAll();
+
         return view('backend/transaksi/servis/detail', [
-            'h'    => $header,
+            'h' => $header,
             'jasa' => $jasa,
-            'part' => $part
+            'part' => $part,
+            'jasa_luar' => $jasa_luar
         ]);
     }
 }

@@ -298,9 +298,9 @@ body {
 
         <div class="col-md-3">
             <div class="card border-orange p-3 shadow-sm text-center">
-                <small class="text-muted-custom fw-bold">BELUM LUNAS</small>
+                <small class="text-muted-custom fw-bold">TRANSAKSI BERJALAN</small>
                 <h6 class="fw-bold">
-                    <?= $belum_lunas; ?> Transaksi
+                    <?= $transaksi_aktif; ?> Transaksi
                 </h6>
             </div>
         </div>
@@ -314,9 +314,9 @@ body {
     <div class="row mb-4 g-3">
         <div class="col-md-6">
             <div class="card border-orange p-3 shadow-sm text-center">
-                <small class="text-muted-custom fw-bold">BELUM LUNAS</small>
+                <small class="text-muted-custom fw-bold">Transaksi Aktif</small>
                 <h6 class="fw-bold">
-                    <?= $belum_lunas; ?> Transaksi
+                    <?= $transaksi_aktif; ?> Transaksi
                 </h6>
             </div>
         </div>
