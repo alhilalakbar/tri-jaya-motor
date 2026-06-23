@@ -156,6 +156,8 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
 
             $routes->post('servis/create', 'Transaksi\Servis::create');
             $routes->post('servis/update-pembayaran', 'Transaksi\Servis::update_pembayaran');
+            $routes->get('servis/edit/(:num)', 'Transaksi\Servis::edit/$1');
+            $routes->post('servis/update', 'Transaksi\Servis::update');
             $routes->get('pembelian', 'Transaksi\Pembelian::index');
             $routes->post('pembelian/save', 'Transaksi\Pembelian::save');
             $routes->get('pembelian/detail/(:any)', 'Transaksi\Pembelian::detail/$1');

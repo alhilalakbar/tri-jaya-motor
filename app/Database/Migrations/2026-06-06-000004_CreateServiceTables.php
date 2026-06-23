@@ -18,6 +18,7 @@ class CreateServiceTables extends Migration
             'keluhan_awal'      => ['type' => 'TEXT', 'null' => true],
             'hasil_pemeriksaan' => ['type' => 'TEXT', 'null' => true],
             'status_pengerjaan' => ['type' => 'ENUM("Antre","Diproses","Menunggu Part","Selesai","Diambil","Dibatalkan")', 'null' => true],
+            'status_transaksi'  => ['type' => 'ENUM("Draft","Progress","Lunas")', 'default' => 'Draft'],            
             'metode_pembayaran' => ['type' => 'ENUM("Tunai","QRIS","BRI","Dana")', 'default' => 'Tunai'],
             'status_pembayaran' => ['type' => 'ENUM("Lunas","Belum Lunas")', 'default' => 'Belum Lunas'],
             'total_biaya'       => ['type' => 'DECIMAL', 'constraint' => '15,2', 'default' => '0.00'],
@@ -28,21 +29,20 @@ class CreateServiceTables extends Migration
         $this->forge->addForeignKey('id_mekanik', 'mekanik', 'id_mekanik', 'RESTRICT', 'CASCADE');
         $this->forge->addForeignKey('id_pengguna', 'pengguna', 'id_pengguna', 'RESTRICT', 'CASCADE');
         $this->forge->createTable('transaksi_servis');
-
         $this->forge->addField([
-            'id_detail_part'    => ['type' => 'INT', 'auto_increment' => true],
-            'id_transaksi'      => ['type' => 'INT'],
-            'id_part'           => ['type' => 'INT'],
-            'jumlah_pakai'      => ['type' => 'INT'],
-            'harga_satuan_jual' => ['type' => 'DECIMAL', 'constraint' => '12,2', 'null' => true],
-            'subtotal'          => ['type' => 'DECIMAL', 'constraint' => '12,2', 'default' => '0.00'],
+            'id_detail_part'     => ['type' => 'INT', 'auto_increment' => true],
+            'id_transaksi'       => ['type' => 'INT'],
+            'id_part'            => ['type' => 'INT'],
+            'jumlah_pakai'       => ['type' => 'INT'],            
+            'harga_satuan_modal' => ['type' => 'DECIMAL', 'constraint' => '12,2', 'default' => '0.00'],
+            'harga_satuan_jual'  => ['type' => 'DECIMAL', 'constraint' => '12,2', 'null' => true],
+            'subtotal'           => ['type' => 'DECIMAL', 'constraint' => '12,2', 'default' => '0.00'],
         ]);
         $this->forge->addKey('id_detail_part', true);
         $this->forge->addUniqueKey(['id_transaksi', 'id_part'], 'unique_part_per_transaksi');
         $this->forge->addForeignKey('id_transaksi', 'transaksi_servis', 'id_transaksi', 'RESTRICT', 'CASCADE');
         $this->forge->addForeignKey('id_part', 'sparepart', 'id_part', 'RESTRICT', 'CASCADE');
         $this->forge->createTable('detail_penggunaan_part');
-
         $this->forge->addField([
             'id_detail_jasa'       => ['type' => 'INT', 'auto_increment' => true],
             'id_transaksi'         => ['type' => 'INT'],
@@ -55,7 +55,6 @@ class CreateServiceTables extends Migration
         $this->forge->addForeignKey('id_transaksi', 'transaksi_servis', 'id_transaksi', 'RESTRICT', 'CASCADE');
         $this->forge->addForeignKey('id_jasa', 'jasa_servis', 'id_jasa', 'RESTRICT', 'CASCADE');
         $this->forge->createTable('detail_jasa_servis');
-
         $this->forge->addField([
             'id_jasa_luar'         => ['type' => 'INT', 'auto_increment' => true],
             'kode_jasa_luar'       => ['type' => 'VARCHAR', 'constraint' => 15, 'null' => true],

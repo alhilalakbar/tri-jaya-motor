@@ -109,10 +109,25 @@
                                 <i class="bi bi-eye"></i>
                             </a>
 
-                            <button type="button" class="btn btn-warning btn-sm"
-                                onclick='editStatus(<?= json_encode($d); ?>)'
-                                title="<?= $peran === 'Mekanik' ? 'Update Status' : 'Update Status / Pembayaran'; ?>">
+                            <?php if (
+            $d['status_pengerjaan'] !== 'Selesai' &&
+            $d['status_pembayaran'] !== 'Lunas'
+        ): ?>
+                            <a href="<?= base_url('transaksi/servis/edit/' . $d['id_transaksi']); ?>"
+                                class="btn btn-warning btn-sm" title="Edit Detail Transaksi">
                                 <i class="bi bi-pencil-square"></i>
+                            </a>
+                            <?php else: ?>
+                            <span class="btn btn-secondary btn-sm disabled" title="Transaksi sudah terkunci">
+                                <i class="bi bi-lock-fill"></i>
+                            </span>
+                            <?php endif; ?>
+
+                            <button type="button" class="btn btn-warning btn-sm"
+                                onclick='editStatus(<?= json_encode($d); ?>)' title="<?= $peran === 'Mekanik'
+                ? 'Update Status'
+                : 'Update Status / Pembayaran'; ?>">
+                                <i class="bi bi-arrow-repeat"></i>
                             </button>
 
                         </div>
