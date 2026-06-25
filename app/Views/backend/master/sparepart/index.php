@@ -3,7 +3,7 @@
 <?= $this->section('content'); ?>
 <div class="card card-primary card-outline">
     <div class="card-header d-flex align-items-center">
-        <h5 class="card-title m-0">Daftar Data</h5>
+        <h5 class="card-title m-0">Daftar Data Sparepart</h5>
 
         <div class="flex-grow-1 d-flex justify-content-center">
             <button type="button" class="btn btn-primary btn-sm" onclick="tambahData()">

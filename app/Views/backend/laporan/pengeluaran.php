@@ -52,8 +52,8 @@
             <table class="table table-bordered table-striped align-middle text-nowrap" id="tablePengeluaran">
                 <thead class="table-dark">
                     <tr>
-                        <th>#</th>
-                        <th>Kategori</th>
+                        <th>No</th>
+                        <th>Nama</th>
                         <th>Jenis</th>
                         <th>Tanggal</th>
                         <th>Nominal</th>
