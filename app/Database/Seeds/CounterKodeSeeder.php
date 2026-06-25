@@ -25,7 +25,6 @@ class CounterKodeSeeder extends Seeder
             ['nama_counter' => 'transaksi', 'counter_value' => 0],
         ];
 
-        // Memasukkan data awal ke tabel counter_kode
         $this->db->table('counter_kode')->insertBatch($data);
     }
 }
