@@ -241,20 +241,13 @@ git config --list
 
 ## 📥 Clone Repository
 
-> [!WARNING]
-> Repository saat ini masih bersifat **private** karena proyek masih dalam tahap pengembangan / belum dipresentasikan.
->
-> Pastikan akun GitHub Anda memiliki akses ke repository ini.
-
-Jika menggunakan HTTPS dan diminta autentikasi, gunakan **GitHub Personal Access Token**.
+Repository dapat di-clone menggunakan salah satu metode berikut.
 
 ### HTTPS
 
 ```bash
 git clone https://github.com/alhilalakbar/tri-jaya-motor.git
 cd tri-jaya-motor
-
-
 ```
 
 ### SSH
@@ -262,8 +255,6 @@ cd tri-jaya-motor
 ```bash
 git clone git@github.com:alhilalakbar/tri-jaya-motor.git
 cd tri-jaya-motor
-
-
 ```
 ---
 
@@ -595,16 +586,6 @@ app.baseURL = 'http://trijaya.test/'
 
 ## 🗄️ Setup Database
 
-Pilih salah satu metode berikut:
-
-- **Opsi A:** Migration + Seeder (clean setup)
-- **Opsi B:** Import SQL backup (quick setup)
-
-> [!WARNING]
-> Jangan jalankan kedua metode pada database yang sama.
-
----
-
 ### Membuat Database
 
 Masuk ke MySQL:
@@ -620,95 +601,46 @@ CREATE DATABASE tri_jaya_motor_db;
 EXIT;
 ```
 
-Jika nama database di `.env` berbeda, sesuaikan command di atas.
+Apabila nama database pada file `.env` berbeda, sesuaikan nama database yang dibuat.
 
 ---
 
-### Opsi A — Migration & Seeder
+### Menjalankan Migration
 
-Jalankan migration:
+Buat seluruh struktur tabel:
 
 ```bash
 php spark migrate
 ```
 
-Jalankan seeder:
+---
+
+### Menjalankan Seeder
+
+Inisialisasi data awal aplikasi:
 
 ```bash
-php spark db:seed CounterKodeSeeder
+php spark db:seed DatabaseSeeder
 ```
 
 ---
 
-### Membuat Akun Administrator
+## 🔑 Default Login
 
-Password tidak boleh disimpan dalam bentuk plain text.
+| Role | Username | Password |
+|------|----------|----------|
+| Pemilik | owner | owner123 |
+| Admin | admin | admin123 |
+| Mekanik | mekanik | mekanik123 |
 
-Generate password hash:
+> [!NOTE]
+> Password pada database disimpan menggunakan algoritma **bcrypt** (`password_hash()`).
 
-```bash
-php -r "echo password_hash('PasswordAdmin123', PASSWORD_DEFAULT) . PHP_EOL;"
-```
-
-Contoh output:
-
-```text
-$2y$10$xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-```
-
-Copy hasil hash tersebut.
-
-Masuk ke MySQL:
+Apabila ingin membuat hash password baru, jalankan:
 
 ```bash
-mysql -u root -p
+php -r "echo password_hash('password_baru', PASSWORD_DEFAULT) . PHP_EOL;"
 ```
-
-Pilih database:
-
-```sql
-USE tri_jaya_motor_db;
-```
-
-Insert akun administrator:
-
-```sql
-INSERT INTO pengguna (nama_pengguna, kata_sandi, peran)
-VALUES (
-    'Administrator',
-    'PASTE_HASH_DI_SINI',
-    'Admin'
-);
-```
-
-Ganti:
-
-```text
-PASTE_HASH_DI_SINI
-```
-
-dengan hash yang sudah Anda generate.
-
-Login default:
-
-- Username: `Administrator`
-- Password: `PasswordAdmin123`
-
-> [!WARNING]
-> Password ini hanya untuk setup awal/testing. Segera ubah setelah login pertama.
-
----
-
-### Opsi B — Import SQL Backup
-
-Jika menggunakan backup SQL:
-
-```bash
-mysql -u root -p tri_jaya_motor_db < tri_jaya_motor_refinement_new_view.sql
-```
-
-Pastikan file SQL tersedia di root project, atau gunakan full path file.
-
 
 ---
 
