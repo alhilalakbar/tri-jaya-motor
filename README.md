@@ -17,9 +17,9 @@ Proyek ini dikembangkan sebagai implementasi digitalisasi proses bisnis bengkel 
 - [Clone Repository](#-clone-repository)
 - [Penempatan Project Directory](#-penempatan-project-directory)
 - [Install Dependency](#-install-dependency)
-- [Setup Environment (.env)](#-setup-environment-env)
-- [Setup Database](#-setup-database)
-- [Menjalankan Aplikasi](#-menjalankan-aplikasi)
+- [Setup Environment (.env)](#setup-environment-env)
+- [Setup Database](#setup-database)
+- [Menjalankan Aplikasi](#menjalankan-aplikasi)
 - [Struktur Project](#-struktur-project)
 - [Troubleshooting](#-troubleshooting)
 - [Catatan](#-catatan)
@@ -491,7 +491,7 @@ composer install
 
 ---
 
-## ⚙️ Setup Environment (.env)
+## Setup Environment (.env)
 
 File `.env` tidak disertakan dalam repository demi alasan keamanan.
 
@@ -584,17 +584,82 @@ app.baseURL = 'http://trijaya.test/'
 
 ---
 
-## 🗄️ Setup Database
+## Setup Database
 
 ### Membuat Database
 
-Masuk ke MySQL:
+Pilih salah satu metode berikut untuk membuat database.
+
+---
+
+#### Opsi 1 — Menggunakan phpMyAdmin (Recommended)
+
+1. Jalankan **Apache** dan **MySQL** melalui XAMPP atau Laragon.
+2. Buka browser, lalu akses:
+
+```text
+http://localhost/phpmyadmin
+```
+
+3. Klik **New** pada panel sebelah kiri.
+4. Masukkan nama database:
+
+```text
+tri_jaya_motor_db
+```
+
+5. Biarkan **Collation** menggunakan nilai default.
+6. Klik **Create**.
+
+Pastikan nama database sama dengan yang dikonfigurasi pada file `.env`.
+
+---
+
+#### Opsi 2 — Menggunakan MySQL Command Line
+
+##### Windows (XAMPP)
+
+Buka **Command Prompt**, lalu masuk ke direktori MySQL XAMPP:
+
+```cmd
+cd C:\xampp\mysql\bin
+```
+
+Jalankan MySQL:
+
+```cmd
+mysql.exe -u root -p
+```
+
+Apabila password pengguna `root` kosong, cukup tekan **Enter** saat diminta memasukkan password.
+
+##### Windows (Laragon)
+
+Buka **Command Prompt** atau **Terminal Laragon**, kemudian jalankan:
+
+```cmd
+mysql -u root -p
+```
+
+Apabila password pengguna `root` kosong, cukup tekan **Enter** saat diminta memasukkan password.
+
+##### Linux
+
+Buka Terminal, kemudian jalankan:
 
 ```bash
 mysql -u root -p
 ```
 
-Buat database:
+##### macOS
+
+Buka Terminal, kemudian jalankan:
+
+```bash
+mysql -u root -p
+```
+
+Setelah berhasil masuk ke MySQL, buat database dengan perintah berikut:
 
 ```sql
 CREATE DATABASE tri_jaya_motor_db;
@@ -644,7 +709,7 @@ php -r "echo password_hash('password_baru', PASSWORD_DEFAULT) . PHP_EOL;"
 
 ---
 
-## 🖥️ Menjalankan Aplikasi
+## Menjalankan Aplikasi
 
 Berikut beberapa opsi untuk menjalankan aplikasi sesuai environment development Anda.
 
