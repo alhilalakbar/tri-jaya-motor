@@ -60,12 +60,13 @@
                                 <strong>
                                     <?= esc($d['nomor_plat']); ?>
                                     (<?= esc($d['nama_pelanggan']); ?>)
-                                </strong><br>
+                                </strong>
+                                <br>
 
-                                <small class="text-muted text-truncate d-inline-block" style="max-width: 250px;"
-                                    title="<?= esc($d['keluhan_awal']); ?>">
-                                    K: <?= esc($d['keluhan_awal'] ?: '-'); ?>
-                                </small>
+                                <a href="#" class="small" onclick='lihatPemeriksaan(<?= json_encode($d); ?>)'>
+                                    <i class="bi bi-search"></i>
+                                    Lihat Keluhan & Hasil Pemeriksaan
+                                </a>
                             </td>
 
                             <td>
@@ -298,13 +299,68 @@
         </div>
     </div>
 
+    <!-- MODAL DETAIL PEMERIKSAAN -->
+    <div class="modal fade" id="modalPemeriksaan" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+
+            <div class="modal-content shadow-lg">
+
+                <div class="modal-header bg-info text-white">
+                    <h5 class="modal-title">
+                        <i class="bi bi-file-earmark-medical"></i>
+                        Detail Keluhan & Hasil Pemeriksaan
+                    </h5>
+
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal">
+                    </button>
+                </div>
+
+                <div class="modal-body" style="max-height:70vh;">
+
+                    <div class="mb-4">
+                        <label class="fw-bold">
+                            Keluhan Awal
+                        </label>
+
+                        <div id="detail_keluhan" class="border rounded p-3 bg-light">
+                            -
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="fw-bold">
+                            Hasil Pemeriksaan
+                        </label>
+
+                        <div id="detail_pemeriksaan" class="border rounded p-3 bg-light">
+                            -
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Tutup
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
     <script>
         let modalServis = null;
         let modalEditStatus = null;
+        let modalPemeriksaan = null;
 
         document.addEventListener('DOMContentLoaded', function () {
             if (typeof bootstrap !== 'undefined') {
                 modalEditStatus = new bootstrap.Modal(document.getElementById('modalEditStatus'));
+                modalPemeriksaan = new bootstrap.Modal(document.getElementById('modalPemeriksaan'));
 
                 <?php if (in_array($peran, ['Admin', 'Pemilik'])): ?>
                     modalServis = new bootstrap.Modal(document.getElementById('modalServis'));
@@ -370,6 +426,17 @@
             }
 
             select.value = statusSaatIni;
+        }
+
+        function lihatPemeriksaan(data) {
+
+            document.getElementById('detail_keluhan').textContent =
+                data.keluhan_awal || '-';
+
+            document.getElementById('detail_pemeriksaan').textContent =
+                data.hasil_pemeriksaan || '-';
+
+            modalPemeriksaan.show();
         }
     </script>
 

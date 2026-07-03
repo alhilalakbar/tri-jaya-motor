@@ -198,7 +198,6 @@ class Laporan extends BaseController
             'total_pengeluaran',
             'total_pendapatan_jasa',
             'harga_jual',
-            'harga_modal',
             'biaya_standar'
         ];
 

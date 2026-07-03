@@ -76,11 +76,11 @@ class Pembelian extends BaseController
                     throw new \Exception('Data detail pembelian tidak lengkap.');
                 }
 
-                if ((int)$item['jumlah_beli'] <= 0) {
+                if ((int) $item['jumlah_beli'] <= 0) {
                     throw new \Exception('Jumlah pembelian harus lebih dari 0.');
                 }
 
-                if ((float)$item['harga_beli_satuan'] <= 0) {
+                if ((float) $item['harga_beli_satuan'] <= 0) {
                     throw new \Exception('Harga beli harus lebih dari 0.');
                 }
             }
@@ -89,7 +89,6 @@ class Pembelian extends BaseController
             $header['id_pengguna'] = session()->get('id_pengguna');
 
             $beliModel = new PembelianStokModel();
-
             $idBeli = $beliModel->insert($header, true);
 
             if (!$idBeli) {
@@ -100,6 +99,7 @@ class Pembelian extends BaseController
 
             foreach ($items as $item) {
                 $item['id_pembelian'] = $idBeli;
+                $item['qty_tersisa'] = $item['jumlah_beli'];
                 $detModel->insert($item);
             }
 

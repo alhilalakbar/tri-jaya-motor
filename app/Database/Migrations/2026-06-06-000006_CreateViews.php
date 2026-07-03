@@ -9,13 +9,26 @@ class CreateViews extends Migration
     public function up()
     {
         $this->db->query("
-            CREATE OR REPLACE VIEW view_laporan_laba_rugi AS 
-            SELECT ts.kode_transaksi, ts.tanggal_masuk, ts.status_transaksi, ts.total_biaya, 
-                   COALESCE(dpp.jumlah_pakai, 0) AS jumlah_pakai, COALESCE(s.harga_modal, 0) AS harga_modal, 
-                   COALESCE((dpp.jumlah_pakai * s.harga_modal), 0) AS hpp_sparepart 
-            FROM transaksi_servis ts 
-            LEFT JOIN detail_penggunaan_part dpp ON ts.id_transaksi = dpp.id_transaksi 
-            LEFT JOIN sparepart s ON dpp.id_part = s.id_part
+            CREATE OR REPLACE VIEW view_laporan_laba_rugi AS
+            SELECT
+                ts.kode_transaksi,
+                ts.tanggal_masuk,
+                ts.status_transaksi,
+                ts.total_biaya,
+
+                COALESCE(dpp.jumlah_pakai, 0) AS jumlah_pakai,
+
+                COALESCE(dpp.harga_satuan_modal, 0) AS harga_satuan_modal,
+
+                COALESCE(
+                    dpp.jumlah_pakai * dpp.harga_satuan_modal,
+                    0
+                ) AS hpp_sparepart
+
+            FROM transaksi_servis ts
+
+            LEFT JOIN detail_penggunaan_part dpp
+            ON ts.id_transaksi = dpp.id_transaksi;
         ");
 
         $this->db->query("

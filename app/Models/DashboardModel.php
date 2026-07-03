@@ -119,8 +119,8 @@ class DashboardModel extends Model
             ])
             ->countAllResults();
 
-        $asetGudang = $this->db->table('sparepart')
-            ->select('COALESCE(SUM(stok_saat_ini * harga_modal),0) AS total', false)
+        $asetGudang = $this->db->table('detail_pembelian_stok')
+            ->select('COALESCE(SUM(qty_tersisa * harga_beli_satuan),0) AS total', false)
             ->get()
             ->getRow()->total ?? 0;
 

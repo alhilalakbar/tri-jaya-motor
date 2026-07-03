@@ -15,7 +15,6 @@ class CreateInventoryTables extends Migration
             'id_merek_part' => ['type' => 'INT', 'null' => true],
             'nama_part'     => ['type' => 'VARCHAR', 'constraint' => 100],
             'kualitas_part' => ['type' => 'ENUM("Original","OEM","KW")', 'default' => 'Original'],
-            'harga_modal'   => ['type' => 'DECIMAL', 'constraint' => '12,2', 'default' => '0.00'],
             'harga_jual'    => ['type' => 'DECIMAL', 'constraint' => '12,2', 'default' => '0.00'],
             'stok_saat_ini' => ['type' => 'INT', 'default' => 0],
             'stok_minimum'  => ['type' => 'INT', 'default' => 5],
@@ -46,6 +45,7 @@ class CreateInventoryTables extends Migration
             'id_pembelian'        => ['type' => 'INT', 'null' => true],
             'id_part'             => ['type' => 'INT', 'null' => true],
             'jumlah_beli'         => ['type' => 'INT'],
+            'qty_tersisa'          => ['type' => 'INT', 'default' => 0],
             'harga_beli_satuan'   => ['type' => 'DECIMAL', 'constraint' => '12,2', 'null' => true],
         ]);
         $this->forge->addKey('id_detail_pembelian', true);

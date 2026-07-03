@@ -85,7 +85,6 @@ class MasterSeeder extends Seeder
                 'id_merek_part' => 1,
                 'nama_part' => 'Yamalube Power Matic 10W-40 0.8L',
                 'kualitas_part' => 'Original',
-                'harga_modal' => 60000,
                 'harga_jual' => 77200,
                 'stok_saat_ini' => 0,
                 'stok_minimum' => 5
@@ -95,7 +94,6 @@ class MasterSeeder extends Seeder
                 'id_merek_part' => 2,
                 'nama_part' => 'Motul 5100 4T 10W40 1L Technosynthese Ester',
                 'kualitas_part' => 'Original',
-                'harga_modal' => 140000,
                 'harga_jual' => 169300,
                 'stok_saat_ini' => 0,
                 'stok_minimum' => 5
@@ -105,7 +103,6 @@ class MasterSeeder extends Seeder
                 'id_merek_part' => 3,
                 'nama_part' => 'AHM Oil MPX-1 0.8L 10W-30',
                 'kualitas_part' => 'Original',
-                'harga_modal' => 45000,
                 'harga_jual' => 56000,
                 'stok_saat_ini' => 0,
                 'stok_minimum' => 5

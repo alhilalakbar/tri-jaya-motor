@@ -2,6 +2,8 @@
 
 Aplikasi web berbasis **CodeIgniter 4** untuk membantu pengelolaan operasional bengkel, mencakup manajemen data master, transaksi servis kendaraan, inventaris sparepart, sistem kasir, hingga pelaporan operasional.
 
+Sistem ini menerapkan **Role-Based Access Control (RBAC)** untuk mengatur hak akses pengguna serta menggunakan metode **First In, First Out (FIFO)** dalam pengelolaan persediaan sparepart agar perhitungan Harga Pokok Penjualan (HPP), nilai persediaan, dan laporan laba rugi lebih akurat.
+
 Proyek ini dikembangkan sebagai implementasi digitalisasi proses bisnis bengkel berdasarkan observasi, wawancara, dan analisis kebutuhan operasional nyata di lapangan.
 
 ---

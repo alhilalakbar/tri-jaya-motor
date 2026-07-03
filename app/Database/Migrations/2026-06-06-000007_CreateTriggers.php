@@ -43,9 +43,13 @@ class CreateTriggers extends Migration
             SQL,
 
             <<<SQL
-            CREATE TRIGGER tambah_stok_dan_update_harga AFTER INSERT ON detail_pembelian_stok FOR EACH ROW 
-            BEGIN 
-                UPDATE sparepart SET stok_saat_ini = stok_saat_ini + NEW.jumlah_beli, harga_modal = NEW.harga_beli_satuan WHERE id_part = NEW.id_part; 
+            CREATE TRIGGER tambah_stok
+            AFTER INSERT ON detail_pembelian_stok
+            FOR EACH ROW
+            BEGIN
+                UPDATE sparepart
+                SET stok_saat_ini = stok_saat_ini + NEW.jumlah_beli
+                WHERE id_part = NEW.id_part;
             END;
             SQL,
 
@@ -290,8 +294,9 @@ class CreateTriggers extends Migration
             <<<SQL
             CREATE TRIGGER batal_kembalikan_stok AFTER UPDATE ON transaksi_servis FOR EACH ROW 
             BEGIN 
-                IF NEW.status_transaksi = 'Dibatalkan' AND OLD.status_transaksi <> 'Dibatalkan' THEN 
-                    UPDATE sparepart sc JOIN detail_penggunaan_part dpp ON sc.id_part = dpp.id_part SET sc.stok_saat_ini = sc.stok_saat_ini + dpp.jumlah_pakai WHERE dpp.id_transaksi = NEW.id_transaksi; 
+            IF NEW.status_transaksi = 'Dibatalkan'
+            AND OLD.status_transaksi IN ('Draft', 'Progress') THEN                    
+            UPDATE sparepart sc JOIN detail_penggunaan_part dpp ON sc.id_part = dpp.id_part SET sc.stok_saat_ini = sc.stok_saat_ini + dpp.jumlah_pakai WHERE dpp.id_transaksi = NEW.id_transaksi; 
                 END IF; 
             END;
             SQL,
@@ -315,7 +320,7 @@ class CreateTriggers extends Migration
             'update_total_after_delete_jasa',
             'update_total_after_jasa',
             'update_total_after_update_jasa',
-            'tambah_stok_dan_update_harga',
+            'tambah_stok',
             'update_total_pembelian_delete',
             'update_total_pembelian_insert',
             'update_total_pembelian_update',
@@ -340,7 +345,6 @@ class CreateTriggers extends Migration
             'tg_kode_part',
             'tg_kode_tipe_motor',
             'tg_kode_transaksi',
-            // 3 baris di bawah ini ditambahkan agar rollback tidak error
             'update_total_after_insert_jasa_luar',
             'update_total_after_update_jasa_luar',
             'update_total_after_delete_jasa_luar',

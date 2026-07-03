@@ -96,8 +96,12 @@ class Servis extends BaseController
                         throw new \Exception('Data sparepart tidak ditemukan.');
 
                     $p['id_transaksi'] = $idTrans;
-                    $p['harga_satuan_modal'] = $masterPart['harga_modal'];
-                    $p['harga_satuan_jual'] = $p['harga_satuan_jual'] ?? $masterPart['harga_jual'];
+
+                    $p['harga_satuan_modal'] = 0;
+
+                    $p['harga_satuan_jual'] =
+                        $p['harga_satuan_jual']
+                        ?? $masterPart['harga_jual'];
 
                     $partModel->insert($p);
                 }
@@ -195,8 +199,12 @@ class Servis extends BaseController
                         throw new \Exception('Data sparepart tidak ditemukan.');
 
                     $p['id_transaksi'] = $idTrans;
-                    $p['harga_satuan_modal'] = $masterPart['harga_modal'];
-                    $p['harga_satuan_jual'] = $p['harga_satuan_jual'] ?? $masterPart['harga_jual'];
+
+                    $p['harga_satuan_modal'] = 0;
+
+                    $p['harga_satuan_jual'] =
+                        $p['harga_satuan_jual']
+                        ?? $masterPart['harga_jual'];
 
                     $partModel->insert($p);
                 }
@@ -218,7 +226,11 @@ class Servis extends BaseController
 
     public function update_status()
     {
+        $db = \Config\Database::connect();
+        $db->transBegin();
+
         try {
+
             $id = $this->request->getPost('id_transaksi');
 
             if (empty($id)) {
@@ -227,32 +239,59 @@ class Servis extends BaseController
 
             $statusPengerjaan = $this->request->getPost('status_pengerjaan');
 
+            $model = new TransaksiServisModel();
+
+            $transaksi = $model->find($id);
+
+            if (!$transaksi) {
+                throw new \Exception('Transaksi tidak ditemukan.');
+            }
+
+            if (in_array($transaksi['status_transaksi'], ['Lunas', 'Dibatalkan'])) {
+                throw new \Exception('Transaksi sudah final.');
+            }
+
             $data = [
                 'status_pengerjaan' => $statusPengerjaan,
             ];
 
             switch ($statusPengerjaan) {
+
                 case 'Antre':
                     $data['status_transaksi'] = 'Draft';
                     break;
+
                 case 'Diproses':
                 case 'Menunggu Part':
                 case 'Selesai':
                     $data['status_transaksi'] = 'Progress';
                     break;
+
                 case 'Diambil':
+
+                    // Jalankan FIFO sebelum transaksi dikunci
+                    $this->prosesFIFO($id);
+
                     $data['status_transaksi'] = 'Lunas';
                     break;
             }
 
-            $model = new TransaksiServisModel();
             $model->update($id, $data);
+
+            if ($db->transStatus() === false) {
+                throw new \Exception('Gagal memperbarui status.');
+            }
+
+            $db->transCommit();
 
             return redirect()
                 ->to('transaksi/servis')
                 ->with('success', 'Status berhasil diperbarui.');
 
         } catch (\Throwable $e) {
+
+            $db->transRollback();
+
             return redirect()
                 ->back()
                 ->with('error', $e->getMessage());
@@ -261,7 +300,11 @@ class Servis extends BaseController
 
     public function update_transaksi()
     {
+        $db = \Config\Database::connect();
+        $db->transBegin();
+
         try {
+
             $id = $this->request->getPost('id_transaksi');
 
             if (empty($id)) {
@@ -269,16 +312,14 @@ class Servis extends BaseController
             }
 
             $model = new TransaksiServisModel();
-            
+
             $transaksi = $model->find($id);
             if (!$transaksi) {
                 throw new \Exception('Data transaksi tidak ada di database.');
             }
 
             if (in_array($transaksi['status_transaksi'], ['Lunas', 'Dibatalkan'])) {
-                return redirect()
-                    ->back()
-                    ->with('error', 'Transaksi sudah final dan tidak dapat diubah.');
+                throw new \Exception('Transaksi sudah final dan tidak dapat diubah.');
             }
 
             $statusTransaksi = $this->request->getPost('status_transaksi');
@@ -288,27 +329,107 @@ class Servis extends BaseController
                 'status_transaksi' => $statusTransaksi,
             ];
 
+            if ($statusTransaksi === 'Lunas') {
 
-            if ($statusTransaksi === 'Dibatalkan') {
-                $data['metode_pembayaran'] = null;
-            } else {
                 $data['metode_pembayaran'] = $metodePembayaran;
-            }
-
-            if (in_array($statusTransaksi, ['Lunas', 'Dibatalkan'])) {
                 $data['status_pengerjaan'] = 'Diambil';
+
+                if (
+                    in_array(
+                        $transaksi['status_transaksi'],
+                        ['Draft', 'Progress']
+                    )
+                ) {
+                    $this->prosesFIFO($id);
+                }
+
+            } elseif ($statusTransaksi === 'Dibatalkan') {
+
+                $data['metode_pembayaran'] = null;
+                $data['status_pengerjaan'] = 'Diambil';
+
+            } else {
+
+                $data['metode_pembayaran'] = $metodePembayaran;
+
             }
 
             $model->update($id, $data);
+
+            if ($db->transStatus() === false) {
+                throw new \Exception('Gagal memperbarui transaksi.');
+            }
+
+            $db->transCommit();
 
             return redirect()
                 ->to('transaksi/servis')
                 ->with('success', 'Status transaksi berhasil diperbarui.');
 
         } catch (\Throwable $e) {
+
+            $db->transRollback();
+
             return redirect()
                 ->back()
                 ->with('error', $e->getMessage());
+        }
+    }
+
+    private function prosesFIFO(int $idTransaksi): void
+    {
+        $db = \Config\Database::connect();
+
+        $detailPart = $db->table('detail_penggunaan_part')
+            ->where('id_transaksi', $idTransaksi)
+            ->get()
+            ->getResultArray();
+
+        foreach ($detailPart as $part) {
+
+            $jumlah = (int) $part['jumlah_pakai'];
+            $sisa = $jumlah;
+            $totalHPP = 0;
+
+            $batchList = $db->table('detail_pembelian_stok')
+                ->where('id_part', $part['id_part'])
+                ->where('qty_tersisa >', 0)
+                ->orderBy('id_detail_pembelian', 'ASC')
+                ->get()
+                ->getResultArray();
+
+            foreach ($batchList as $batch) {
+
+                if ($sisa <= 0) {
+                    break;
+                }
+
+                $ambil = min($batch['qty_tersisa'], $sisa);
+
+                $db->table('detail_pembelian_stok')
+                    ->where('id_detail_pembelian', $batch['id_detail_pembelian'])
+                    ->update([
+                        'qty_tersisa' => $batch['qty_tersisa'] - $ambil
+                    ]);
+
+                $totalHPP += $ambil * (float) $batch['harga_beli_satuan'];
+
+                $sisa -= $ambil;
+            }
+
+            if ($sisa > 0) {
+                throw new \Exception(
+                    "Stok FIFO untuk part ID {$part['id_part']} tidak mencukupi."
+                );
+            }
+
+            $hppRata = round($totalHPP / $jumlah, 2);
+
+            $db->table('detail_penggunaan_part')
+                ->where('id_detail_part', $part['id_detail_part'])
+                ->update([
+                    'harga_satuan_modal' => $hppRata
+                ]);
         }
     }
 
