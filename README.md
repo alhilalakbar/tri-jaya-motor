@@ -11,7 +11,7 @@ Proyek ini dikembangkan sebagai implementasi digitalisasi proses bisnis bengkel 
 ## 📚 Daftar Isi
 
 - [Fitur Utama](#-fitur-utama)
-- [Teknologi yang Digunakan](#-teknologi-yang-digunakan)
+- [Teknologi yang Digunakan](#teknologi-yang-digunakan)
 - [Prasyarat](#-prasyarat)
 - [Required PHP Extensions](#required-php-extensions)
 - [Install Git](#-install-git)
@@ -54,7 +54,7 @@ Aplikasi ini menyediakan fitur-fitur berikut:
 
 ---
 
-## 🛠️ Teknologi yang Digunakan
+## Teknologi yang Digunakan
 
 Stack teknologi yang digunakan dalam proyek ini:
 
