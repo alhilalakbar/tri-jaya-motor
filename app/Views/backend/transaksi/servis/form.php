@@ -39,26 +39,6 @@
 
 <div class="row mb-4">
     <div class="col-md-4">
-        <label class="form-label">Status Pengerjaan</label>
-        <select name="header[status_pengerjaan]" class="form-select">
-            <option value="Antre">Antre</option>
-            <option value="Diproses">Diproses</option>
-            <option value="Menunggu Part">Menunggu Part</option>
-            <option value="Selesai">Selesai</option>
-            <option value="Diambil">Diambil</option>
-            <option value="Dibatalkan">Dibatalkan</option>
-        </select>
-    </div>
-    <div class="col-md-4">
-        <label class="form-label">Status Transaksi</label>
-        <select name="header[status_transaksi]" class="form-select">
-            <option value="Draft" selected>Draft</option>
-            <option value="Progress">Progress</option>
-            <option value="Lunas">Lunas</option>
-            <option value="Dibatalkan">Dibatalkan</option>
-        </select>
-    </div>
-    <div class="col-md-4">
         <label class="form-label">Metode Pembayaran</label>
         <select name="header[metode_pembayaran]" class="form-select">
             <option value="Tunai">Tunai</option>
