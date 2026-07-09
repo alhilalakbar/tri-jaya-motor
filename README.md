@@ -10,6 +10,7 @@ Proyek ini dikembangkan sebagai implementasi digitalisasi proses bisnis bengkel 
 
 ## 📚 Daftar Isi
 
+- [Quick Start](#-quick-start)
 - [Fitur Utama](#-fitur-utama)
 - [Teknologi yang Digunakan](#teknologi-yang-digunakan)
 - [Prasyarat](#-prasyarat)
@@ -28,6 +29,111 @@ Proyek ini dikembangkan sebagai implementasi digitalisasi proses bisnis bengkel 
 - [Lisensi](#-lisensi)
 
 ---
+
+## 🚀 Quick Start
+
+Ikuti langkah berikut untuk menjalankan aplikasi pada environment development lokal.
+
+### 1. Clone Repository
+
+```bash
+git clone https://github.com/alhilalakbar/tri-jaya-motor.git
+cd tri-jaya-motor
+```
+
+---
+
+### 2. Install Dependency
+
+```bash
+composer install
+```
+
+---
+
+### 3. Setup Environment
+
+Linux / macOS
+
+```bash
+cp env .env
+```
+
+Windows CMD
+
+```cmd
+copy env .env
+```
+
+Windows PowerShell
+
+```powershell
+Copy-Item env .env
+```
+
+Edit file `.env`, kemudian sesuaikan konfigurasi database:
+
+```env
+CI_ENVIRONMENT = development
+
+app.baseURL = 'http://localhost:8080/'
+
+database.default.hostname = localhost
+database.default.database = tri_jaya_motor_db
+database.default.username = root
+database.default.password =
+database.default.DBDriver = MySQLi
+database.default.port = 3306
+```
+
+---
+
+### 4. Buat Database
+
+Buat database baru bernama:
+
+```text
+tri_jaya_motor_db
+```
+
+---
+
+### 5. Jalankan Migration & Seeder
+
+```bash
+php spark migrate
+php spark db:seed DatabaseSeeder
+```
+
+---
+
+### 6. Jalankan Aplikasi
+
+```bash
+php spark serve
+```
+
+Buka browser:
+
+```text
+http://localhost:8080
+```
+
+---
+
+### 7. Login
+
+| Role | Username | Password |
+|------|----------|----------|
+| Pemilik | owner | owner123 |
+| Admin | admin | admin123 |
+| Mekanik | mekanik | mekanik123 |
+
+---
+
+> **Catatan**
+>
+> Jika mengalami kendala saat instalasi atau menjalankan aplikasi, silakan lihat bagian **Troubleshooting** pada README ini.
 
 ## 🌟 Fitur Utama
 
@@ -58,12 +164,12 @@ Aplikasi ini menyediakan fitur-fitur berikut:
 
 Stack teknologi yang digunakan dalam proyek ini:
 
-- PHP >= 8.1
+- PHP 8.2+
 - CodeIgniter 4
 - MySQL / MariaDB
-- Composer
+- Composer 2.x
 - Bootstrap
-- AdminLTE 3
+- AdminLTE 4
 - JavaScript
 - jQuery
 
@@ -75,7 +181,7 @@ Sebelum menjalankan proyek ini, pastikan environment development Anda sudah memi
 
 - Git
 - Composer
-- PHP >= 8.1
+- PHP **8.2 atau lebih baru**
 - MySQL / MariaDB
 - Apache (opsional)
 - Laragon / XAMPP (Windows)
@@ -86,14 +192,21 @@ Sebelum menjalankan proyek ini, pastikan environment development Anda sudah memi
 
 Pastikan extension PHP berikut sudah aktif:
 
+- `dom`
+- `fileinfo`
+- `gd`
+- `iconv`
 - `intl`
 - `mbstring`
-- `mysqli`
-- `json`
-- `openssl`
-- `xml`
-- `curl`
-- `fileinfo`
+- `zip`
+
+Untuk memverifikasi seluruh requirement, jalankan:
+
+```bash
+composer check-platform-reqs
+```
+
+Jika seluruh requirement berstatus **success**, maka environment sudah siap digunakan.
 
 ### Cek Versi PHP
 
@@ -985,9 +1098,109 @@ Jika dependency belum terinstall:
 ```bash
 composer install
 ```
+---
+
+### PHP Version Tidak Sesuai
+
+Project ini memerlukan **PHP 8.2 atau lebih baru**.
+
+Periksa versi PHP yang sedang digunakan:
+
+```bash
+php -v
+```
+
+Contoh output yang benar:
+
+```text
+PHP 8.3.6 (cli)
+```
+
+Apabila versi PHP masih **8.1** atau lebih lama, lakukan upgrade PHP terlebih dahulu sebelum menjalankan:
+
+```bash
+composer install
+```
 
 ---
 
+### PHP Extension Belum Aktif
+
+Pastikan seluruh extension yang dibutuhkan telah tersedia dengan menjalankan:
+
+```bash
+composer check-platform-reqs
+```
+
+Jika terdapat extension yang berstatus **missing**, ikuti panduan sesuai sistem operasi yang digunakan.
+
+#### Windows (XAMPP)
+
+Buka file:
+
+```text
+C:\xampp\php\php.ini
+```
+
+Cari extension yang masih dinonaktifkan, misalnya:
+
+```ini
+;extension=intl
+;extension=gd
+;extension=zip
+```
+
+Hilangkan tanda `;` sehingga menjadi:
+
+```ini
+extension=intl
+extension=gd
+extension=zip
+```
+
+Simpan perubahan, kemudian **restart Apache** melalui XAMPP Control Panel.
+
+Verifikasi kembali:
+
+```bash
+composer check-platform-reqs
+```
+
+---
+
+#### Ubuntu / Debian
+
+Install extension yang diperlukan:
+
+```bash
+sudo apt update
+sudo apt install php-intl php-gd php-mysql php-mbstring php-xml php-zip php-curl
+```
+
+Restart Apache:
+
+```bash
+sudo systemctl restart apache2
+```
+
+Apabila menggunakan PHP-FPM:
+
+```bash
+sudo systemctl restart php8.2-fpm
+```
+
+> [!NOTE]
+> Sesuaikan nama service PHP-FPM dengan versi PHP yang digunakan, misalnya:
+>
+> - `php8.2-fpm`
+> - `php8.3-fpm`
+
+Verifikasi kembali:
+
+```bash
+composer check-platform-reqs
+```
+---
 ### Database Connection Error
 
 Periksa konfigurasi `.env`:
